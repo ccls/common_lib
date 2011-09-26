@@ -18,7 +18,8 @@ Gem::Specification.new do |s|
   s.files = [
     "README.rdoc",
     "Rakefile",
-    "VERSION"
+    "VERSION",
+    "ccls-common_lib.gemspec"
   ]
   s.homepage = %q{http://github.com/ccls/common_lib}
   s.require_paths = ["lib"]
