@@ -1,0 +1,26 @@
+= CCLS Common Lib
+
+This ruby gem ( ccls-common_lib ) is meant to include all of the current functionality provided by ...
+
+
+* {jakewendt-ruby_extension}[http://github.com/jakewendt/ruby_extension] - modifications, updates and patches for ruby.
+* {jakewendt-simply_helpful}[http://github.com/jakewendt/simply_helpful]
+* {jakewendt-simply_authorized}[http://github.com/jakewendt/simply_authorized]
+* {jakewendt-simply_pages}[http://github.com/jakewendt/simply_pages]
+* {jakewendt-rails_extension}[http://github.com/jakewendt/rails_extension]
+
+== Gemified with Jeweler
+
+ vi Rakefile
+ rake version:write
+
+ rake version:bump:patch
+ rake version:bump:minor
+ rake version:bump:major
+
+ rake gemspec
+
+ rake install
+ rake release
+
+Copyright (c) 2010 [Jake Wendt], released under the MIT license
