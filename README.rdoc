@@ -2,7 +2,6 @@
 
 This ruby gem ( ccls-common_lib ) is meant to include all of the current functionality provided by ...
 
-
 * {jakewendt-ruby_extension}[http://github.com/jakewendt/ruby_extension] - modifications, updates and patches for ruby.
 * {jakewendt-simply_helpful}[http://github.com/jakewendt/simply_helpful]
 * {jakewendt-simply_authorized}[http://github.com/jakewendt/simply_authorized]
