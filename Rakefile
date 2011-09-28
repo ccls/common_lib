@@ -1,28 +1,28 @@
-#	require(File.join(File.dirname(__FILE__), 'config', 'boot'))
-#	
-#	#	Newer versions are incompatible with rdoc_rails gem/plugin
-#	gem 'rdoc', '~> 2'
-#	
-#	# Use the updated rdoc gem rather than version
-#	# included with ruby.
-#	require 'rdoc'
-#	require 'rdoc/rdoc'
-#	
-#	require 'rake'
-#	require 'rake/testtask'
-#	require 'rdoc/task'
-#	
-#	desc 'Generate documentation for the gem.'
-#	Rake::RDocTask.new(:rdoc) do |rdoc|
-#		rdoc.rdoc_dir = 'rdoc'
-#		rdoc.title		= 'CCLS Common Lib'
-#		rdoc.options << '--line-numbers' #<< '--inline-source'
-#		rdoc.rdoc_files.include('README')
-#		rdoc.rdoc_files.include('lib/**/*.rb')
-#	end
-#	
-#	require 'tasks/rails'
-#	
+require(File.join(File.dirname(__FILE__), 'config', 'boot'))
+
+#	Newer versions are incompatible with rdoc_rails gem/plugin
+gem 'rdoc', '~> 2'
+
+# Use the updated rdoc gem rather than version
+# included with ruby.
+require 'rdoc'
+require 'rdoc/rdoc'
+
+require 'rake'
+require 'rake/testtask'
+require 'rdoc/task'
+
+desc 'Generate documentation for the gem.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+	rdoc.rdoc_dir = 'rdoc'
+	rdoc.title		= 'CCLS Common Lib'
+	rdoc.options << '--line-numbers' #<< '--inline-source'
+	rdoc.rdoc_files.include('README')
+	rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+require 'tasks/rails'
+
 #	#	Must come after rails as overrides doc:app
 #	if g = Gem.source_index.find_name('jakewendt-rdoc_rails').last
 #		gem 'jakewendt-rdoc_rails'

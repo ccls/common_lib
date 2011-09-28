@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::RubyExtensionTest < ActiveSupport::TestCase
+class RubyExtensionTest < ActiveSupport::TestCase
 
 #	Nil
 
