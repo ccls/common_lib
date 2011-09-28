@@ -1,5 +1,12 @@
 = CCLS Common Lib
 
+After further pondering, I think that I'm just going to fork all of the jakewendt repo/gems into ccls and then to use the ccls-* gem instead.
+
+This will probably not endure any further development, but I'm leaving it just in case.
+
+---
+
+
 This ruby gem ( ccls-common_lib ) is meant to include all of the current functionality provided by ...
 
 * {jakewendt-ruby_extension}[http://github.com/jakewendt/ruby_extension] - modifications, updates and patches for ruby.
