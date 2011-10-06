@@ -8,9 +8,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
 
-	config.gem 'jakewendt-html_test'
-#	added the naming of tests in output but will be included
-#	config.gem 'jakewendt-rails_extension'	
+	config.gem 'ccls-html_test'
 
 	config.plugin_paths = [
 		File.expand_path(File.join(File.dirname(__FILE__),'../..'))
