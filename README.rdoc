@@ -9,10 +9,10 @@ This will probably not endure any further development, but I'm leaving it just i
 
 This ruby gem ( ccls-common_lib ) is meant to include all of the current functionality provided by ...
 
-* {jakewendt-ruby_extension}[http://github.com/jakewendt/ruby_extension] - modifications, updates and patches for ruby.
-* {jakewendt-simply_helpful}[http://github.com/jakewendt/simply_helpful]
-* {jakewendt-simply_authorized}[http://github.com/jakewendt/simply_authorized]
-* {jakewendt-rails_extension}[http://github.com/jakewendt/rails_extension]
+* {ccls-ruby_extension}[http://github.com/ccls/ruby_extension] - modifications, updates and patches for ruby.
+* {ccls-simply_helpful}[http://github.com/ccls/simply_helpful]
+* {ccls-simply_authorized}[http://github.com/ccls/simply_authorized]
+* {ccls-rails_extension}[http://github.com/ccls/rails_extension]
 
 == Gemified with Jeweler
 
