@@ -43,6 +43,13 @@ begin
 		gem.add_dependency('activeresource', '~> 2')
 		gem.add_dependency('activesupport', '~> 2')
 		gem.add_dependency('actionpack', '~> 2')
+
+		gem.add_dependency('ryanb-acts-as-list')
+		gem.add_dependency('thoughtbot-factory_girl')
+		gem.add_dependency('ssl_requirement', '>= 0.1.0')
+		gem.add_dependency('ccls-html_test')
+		gem.add_dependency('chronic')
+
 	end
 	Jeweler::GemcutterTasks.new
 rescue LoadError

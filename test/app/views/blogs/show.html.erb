@@ -1,0 +1,13 @@
+<p>
+  <b>Posts count:</b>
+  <%=h @blog.posts_count %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @blog.title %>
+</p>
+
+
+<%= link_to 'Edit', edit_blog_path(@blog) %> |
+<%= link_to 'Back', blogs_path %>

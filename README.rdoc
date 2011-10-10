@@ -6,7 +6,7 @@ This will probably not endure any further development, but I'm leaving it just i
 
 
 
-I've included most of ruby_extension and some of rails_extension.  Still working on it.
+I've included most of ruby_extension and most of rails_extension.  Still working on it.
 
 
 ---

@@ -8,7 +8,12 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
 
+	config.gem 'ryanb-acts-as-list',
+		:lib => 'acts_as_list'
+	config.gem 'thoughtbot-factory_girl',
+		:lib => 'factory_girl'
 	config.gem 'ccls-html_test'
+	config.gem 'chronic'
 
 	config.plugin_paths = [
 		File.expand_path(File.join(File.dirname(__FILE__),'../..'))
