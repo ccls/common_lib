@@ -18,10 +18,15 @@ This ruby gem ( ccls-common_lib ) is meant to include all of the current functio
 * {ccls-simply_authorized}[http://github.com/ccls/simply_authorized]
 * {ccls-rails_extension}[http://github.com/ccls/rails_extension]
 
-This gem would then be used by ALL of the ccls apps and the engine.  The following would be kept separate and used only for testing.
+This gem would then be used by ALL of the ccls apps and the engine and the aforementioned gems can and should be removed from the machines to avoid accidental usage.  The following would be kept separate and used only for testing only by this gem.  SimplySessions might actually be includable within just the test environment of CommonLib.
 
 * {ccls-simply_sessions}[http://github.com/ccls/simply_sessions]
+
+
+And the following would be used by ALL ccls apps and gems and probably included in the config/environments/test.rb as "config.gem 'ccls-html_test'"
+
 * {ccls-html_test}[http://github.com/ccls/html_test]
+
 
 Unfortunately, this has all gotten kinda muddled, making it a bit confusing.  This would take at least a day of importing and merging and testing and installing and testing and ...
 
