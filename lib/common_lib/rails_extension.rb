@@ -1,4 +1,4 @@
-def brand
+def brand	#	for auto-generated tests
 	"@@ "
 end
 module CommonLib::RailsExtension
