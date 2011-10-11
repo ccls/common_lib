@@ -6,8 +6,10 @@ This will probably not endure any further development, but I'm leaving it just i
 
 
 
-I've included most of ruby_extension and most of rails_extension.  Still working on it.
+I've included ruby_extension and rails_extension.  Still working on the rest, but in no hurry at the moment.
 
+Some of these extensions and additions are not actually used on any of the CCLS sites, but were part of my original gems.
+There existance should not cause any problems.
 
 ---
 
