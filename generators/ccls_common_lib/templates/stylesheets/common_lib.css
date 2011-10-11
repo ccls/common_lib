@@ -1,0 +1,48 @@
+.flash {
+	/* http://css-radius.heroku.com */
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: 0.7em;
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+}
+.flash.error,
+.flash#error {
+	border: 2px solid #F44;
+	background-color: #FCC;
+}
+.flash.warn,
+.flash#warn {
+	border: 2px solid #FF6600;
+	background-color: #FFCC99;
+}
+.flash.notice,
+.flash#notice {
+	border: 2px solid #4F4;
+	background-color: #CFC;
+}
+.flash.noscript,
+.flash#noscript {
+	border: 2px solid #FF8C00;
+	background-color: #FFC5AF;
+}
+
+
+a.button {
+	/* http://css-radius.heroku.com */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid gray;
+	text-decoration:none;
+	padding: 1px 8px;
+	color:black;
+
+/* for webkit browsers */
+	background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#CCCCCC)); 
+/* for firefox 3.6+  */
+	background: -moz-linear-gradient(top,  #EEEEEE,  #CCCCCC); 
+}
+

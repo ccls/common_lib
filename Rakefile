@@ -35,6 +35,19 @@ begin
 		gem.files  = FileList['config/routes.rb']
 		gem.files += FileList['rails/init.rb']
 		gem.files += FileList['lib/**/*.rb']
+		gem.files += FileList['lib/**/*.rake']
+		gem.files += FileList['generators/**/*']
+		gem.files -= FileList['**/versions/*']
+#   
+#		I'm not quite sure if it matters whether these files
+#		are included as 'files' or 'test_files', but
+#		they need to be included if I'm gonna use'em.
+#
+		gem.test_files  = FileList['test/**/*.rb']
+		gem.test_files -= FileList['test/test_helper.rb']
+
+
+
 
 		gem.add_dependency('rails', '~> 2')
 #	had to explicitly add rails components as greater
