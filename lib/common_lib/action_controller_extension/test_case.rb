@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActionControllerExtension::TestCase
+module CommonLib::ActionControllerExtension::TestCase
 
 	def turn_https_on
 		@request.env['HTTPS'] = 'on'
@@ -14,6 +14,6 @@ module CommonLib::RailsExtension::ActionControllerExtension::TestCase
 		assert_equal layout, @response.layout
 	end
 
-end	#	module RailsExtension::ActionControllerExtension::TestCase
+end	#	module CommonLib::ActionControllerExtension::TestCase
 ActionController::TestCase.send(:include,
-	CommonLib::RailsExtension::ActionControllerExtension::TestCase)
+	CommonLib::ActionControllerExtension::TestCase)

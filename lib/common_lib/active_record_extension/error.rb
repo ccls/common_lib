@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveRecordExtension::Error
+module CommonLib::ActiveRecordExtension::Error
 
 	def self.included(base)
 		base.alias_method_chain( :generate_full_message, :attribute_strip ) unless
@@ -13,6 +13,6 @@ module CommonLib::RailsExtension::ActiveRecordExtension::Error
 		m
 	end
 	
-end
+end	#	module CommonLib::ActiveRecordExtension::Error
 ActiveRecord::Error.send(:include,
-	CommonLib::RailsExtension::ActiveRecordExtension::Error)
+	CommonLib::ActiveRecordExtension::Error)

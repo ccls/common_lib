@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveRecordExtension::Base
+module CommonLib::ActiveRecordExtension::Base
 	def self.included(base)
 		base.extend(ClassMethods)
 	end
@@ -77,6 +77,6 @@ module CommonLib::RailsExtension::ActiveRecordExtension::Base
 
 	end
 
-end
+end	#	module CommonLib::ActiveRecordExtension::Base
 ActiveRecord::Base.send(:include,
-	CommonLib::RailsExtension::ActiveRecordExtension::Base)
+	CommonLib::ActiveRecordExtension::Base)

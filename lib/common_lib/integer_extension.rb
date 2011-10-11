@@ -1,6 +1,5 @@
 module CommonLib	#	:nodoc:
-module RubyExtension	#	:nodoc:
-module Integer	#	:nodoc:
+module IntegerExtension	#	:nodoc:
 	def self.included(base)
 #		base.extend(ClassMethods)
 		base.instance_eval do
@@ -24,5 +23,4 @@ module Integer	#	:nodoc:
 
 end
 end
-end
-Integer.send( :include, CommonLib::RubyExtension::Integer )
+Integer.send( :include, CommonLib::IntegerExtension )

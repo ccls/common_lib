@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActionControllerExtension::AccessibleViaProtocol
+module CommonLib::ActionControllerExtension::AccessibleViaProtocol
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -398,6 +398,6 @@ module CommonLib::RailsExtension::ActionControllerExtension::AccessibleViaProtoc
 		end
 
 	end	# module ClassMethods
-end	#	module RailsExtension::ActionControllerExtension::AccessibleViaProtocol
+end	#	module CommonLib::ActionControllerExtension::AccessibleViaProtocol
 ActionController::TestCase.send(:include, 
-	CommonLib::RailsExtension::ActionControllerExtension::AccessibleViaProtocol)
+	CommonLib::ActionControllerExtension::AccessibleViaProtocol)

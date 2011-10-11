@@ -1,10 +1,11 @@
 require 'active_support'
 require 'active_support/test_case'
 #$LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'common_lib/rails_extension/active_support_extension/test_case'
-require 'common_lib/rails_extension/active_support_extension/associations'
-require 'common_lib/rails_extension/active_support_extension/attributes'
-require 'common_lib/rails_extension/active_support_extension/pending'
+module CommonLib::ActiveSupportExtension; end
+require 'common_lib/active_support_extension/test_case'
+require 'common_lib/active_support_extension/associations'
+require 'common_lib/active_support_extension/attributes'
+require 'common_lib/active_support_extension/pending'
 
 
 Rails.backtrace_cleaner.add_silencer {|line|

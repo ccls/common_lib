@@ -1,0 +1,2 @@
+module CommonLib::ActionControllerExtension::AccessibleViaFormat
+end

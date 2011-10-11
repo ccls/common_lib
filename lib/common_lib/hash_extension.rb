@@ -1,6 +1,5 @@
 module CommonLib	#	:nodoc:
-module RubyExtension	#	:nodoc:
-module Hash	#	:nodoc:
+module HashExtension	#	:nodoc:
 	def self.included(base)
 #		base.extend(ClassMethods)
 		base.instance_eval do
@@ -53,5 +52,4 @@ module Hash	#	:nodoc:
 
 end
 end
-end
-Hash.send( :include, CommonLib::RubyExtension::Hash )
+Hash.send( :include, CommonLib::HashExtension )

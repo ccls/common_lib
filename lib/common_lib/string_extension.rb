@@ -1,6 +1,5 @@
 module CommonLib	#	:nodoc:
-module RubyExtension	#	:nodoc:
-module String	#	:nodoc:
+module StringExtension	#	:nodoc:
   def self.included(base)
 #    base.extend(ClassMethods)
     base.instance_eval do
@@ -33,5 +32,4 @@ module String	#	:nodoc:
 
 end
 end
-end
-String.send( :include, CommonLib::RubyExtension::String )
+String.send( :include, CommonLib::StringExtension )

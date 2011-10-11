@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveSupportExtension::Associations
+module CommonLib::ActiveSupportExtension::Associations
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -204,6 +204,6 @@ module CommonLib::RailsExtension::ActiveSupportExtension::Associations
 
 	end	# ClassMethods
 
-end	# module RailsExtension::Associations
+end	# module CommonLib::ActiveSupportExtension::Associations
 ActiveSupport::TestCase.send(:include,
-	CommonLib::RailsExtension::ActiveSupportExtension::Associations)
+	CommonLib::ActiveSupportExtension::Associations)

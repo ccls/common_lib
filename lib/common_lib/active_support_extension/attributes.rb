@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveSupportExtension::Attributes
+module CommonLib::ActiveSupportExtension::Attributes
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -230,6 +230,6 @@ module CommonLib::RailsExtension::ActiveSupportExtension::Attributes
 
 	end
 
-end	# module RailsExtension::Attributes
+end	# module CommonLib::ActiveSupportExtension::Attributes
 ActiveSupport::TestCase.send(:include,
-	CommonLib::RailsExtension::ActiveSupportExtension::Attributes)
+	CommonLib::ActiveSupportExtension::Attributes)

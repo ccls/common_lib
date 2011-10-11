@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveRecordExtension::Errors
+module CommonLib::ActiveRecordExtension::Errors
 	def self.included(base)
 		base.extend(ClassMethods)
 		base.send(:include,InstanceMethods)
@@ -15,6 +15,6 @@ module CommonLib::RailsExtension::ActiveRecordExtension::Errors
 			@errors.delete(key.to_s)
 		end
 	end
-end	#	RailsExtension::ActiveRecordExtension::Errors
+end	#	CommonLib::ActiveRecordExtension::Errors
 ActiveRecord::Errors.send(:include,
-	CommonLib::RailsExtension::ActiveRecordExtension::Errors)
+	CommonLib::ActiveRecordExtension::Errors)

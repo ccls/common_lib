@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActionControllerExtension::Routing
+module CommonLib::ActionControllerExtension::Routing
 
 	def self.included(base)
 		base.extend ClassMethods
@@ -18,6 +18,6 @@ module CommonLib::RailsExtension::ActionControllerExtension::Routing
 		end
 
 	end	# module ClassMethods
-end	#	module RailsExtension::ActionControllerExtension::Routing
+end	#	module CommonLib::ActionControllerExtension::Routing
 ActionController::TestCase.send(:include, 
-	CommonLib::RailsExtension::ActionControllerExtension::Routing)
+	CommonLib::ActionControllerExtension::Routing)

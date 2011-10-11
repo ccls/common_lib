@@ -1,7 +1,7 @@
 # Some code from jeremymcanally's "pending"
 # http://github.com/jeremymcanally/pending/tree/master
 
-module CommonLib::RailsExtension::ActiveSupportExtension::Pending
+module CommonLib::ActiveSupportExtension::Pending
 	unless defined?(Spec)
 
 		@@pending_cases = []
@@ -62,6 +62,6 @@ module CommonLib::RailsExtension::ActiveSupportExtension::Pending
 			end
 		end
 	end
-end
+end	#	module CommonLib::ActiveSupportExtension::Pending
 ActiveSupport::TestCase.send(:include, 
-	CommonLib::RailsExtension::ActiveSupportExtension::Pending)
+	CommonLib::ActiveSupportExtension::Pending)

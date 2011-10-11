@@ -1,4 +1,4 @@
-module CommonLib::RailsExtension::ActiveSupportExtension::TestCase
+module CommonLib::ActiveSupportExtension::TestCase
 
 	def self.included(base)
 		base.extend(ClassMethods)
@@ -205,6 +205,6 @@ module CommonLib::RailsExtension::ActiveSupportExtension::TestCase
 		end
 
 	end	#	InstanceMethods
-end	#	RailsExtension::TestCase
+end	#	CommonLib::ActiveSupportExtension::TestCase
 ActiveSupport::TestCase.send(:include,
-	CommonLib::RailsExtension::ActiveSupportExtension::TestCase)
+	CommonLib::ActiveSupportExtension::TestCase)

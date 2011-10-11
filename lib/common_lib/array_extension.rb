@@ -1,6 +1,5 @@
 module CommonLib	#	:nodoc:
-module RubyExtension	#	:nodoc:
-module Array	#	:nodoc:
+module ArrayExtension	#	:nodoc:
 	def self.included(base)
 #		base.extend(ClassMethods)
 		base.instance_eval do
@@ -140,5 +139,4 @@ module Array	#	:nodoc:
 	end
 end
 end
-end
-Array.send(:include, CommonLib::RubyExtension::Array)
+Array.send(:include, CommonLib::ArrayExtension)

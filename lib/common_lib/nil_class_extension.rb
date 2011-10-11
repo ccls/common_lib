@@ -1,6 +1,5 @@
 module CommonLib	#	:nodoc:
-module RubyExtension	#	:nodoc:
-module NilClass	#	:nodoc:
+module NilClassExtension	#	:nodoc:
 	def self.included(base)
 #		base.extend(ClassMethods)
 		base.instance_eval do
@@ -26,5 +25,4 @@ module NilClass	#	:nodoc:
 
 end
 end
-end
-NilClass.send( :include, CommonLib::RubyExtension::NilClass )
+NilClass.send( :include, CommonLib::NilClassExtension )
