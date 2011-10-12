@@ -1,6 +1,10 @@
 
 #	Would prefer to do this nicer
 
+module CommonLib::ActionViewExtension::FormBuilder
+end
+
+
 ActionView::Helpers::FormBuilder.class_eval do
 
 	def submit_link_to(value=nil,options={})
