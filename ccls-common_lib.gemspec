@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ccls-common_lib}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
@@ -61,7 +61,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}
   s.summary = %q{CCLS Common Lib gem}
-  s.test_files = ["test/app/controllers/application_controller.rb", "test/app/controllers/blogs_controller.rb", "test/app/controllers/posts_controller.rb", "test/app/models/blog.rb", "test/app/models/post.rb", "test/app/models/product.rb", "test/app/models/user.rb", "test/app/models/vendor.rb", "test/config/routes.rb", "test/factories.rb", "test/functional/blogs_controller_test.rb", "test/functional/posts_controller_test.rb", "test/unit/blog_test.rb", "test/unit/common_lib/action_view_extension/base_test.rb", "test/unit/common_lib/action_view_extension/form_builder_test.rb", "test/unit/post_test.rb", "test/unit/product_test.rb", "test/unit/ruby_extension_test.rb", "test/unit/user_test.rb", "test/unit/vendor_test.rb"]
+  s.test_files = ["test/app/controllers/application_controller.rb", "test/app/controllers/blogs_controller.rb", "test/app/controllers/posts_controller.rb", "test/app/models/blog.rb", "test/app/models/post.rb", "test/app/models/product.rb", "test/app/models/user.rb", "test/app/models/vendor.rb", "test/config/routes.rb", "test/factories.rb", "test/functional/blogs_controller_test.rb", "test/functional/posts_controller_test.rb", "test/unit/blog_test.rb", "test/unit/common_lib/action_view_extension/base_test.rb", "test/unit/common_lib/action_view_extension/form_builder_test.rb", "test/unit/common_lib/array_extension_test.rb", "test/unit/common_lib/hash_extension_test.rb", "test/unit/common_lib/integer_extension_test.rb", "test/unit/common_lib/nil_class_extension_test.rb", "test/unit/common_lib/object_extension_test.rb", "test/unit/common_lib/string_extension_test.rb", "test/unit/post_test.rb", "test/unit/product_test.rb", "test/unit/user_test.rb", "test/unit/vendor_test.rb"]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
