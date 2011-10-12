@@ -1,18 +1,22 @@
 require 'test_helper'
 
-class RubyExtensionTest < ActiveSupport::TestCase
+class CommonLib::ArrayExtensionTest < ActiveSupport::TestCase
 
-#	Nil
-
-	test "should split nil and return empty array" do
-		assert_equal [], nil.split()
-	end
-
-	test "should not include anything" do
-		assert_equal false, nil.include?(1)
-	end
-
-#	Array
+#		def arrange(new_array_index=[])
+#		def drop_blanks!
+#		def capitalize
+#		def capitalize!
+#		def downcase
+#		def average
+#		def median
+#		def swap_indexes(i,j)
+#		def swap_indexes!(i,j)
+#		def numericize
+#		def first_index(value = nil, &block)
+#		def to_boolean
+#		def true?
+#		def false?
+#		def true_xor_false?
 
 	test "should arrange array" do
 		assert_equal ["c", "a", "b"], ['a','b','c'].arrange([2,0,1])
@@ -161,94 +165,5 @@ class RubyExtensionTest < ActiveSupport::TestCase
 		assert !['1','0'].true_xor_false?
 		assert !['t','f'].true_xor_false?
 	end
-
-
-#	String
-
-	test "should convert url query string to hash" do
-		h = {'foo' => '1', 'bar' => '2'}
-		assert_equal h, "foo=1&bar=2".to_params_hash
-	end
-
-	test "should return self in response to uniq" do
-		assert_equal "foobar", "foobar".uniq
-	end
-
-#	Integer
-
-	test "should return 5 factorial" do
-		assert_equal 120, 5.factorial
-	end
-
-	test "should return 0 factorial" do
-		assert_equal 0, 0.factorial
-	end
-
-	test "should return -3 factorial" do
-		assert_equal -3, -3.factorial
-	end
-
-
-#	Hash
-
-	#	delete_keys_matching!(regex)
-
-	#	delete_keys!(*keys)
-
-	#	dig
-	test "should return Gold when all keys match dig" do
-		h = { :a => { :b => { :c => 'Gold' } } }
-		assert_equal 'Gold', h.dig(:a,:b,:c)
-	end
-
-	test "should return nil when no key matching dig" do
-		h = { :a => { :b => { :c => 'Gold' } } }
-		assert_nil h.dig('a')
-		assert_nil h.dig(:a,:b,:d)
-		assert_nil h.dig(:d,:e,:f)
-	end
-
-#	Object
-
-#	#	true?
-#	test "should be true? when true" do
-#		assert 1.true?
-#		assert '1'.true?
-#		assert true.true?
-#		assert 'tRUe'.true?
-#		assert 'true'.true?
-#		assert 't'.true?
-#	end
-#
-#	#	false?
-#	test "should be false? when false" do
-#		assert !nil.false?
-#		assert 0.false?
-#		assert '0'.false?
-#		assert false.false?
-#		assert 'fALsE'.false?
-#		assert 'false'.false?
-#		assert 'f'.false?
-#	end
-#
-#	#	to_boolean
-#	test "should return true when true" do
-#		assert 1.to_boolean
-#		assert '1'.to_boolean
-#		assert true.to_boolean
-#		assert 'tRUe'.to_boolean
-#		assert 'true'.to_boolean
-#		assert 't'.to_boolean
-#	end
-#
-#	test "should return false when false" do
-#		assert !nil.to_boolean
-#		assert !0.to_boolean
-#		assert !'0'.to_boolean
-#		assert !false.to_boolean
-#		assert !'fALsE'.to_boolean
-#		assert !'false'.to_boolean
-#		assert !'f'.to_boolean
-#	end
 
 end
