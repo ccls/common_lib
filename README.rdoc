@@ -2,7 +2,7 @@
 
 After further pondering, I think that I'm just going to fork all of the jakewendt repo/gems into ccls and then to use the ccls-* gem instead.
 
-I've included ruby_extension and rails_extension.  Still working on the rest, but in no hurry at the moment.  Next up would be simply_helpful.  Then simply_authorized.
+I've included ruby_extension and rails_extension.  Working on simply_helpful.  Next up will be simply_authorized.
 
 Some of these extensions and additions are not actually used on any of the CCLS sites, but were part of my original gems.
 There existance should not cause any problems.
