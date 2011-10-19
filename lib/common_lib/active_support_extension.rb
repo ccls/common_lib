@@ -26,5 +26,5 @@ Rails.backtrace_cleaner.add_silencer {|line|
 #	line =~ /simply_testable\/declarative\.rb:/
 
 #	Return true or false.  Need to collect if adding multiple conditions.
-	line =~ /rails_extension\/active_support_extension\/test_case\.rb:/
+	line =~ /common_lib\/active_support_extension\/test_case\.rb:/
 } if defined? Rails 
