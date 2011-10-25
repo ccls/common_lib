@@ -54,7 +54,7 @@ module CommonLib::ActionViewExtension::Base
 	def sex_select(object_name, method, 
 			options={}, html_options={})
 		select(object_name, method,
-			[['male','M'],['female','F']],
+			[['-select-',''],['male','M'],['female','F']],
 			options, html_options)
 	end
 	alias_method :gender_select, :sex_select
