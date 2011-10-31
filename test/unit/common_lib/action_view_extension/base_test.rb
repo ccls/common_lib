@@ -207,6 +207,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select "select#user_sex[name='user[sex]']" do
 				assert_select 'option[value=M]', 'male'
 				assert_select 'option[value=F]', 'female'
+				assert_select 'option[value=DK]', "don't know"
 			end
 		end
 	end
