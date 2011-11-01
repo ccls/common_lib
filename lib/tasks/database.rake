@@ -6,7 +6,8 @@ namespace :db do
 		me = $*.shift
 		while( table_name = $*.shift )
 			File.open("#{RAILS_ROOT}/db/#{table_name}.yml", 'w') do |file|
-				data = table_name.singularize.capitalize.constantize.find(
+#				data = table_name.singularize.capitalize.constantize.find(
+				data = table_name.singularize.classify.constantize.find(
 					:all).collect(&:attributes)
 				file.write data.inject({}) { |hash, record|
 					record.delete('created_at')
