@@ -35,8 +35,6 @@ class CommonLib::HashExtensionTest < ActiveSupport::TestCase
 		assert  s['a'].has_key?('b')
 		assert !s['a']['b'].has_key?(:c)
 		assert  s['a']['b'].has_key?('c')
-puts h.inspect
-puts s.inspect
 	end
 
 end
