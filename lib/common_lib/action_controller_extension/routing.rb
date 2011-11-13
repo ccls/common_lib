@@ -10,7 +10,7 @@ module CommonLib::ActionControllerExtension::Routing
 #		end
 
 		def assert_no_route(verb,action,args={})
-			test "#{brand}no route to #{verb} #{action} #{args}" do
+			test "#{brand}no route to #{verb} #{action} #{args.inspect}" do
 				assert_raise(ActionController::RoutingError){
 					send(verb,action,args)
 				}
