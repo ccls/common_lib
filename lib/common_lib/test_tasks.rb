@@ -19,7 +19,7 @@ namespace :test do
 #			t.libs << "test"
 #			t.verbose = true
 #		end
-	end
+#	end
 end
 #Rake::Task['test:functionals'].prerequisites.unshift(
 #	"test:functionals:common_lib" )
