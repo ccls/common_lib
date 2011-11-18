@@ -8,17 +8,21 @@ namespace :test do
 			t.verbose = true
 		end
 	end
-	namespace :functionals do
-		Rake::TestTask.new(:common_lib => "db:test:prepare") do |t|
-			t.pattern = File.expand_path(File.join(
-				File.dirname(__FILE__),'/../../test/functional/common_lib/*_test.rb'))
-			t.libs << "test"
-			t.verbose = true
-		end
+#
+#	common_lib has no functional/common_lib/ tests,
+#		so why bother.
+#
+#	namespace :functionals do
+#		Rake::TestTask.new(:common_lib => "db:test:prepare") do |t|
+#			t.pattern = File.expand_path(File.join(
+#				File.dirname(__FILE__),'/../../test/functional/common_lib/*_test.rb'))
+#			t.libs << "test"
+#			t.verbose = true
+#		end
 	end
 end
-Rake::Task['test:functionals'].prerequisites.unshift(
-	"test:functionals:common_lib" )
+#Rake::Task['test:functionals'].prerequisites.unshift(
+#	"test:functionals:common_lib" )
 Rake::Task['test:units'].prerequisites.unshift(
 	"test:units:common_lib" )
 

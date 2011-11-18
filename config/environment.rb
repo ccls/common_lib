@@ -22,20 +22,25 @@ Rails::Initializer.run do |config|
 
 	config.frameworks -= [:active_resource]
 
-	config.routes_configuration_file = File.expand_path(
-		File.join(File.dirname(__FILE__),'..','test/config/routes.rb'))
-
-	config.autoload_paths += [
-		File.expand_path(
-			File.join(File.dirname(__FILE__),'..','test/app/models')),
-		File.expand_path(
-			File.join(File.dirname(__FILE__),'..','test/app/controllers'))
-	]
-
-	config.view_path = [
-		File.expand_path(
-			File.join(File.dirname(__FILE__),'..','test/app/views'))
-	]
+#
+#	As this gem doesn't put any of app into the gem,
+#		why bother putting all this in test/
+#
+#	config.routes_configuration_file = File.expand_path(
+#		File.join(File.dirname(__FILE__),'..','test/config/routes.rb'))
+#
+#	config.autoload_paths += [
+#		File.expand_path(
+#			File.join(File.dirname(__FILE__),'..','test/app/models')),
+#		File.expand_path(
+#			File.join(File.dirname(__FILE__),'..','test/app/controllers'))
+#	]
+#
+#	config.view_path = [
+#		File.expand_path(
+#			File.join(File.dirname(__FILE__),'..','test/app/views'))
+#	]
+#
 
 	if RUBY_PLATFORM =~ /java/
 		#	I'm surprised that I don't need this in my apps.
