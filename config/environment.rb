@@ -15,6 +15,7 @@ Rails::Initializer.run do |config|
 	config.gem 'ccls-html_test'
 	config.gem 'chronic'
 
+#	load self as a plugin, or could simply load common_lib.rb.  Either way.
 	config.plugin_paths = [
 		File.expand_path(File.join(File.dirname(__FILE__),'../..'))
 	]
