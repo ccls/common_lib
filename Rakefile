@@ -32,8 +32,8 @@ begin
 		gem.authors = ["George 'Jake' Wendt"]
 		# gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 
-		gem.files  = FileList['config/routes.rb']
-		gem.files += FileList['rails/init.rb']
+#		gem.files  = FileList['config/routes.rb']
+		gem.files  = FileList['rails/init.rb']
 		gem.files += FileList['lib/**/*.rb']
 		gem.files += FileList['lib/**/*.rake']
 		gem.files += FileList['generators/**/*']
