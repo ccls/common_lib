@@ -42,6 +42,9 @@ a.button {
 
 	background-color: #DDDDDD;
 
+/*
+	background or background-image ???
+*/
 /* for webkit browsers */
 	background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#CCCCCC)); 
 /* for firefox 3.6+  */
