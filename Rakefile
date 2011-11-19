@@ -32,8 +32,6 @@ begin
 		gem.authors = ["George 'Jake' Wendt"]
 		# gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 
-#	No routes, controllers, views.
-#		gem.files  = FileList['config/routes.rb']
 		gem.files  = FileList['rails/init.rb']
 		gem.files += FileList['lib/**/*.rb']
 		gem.files += FileList['lib/**/*.rake']
@@ -44,18 +42,7 @@ begin
 #		are included as 'files' or 'test_files', but
 #		they need to be included if I'm gonna use'em.
 #
-#		gem.test_files  = FileList['test/**/*.rb']
-#		gem.test_files -= FileList['test/test_helper.rb']
-#
-#	The above installs more than necessary, including the blog and post stuff.
-#	It doesn't cause a problem, but is completely irrelevant.
-#	
 		gem.test_files  = FileList['test/unit/common_lib/*.rb']
-#	Errr. There aren't any.
-#		gem.test_files += FileList['test/functional/common_lib/*.rb']
-
-
-
 
 		gem.add_dependency('rails', '~> 2')
 #	had to explicitly add rails components as greater
