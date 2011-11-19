@@ -36,13 +36,17 @@ a.button {
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	border: 1px solid gray;
-	text-decoration:none;
+	text-decoration: none;
 	padding: 1px 8px;
-	color:black;
+	color: black;
+
+	background-color: #DDDDDD;
 
 /* for webkit browsers */
 	background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#CCCCCC)); 
 /* for firefox 3.6+  */
 	background: -moz-linear-gradient(top,  #EEEEEE,  #CCCCCC); 
+/* for ie , but doesn't seem to work as expected despite other examples working */
+	filter: progid:DXImageTransform.Microsoft.gradient(StartColorStr='#EEEEEE', EndColorStr='#CCCCCC');
 }
 
