@@ -5,18 +5,17 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ccls-common_lib}
-  s.version = "0.0.10"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
-  s.date = %q{2011-11-14}
+  s.date = %q{2011-11-21}
   s.description = %q{CCLS Common Lib gem}
   s.email = %q{github@jakewendt.com}
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
   s.files = [
-    "config/routes.rb",
     "generators/ccls_common_lib/USAGE",
     "generators/ccls_common_lib/ccls_common_lib_generator.rb",
     "generators/ccls_common_lib/templates/autotest_common_lib.rb",
@@ -61,7 +60,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}
   s.summary = %q{CCLS Common Lib gem}
-  s.test_files = ["test/app/controllers/application_controller.rb", "test/app/controllers/blogs_controller.rb", "test/app/controllers/posts_controller.rb", "test/app/models/blog.rb", "test/app/models/post.rb", "test/app/models/product.rb", "test/app/models/user.rb", "test/app/models/vendor.rb", "test/config/routes.rb", "test/factories.rb", "test/functional/blogs_controller_test.rb", "test/functional/posts_controller_test.rb", "test/unit/blog_test.rb", "test/unit/common_lib/action_view_extension/base_test.rb", "test/unit/common_lib/action_view_extension/form_builder_test.rb", "test/unit/common_lib/array_extension_test.rb", "test/unit/common_lib/hash_extension_test.rb", "test/unit/common_lib/integer_extension_test.rb", "test/unit/common_lib/nil_class_extension_test.rb", "test/unit/common_lib/object_extension_test.rb", "test/unit/common_lib/string_extension_test.rb", "test/unit/post_test.rb", "test/unit/product_test.rb", "test/unit/user_test.rb", "test/unit/vendor_test.rb"]
+  s.test_files = ["test/unit/common_lib/array_extension_test.rb", "test/unit/common_lib/hash_extension_test.rb", "test/unit/common_lib/integer_extension_test.rb", "test/unit/common_lib/nil_class_extension_test.rb", "test/unit/common_lib/object_extension_test.rb", "test/unit/common_lib/string_extension_test.rb"]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
