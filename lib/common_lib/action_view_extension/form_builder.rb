@@ -58,13 +58,13 @@ ActionView::Helpers::FormBuilder.class_eval do
 			@object_name, method, objectify_options(options))
 	end
 
-	def y_n_dk_select(method,options={},html_options={})
-		@template.y_n_dk_select(
-			@object_name, method, 
-				objectify_options(options),
-				html_options)
-	end
-	alias_method :yndk_select, :y_n_dk_select
+#	def y_n_dk_select(method,options={},html_options={})
+#		@template.y_n_dk_select(
+#			@object_name, method, 
+#				objectify_options(options),
+#				html_options)
+#	end
+#	alias_method :yndk_select, :y_n_dk_select
 
 	def method_missing_with_wrapping(symb,*args, &block)
 		method_name = symb.to_s
