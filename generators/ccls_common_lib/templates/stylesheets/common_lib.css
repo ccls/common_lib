@@ -35,6 +35,7 @@
 */
 input[type=submit],
 a.button {
+	cursor: pointer;
 	/* http://css-radius.heroku.com */
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
