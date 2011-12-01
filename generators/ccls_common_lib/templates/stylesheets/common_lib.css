@@ -29,12 +29,20 @@
 	background-color: #FFC5AF;
 }
 
-
+/*
+	Make submit buttons and a.button tags look the same.
+	This works in Firefox and Chrome.  Don't know about IE.
+*/
+input[type=submit],
 a.button {
 	/* http://css-radius.heroku.com */
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: normal;
 	border: 1px solid gray;
 	text-decoration: none;
 	padding: 1px 8px;
@@ -52,4 +60,11 @@ a.button {
 /* for ie , but doesn't seem to work as expected despite other examples working */
 	filter: progid:DXImageTransform.Microsoft.gradient(StartColorStr='#EEEEEE', EndColorStr='#CCCCCC');
 }
-
+/*
+	input and a tags use different box-sizing so need to set 
+		different paddings so that they appear the same.
+	This particular difference is caused by the 1px border.
+*/
+input[type=submit] {
+	padding: 0px 8px;
+}
