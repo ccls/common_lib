@@ -94,11 +94,9 @@ module CommonLib::ActiveSupportExtension::TestCase
 			attr_names.each do |attr_name|
 				test "should require #{attr_name} be in the past" do
 					#	can't assert difference of 1 as may be other errors
-#					object = create_object( attr_name => Chronic.parse('yesterday'))
 					object = create_object( attr_name => Date.yesterday )
 					assert !object.errors.on_attr_and_type(attr_name,:not_past_date)
 					assert_difference( "#{model_name}.count", 0 ) do
-#						object = create_object( attr_name => Chronic.parse('tomorrow'))
 						object = create_object( attr_name => Date.tomorrow )
 						assert object.errors.on_attr_and_type(attr_name,:not_past_date)
 					end
