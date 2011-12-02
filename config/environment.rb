@@ -13,7 +13,7 @@ Rails::Initializer.run do |config|
 	config.gem 'thoughtbot-factory_girl',
 		:lib => 'factory_girl'
 	config.gem 'ccls-html_test'
-	config.gem 'chronic'
+#	config.gem 'chronic'
 
 #	load self as a plugin, or could simply load common_lib.rb.  Either way.
 	config.plugin_paths = [

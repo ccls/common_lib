@@ -55,7 +55,9 @@ begin
 		gem.add_dependency('ryanb-acts-as-list')
 		gem.add_dependency('thoughtbot-factory_girl')
 		gem.add_dependency('ssl_requirement', '>= 0.1.0')
-		gem.add_dependency('chronic')
+
+#	Trying to remove Chronic
+#		gem.add_dependency('chronic')
 
 	end
 	Jeweler::GemcutterTasks.new
