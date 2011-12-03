@@ -38,7 +38,36 @@ module CommonLib::ActiveRecordExtension::Base
 			send(validation_method(configuration[:on]), configuration) do |record|
 				attr_names.each do |attr_name|
 					date = record.send(attr_name)
-					if !date.blank? && Time.now < date
+#					date = record.send(attr_name).to_date #	ensure that it is a date and not datetime?
+#	When tests run late at night, this fails because of timezones I imagine.
+#	However, using Date.today as opposed to Time.now seems to work.
+#	Don't know why I ever used Time.now.  Probably because the incoming date could be a datetime.
+#	May need to actually call to_date on the incoming 'date' just to be sure.
+#	This is just wrong.  Logically, one would expect it to be true, but is not most likely due to time zone conversion.
+#	>> Time.now < Date.tomorrow
+#	=> false
+#	This does work, however, but Time.now.to_date seems to be the same as Date.today
+#	>> Time.now.to_date < Date.tomorrow
+#	=> true
+#
+#	>> Time.now
+#	=> Fri Dec 02 22:57:34 -0800 2011
+#	>> Date.today
+#	=> Fri, 02 Dec 2011
+#	>> Time.now < Date.yesterday
+#	=> false
+#	>> Time.now < Date.tomorrow
+#	=> false
+#	>> Time.now < Date.today
+#	=> false
+#	>> Date.today < Date.yesterday
+#	=> false
+#	>> Date.today < Date.tomorrow
+#	=> true
+#	>> Date.today < Date.today
+#	=> false
+#					if !date.blank? && Time.now < date
+					if !date.blank? && Date.today < date
 						record.errors.add(attr_name, 
 							ActiveRecord::Error.new(record,attr_name,:not_past_date,
 								{ :message => configuration[:message] }))
@@ -63,6 +92,8 @@ module CommonLib::ActiveRecordExtension::Base
 					unless( configuration[:allow_nil] && value.blank? ) ||
 						( !value.is_a?(String) )
 						date_hash = Date._parse(value)
+						#	>> Date._parse( '1/10/2011')
+						#	=> {:mon=>1, :year=>2011, :mday=>10}
 						unless date_hash.has_key?(:year) &&
 							date_hash.has_key?(:mon) &&
 							date_hash.has_key?(:mday)
