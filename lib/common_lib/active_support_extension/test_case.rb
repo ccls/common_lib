@@ -108,16 +108,13 @@ module CommonLib::ActiveSupportExtension::TestCase
 			attr_names.each do |attr_name|
 				test "should require a complete date for #{attr_name}" do
 #
-#
-#	What?  No successful test?
-#
-#
-					assert_difference( "#{model_name}.count", 1 ) do
+#	Cannot assert that one was created as there may be other errors.
+#	We can only assert that there isn't a not_complete_date error.
+#					assert_difference( "#{model_name}.count", 1 ) do
 						object = create_object( attr_name => "Sept 11, 2001")
 						assert !object.errors.on_attr_and_type(attr_name,:not_complete_date)
-					end
-
-
+#					end
+#
 					assert_difference( "#{model_name}.count", 0 ) do
 						object = create_object( attr_name => "Sept 2010")
 						assert object.errors.on_attr_and_type(attr_name,:not_complete_date)
