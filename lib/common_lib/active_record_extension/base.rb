@@ -37,8 +37,11 @@ module CommonLib::ActiveRecordExtension::Base
 
 			send(validation_method(configuration[:on]), configuration) do |record|
 				attr_names.each do |attr_name|
-					date = record.send(attr_name)
-#					date = record.send(attr_name).to_date #	ensure that it is a date and not datetime?
+					#	ensure that it is a date and not datetime
+					#	in some tests, this is actually set to a datetime (5.years.ago), and need a date for comparison
+					#	in some tests, it is nil, so need a try
+					date = record.send(attr_name).try(:to_date)
+
 #	When tests run late at night, this fails because of timezones I imagine.
 #	However, using Date.today as opposed to Time.now seems to work.
 #	Don't know why I ever used Time.now.  Probably because the incoming date could be a datetime.
