@@ -18,16 +18,6 @@ module CommonLib::ActionViewExtension::Base
 			( time.nil? ) ? '&nbsp;' : time.strftime("%I:%M %p %m/%d/%Y")
 		end
 
-	#	def y_n_dk(value)
-	#		case value
-	#			when 1   then 'Yes'
-	#			when 2   then 'No'
-	#			when 999 then "Don't Know"
-	#			else '&nbsp;'
-	#		end
-	#	end
-	#	alias_method :yndk, :y_n_dk
-
 		def field_wrapper(method,options={},&block)
 			classes = [method,options[:class]].compact.join(' ')
 			s =  "<div class='#{classes} field_wrapper'>\n"
@@ -47,13 +37,6 @@ module CommonLib::ActionViewExtension::Base
 			end
 			s << "<span class='value'>#{value}</span>"
 		end
-
-	#	def _wrapped_y_n_dk_spans(object_name,method,options={})
-	#		object = instance_variable_get("@#{object_name}")
-	#		_wrapped_spans(object_name,method,options.update(
-	#			:value => y_n_dk(object.send(method)) ) )
-	#	end
-	#	alias_method :_wrapped_yndk_spans, :_wrapped_y_n_dk_spans
 
 		def _wrapped_date_spans(object_name,method,options={})
 			object = instance_variable_get("@#{object_name}")
@@ -94,14 +77,6 @@ module CommonLib::ActionViewExtension::Base
 			value = (object.send("#{method}?"))?'Yes':'No'
 			s << "<span class='value'>#{value}</span>"
 		end
-
-	#	def y_n_dk_select(object_name, method, 
-	#			options={}, html_options={})
-	#		select(object_name, method,
-	#			[['Yes',1],['No',2],["Don't Know",999]],
-	#			{:include_blank => true}.merge(options), html_options)
-	#	end
-	#	alias_method :yndk_select, :y_n_dk_select
 
 #		def hour_select(object_name, method, 
 #				options={}, html_options={})

@@ -5,7 +5,13 @@ class SomeModel
 	attr_accessor :some_attribute_before_type_cast #	for date_text_field
 end
 
+#	needed to include field_wrapper
+require 'lib/common_lib/action_view_extension/base'
+
 class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
+
+	#	needed to include field_wrapper
+	include CommonLib::ActionViewExtension::Base
 
 	test "sex_select" do
 		form_for(:some_model,SomeModel.new,:url => '/'){|f| 
