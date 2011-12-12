@@ -147,8 +147,39 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">&nbsp;</span>
 #</div><!-- class='name' -->
 		assert_select response, 'div.name.field_wrapper', 1 do
+			assert_select 'label', 0
 			assert_select 'span.label', 1
 			assert_select 'span.value', 1
+		end
+	end
+
+	test "wrapped_date_spans blank" do
+		@user = CommonLib::User.new
+		response = HTML::Document.new(
+			wrapped_date_spans(:user, :dob)).root
+#<div class="dob date_spans field_wrapper">
+#<span class="label">dob</span>
+#<span class="value">&nbsp;</span>
+#</div><!-- class='dob date_spans' -->
+		assert_select response, 'div.dob.date_spans.field_wrapper' do
+			assert_select 'label', 0
+			assert_select 'span.label','dob',1
+			assert_select 'span.value','&nbsp;',1
+		end
+	end
+
+	test "wrapped_date_spans Dec 5, 1971" do
+		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
+		response = HTML::Document.new(
+			wrapped_date_spans(:user, :dob)).root
+#<div class="dob date_spans field_wrapper">
+#<span class="label">dob</span>
+#<span class="value">12/05/1971</span>
+#</div><!-- class='dob date_spans' -->
+		assert_select response, 'div.dob.date_spans.field_wrapper' do
+			assert_select 'label', 0
+			assert_select 'span.label','dob',1
+			assert_select 'span.value','12/05/1971',1
 		end
 	end
 
@@ -161,6 +192,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">no</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
+			assert_select 'label', 0
 			assert_select 'span.label','yes_or_no',1
 			assert_select 'span.value','No',1
 		end
@@ -175,6 +207,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">yes</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
+			assert_select 'label', 0
 			assert_select 'span.label','yes_or_no',1
 			assert_select 'span.value','Yes',1
 		end
@@ -189,6 +222,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">no</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
+			assert_select 'label', 0
 			assert_select 'span.label','yes_or_no',1
 			assert_select 'span.value','No',1
 		end
