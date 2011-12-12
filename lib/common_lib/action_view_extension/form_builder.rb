@@ -3,8 +3,8 @@ module CommonLib::ActionViewExtension::FormBuilder
 	def self.included(base)
 		base.send(:include, InstanceMethods)
 		base.class_eval do
-			alias_method_chain( :method_missing, :wrapping 
-				) unless base.respond_to?(:method_missing_without_wrapping)
+			alias_method_chain( :method_missing, :field_wrapping 
+				) unless base.respond_to?(:method_missing_without_field_wrapping)
 		end
 	end
 
@@ -118,7 +118,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 #			end
 #		end
 
-		def method_missing_with_wrapping(symb,*args, &block)
+		def method_missing_with_field_wrapping(symb,*args, &block)
 			method_name = symb.to_s
 			if method_name =~ /^wrapped_(.+)$/
 				unwrapped_method_name = $1
@@ -146,7 +146,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 #				( @template.block_called_from_erb?(block) ) ? @template.concat(content) : content
 				content
 			else
-				method_missing_without_wrapping(symb,*args, &block)
+				method_missing_without_field_wrapping(symb,*args, &block)
 			end
 		end
 
