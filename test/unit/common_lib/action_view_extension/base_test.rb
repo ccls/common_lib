@@ -194,78 +194,78 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		end
 	end
 
-	test "wrapped_sex_select" do
-		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_sex_select(:user, :sex)).root
-#<div class="sex field_wrapper">
-#<label for="user_sex">Sex</label><select id="user_sex" name="user[sex]"><option value="M">male</option>
-#<option value="F">female</option></select>
-#</div><!-- class='sex' -->
-		assert_select response, 'div.sex.field_wrapper', 1 do
-			assert_select 'label[for=user_sex]','Sex',1 
-			assert_select "select#user_sex[name='user[sex]']" do
-				assert_select 'option[value=M]', 'male'
-				assert_select 'option[value=F]', 'female'
-				assert_select 'option[value=DK]', "don't know"
-			end
-		end
-	end
-
-	test "wrapped_gender_select" do
-		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_gender_select(:user, :sex)).root
-#<div class="sex field_wrapper">
-#<label for="user_sex">Sex</label><select id="user_sex" name="user[sex]"><option value="M">male</option>
-#<option value="F">female</option></select>
-#</div><!-- class='sex' -->
-		assert_select response, 'div.sex.field_wrapper', 1 do
-			assert_select 'label[for=user_sex]','Sex',1 
-			assert_select "select#user_sex[name='user[sex]']" do
-				assert_select 'option[value=M]', 'male'
-				assert_select 'option[value=F]', 'female'
-			end
-		end
-	end
-
-	test "wrapped_date_text_field" do
-		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_date_text_field(:user,:dob, :object => @user)).root
-#<div class="dob field_wrapper">
-#<label for="user_dob">Dob</label><input id="user_dob" name="user[dob]" size="30" type="text" />
-#</div><!-- class='dob' -->
-		assert_select response, 'div.dob.field_wrapper', 1 do
-			assert_select 'label[for=user_dob]','Dob', 1 
-			assert_select "input#user_dob[name='user[dob]']"
-		end
-	end
-
-	test "wrapped_date_text_field with invalid dob" do
-		@user = CommonLib::User.new
-		@user.dob = "07181989"	
-#	will raise ...
-#ArgumentError: invalid date
-#    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/date.rb:752:in `new'
-#    lib/simply_helpful/form_helper.rb:67:in `date_text_field'
-#    lib/simply_helpful/form_helper.rb:123:in `send'
-#    lib/simply_helpful/form_helper.rb:123:in `method_missing'
-#    lib/simply_helpful/form_helper.rb:19:in `field_wrapper'
-#    lib/simply_helpful/form_helper.rb:114:in `method_missing'
-#    /test/unit/helpful/form_helper_test.rb:134:in `test_wrapped_date_text_field_with_invalid_dob'
+#	test "wrapped_sex_select" do
+#		@user = CommonLib::User.new
+#		response = HTML::Document.new(
+#			wrapped_sex_select(:user, :sex)).root
+##<div class="sex field_wrapper">
+##<label for="user_sex">Sex</label><select id="user_sex" name="user[sex]"><option value="M">male</option>
+##<option value="F">female</option></select>
+##</div><!-- class='sex' -->
+#		assert_select response, 'div.sex.field_wrapper', 1 do
+#			assert_select 'label[for=user_sex]','Sex',1 
+#			assert_select "select#user_sex[name='user[sex]']" do
+#				assert_select 'option[value=M]', 'male'
+#				assert_select 'option[value=F]', 'female'
+#				assert_select 'option[value=DK]', "don't know"
+#			end
+#		end
+#	end
 #
-		response = HTML::Document.new(
-			wrapped_date_text_field(:user,:dob, :object => @user)).root
-#<div class="dob field_wrapper">
-#<label for="user_dob">Dob</label><input id="user_dob" name="user[dob]" size="30" type="text" />
-#</div><!-- class='dob' -->
-		assert_select response, 'div.dob.field_wrapper', 1 do
-			assert_select 'label[for=user_dob]','Dob', 1 
-			assert_select "input#user_dob[name='user[dob]']"
-		end
-	end
-
+#	test "wrapped_gender_select" do
+#		@user = CommonLib::User.new
+#		response = HTML::Document.new(
+#			wrapped_gender_select(:user, :sex)).root
+##<div class="sex field_wrapper">
+##<label for="user_sex">Sex</label><select id="user_sex" name="user[sex]"><option value="M">male</option>
+##<option value="F">female</option></select>
+##</div><!-- class='sex' -->
+#		assert_select response, 'div.sex.field_wrapper', 1 do
+#			assert_select 'label[for=user_sex]','Sex',1 
+#			assert_select "select#user_sex[name='user[sex]']" do
+#				assert_select 'option[value=M]', 'male'
+#				assert_select 'option[value=F]', 'female'
+#			end
+#		end
+#	end
+#
+#	test "wrapped_date_text_field" do
+#		@user = CommonLib::User.new
+#		response = HTML::Document.new(
+#			wrapped_date_text_field(:user,:dob, :object => @user)).root
+##<div class="dob field_wrapper">
+##<label for="user_dob">Dob</label><input id="user_dob" name="user[dob]" size="30" type="text" />
+##</div><!-- class='dob' -->
+#		assert_select response, 'div.dob.field_wrapper', 1 do
+#			assert_select 'label[for=user_dob]','Dob', 1 
+#			assert_select "input#user_dob[name='user[dob]']"
+#		end
+#	end
+#
+#	test "wrapped_date_text_field with invalid dob" do
+#		@user = CommonLib::User.new
+#		@user.dob = "07181989"	
+##	will raise ...
+##ArgumentError: invalid date
+##    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/date.rb:752:in `new'
+##    lib/simply_helpful/form_helper.rb:67:in `date_text_field'
+##    lib/simply_helpful/form_helper.rb:123:in `send'
+##    lib/simply_helpful/form_helper.rb:123:in `method_missing'
+##    lib/simply_helpful/form_helper.rb:19:in `field_wrapper'
+##    lib/simply_helpful/form_helper.rb:114:in `method_missing'
+##    /test/unit/helpful/form_helper_test.rb:134:in `test_wrapped_date_text_field_with_invalid_dob'
+##
+#		response = HTML::Document.new(
+#			wrapped_date_text_field(:user,:dob, :object => @user)).root
+##<div class="dob field_wrapper">
+##<label for="user_dob">Dob</label><input id="user_dob" name="user[dob]" size="30" type="text" />
+##</div><!-- class='dob' -->
+#		assert_select response, 'div.dob.field_wrapper', 1 do
+#			assert_select 'label[for=user_dob]','Dob', 1 
+#			assert_select "input#user_dob[name='user[dob]']"
+#		end
+#	end
+#
 #	test "wrapped_y_n_dk_select" do
 #		@user = CommonLib::User.new
 #		response = HTML::Document.new(

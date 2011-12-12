@@ -61,31 +61,31 @@ module CommonLib::ActionViewExtension::Base
 				:value => mdy(object.send(method)) ) )
 		end
 
-		def sex_select(object_name, method, 
-				options={}, html_options={})
-			select(object_name, method,
-				[['-select-',''],['male','M'],['female','F'],["don't know",'DK']],
-				options, html_options)
-		end
-		alias_method :gender_select, :sex_select
+#		def sex_select(object_name, method, 
+#				options={}, html_options={})
+#			select(object_name, method,
+#				[['-select-',''],['male','M'],['female','F'],["don't know",'DK']],
+#				options, html_options)
+#		end
+#		alias_method :gender_select, :sex_select
 
-		def date_text_field(object_name,method,options={})
-			format = options.delete(:format) || '%m/%d/%Y'
-			tmp_value = if options[:value].blank? #and !options[:object].nil?
-				object = options[:object]
-				tmp = object.send("#{method}") ||
-				      object.send("#{method}_before_type_cast")
-			else
-				options[:value]
-			end
-			begin
-				options[:value] = tmp_value.to_date.try(:strftime,format)
-			rescue NoMethodError, ArgumentError
-				options[:value] = tmp_value
-			end
-			options.update(:class => [options[:class],'datepicker'].compact.join(' '))
-			text_field( object_name, method, options )
-		end
+#		def date_text_field(object_name,method,options={})
+#			format = options.delete(:format) || '%m/%d/%Y'
+#			tmp_value = if options[:value].blank? #and !options[:object].nil?
+#				object = options[:object]
+#				tmp = object.send("#{method}") ||
+#				      object.send("#{method}_before_type_cast")
+#			else
+#				options[:value]
+#			end
+#			begin
+#				options[:value] = tmp_value.to_date.try(:strftime,format)
+#			rescue NoMethodError, ArgumentError
+#				options[:value] = tmp_value
+#			end
+#			options.update(:class => [options[:class],'datepicker'].compact.join(' '))
+#			text_field( object_name, method, options )
+#		end
 
 		#	This is NOT a form field
 		def _wrapped_yes_or_no_spans(object_name,method,options={})
@@ -103,27 +103,27 @@ module CommonLib::ActionViewExtension::Base
 	#	end
 	#	alias_method :yndk_select, :y_n_dk_select
 
-		def hour_select(object_name, method, 
-				options={}, html_options={})
-			select(object_name, method,
-				(1..12),
-				{:include_blank => 'Hour'}.merge(options), html_options)
-		end
+#		def hour_select(object_name, method, 
+#				options={}, html_options={})
+#			select(object_name, method,
+#				(1..12),
+#				{:include_blank => 'Hour'}.merge(options), html_options)
+#		end
 
-		def minute_select(object_name, method, 
-				options={}, html_options={})
-			minutes = (0..59).to_a.collect{|m|[sprintf("%02d",m),m]}
-			select(object_name, method,
-				minutes,
-				{:include_blank => 'Minute'}.merge(options), html_options)
-		end
+#		def minute_select(object_name, method, 
+#				options={}, html_options={})
+#			minutes = (0..59).to_a.collect{|m|[sprintf("%02d",m),m]}
+#			select(object_name, method,
+#				minutes,
+#				{:include_blank => 'Minute'}.merge(options), html_options)
+#		end
 
-		def meridiem_select(object_name, method, 
-				options={}, html_options={})
-			select(object_name, method,
-				['AM','PM'], 
-				{:include_blank => 'Meridiem'}.merge(options), html_options)
-		end
+#		def meridiem_select(object_name, method, 
+#				options={}, html_options={})
+#			select(object_name, method,
+#				['AM','PM'], 
+#				{:include_blank => 'Meridiem'}.merge(options), html_options)
+#		end
 
 		def method_missing_with_wrapping(symb,*args, &block)
 			method_name = symb.to_s
