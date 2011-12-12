@@ -45,6 +45,18 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 		assert_equal expected, output_buffer
 	end
 
+	#	This isn't in an 'erb block' so it isn't really testing what I wanted.
+	test "wrapped_date_text_field with block" do
+		form_for(:some_model,SomeModel.new,:url => '/'){|f| 
+			concat f.wrapped_date_text_field(:some_attribute){
+				'testing'
+			} }
+		expected = %{<form action="/" method="post"><div class='some_attribute date_text_field field_wrapper'>
+<label for="some_model_some_attribute">Some attribute</label><input class="datepicker" id="some_model_some_attribute" name="some_model[some_attribute]" size="30" type="text" />testing
+</div><!-- class='some_attribute date_text_field' --></form>}
+		assert_equal expected, output_buffer
+	end
+
 	test "meridiem_select" do
 		form_for(:some_model,SomeModel.new,:url => '/'){|f| 
 			concat f.meridiem_select(:some_attribute) }

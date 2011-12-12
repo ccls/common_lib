@@ -139,12 +139,11 @@ module CommonLib::ActionViewExtension::FormBuilder
 					else
 						send("_#{method_name}",*args,&block)
 					end
-#					s << (( block_given? )? capture(&block) : '')
 					s << (( block_given? )? @template.capture(&block) : '')
 				end
-#				( block_called_from_erb?(block) ) ? concat(content) : content
-#				( @template.block_called_from_erb?(block) ) ? @template.concat(content) : content
-				content
+				#	ActionView::TemplateError (private method `block_called_from_erb?' 
+				( @template.send(:block_called_from_erb?,block) ) ? 
+					@template.concat(content) : content
 			else
 				method_missing_without_field_wrapping(symb,*args, &block)
 			end
