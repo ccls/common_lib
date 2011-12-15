@@ -51,14 +51,20 @@ begin
 		gem.add_dependency('activeresource', '~> 2')
 		gem.add_dependency('activesupport', '~> 2')
 		gem.add_dependency('actionpack', '~> 2')
-
 		gem.add_dependency('ryanb-acts-as-list')
-		gem.add_dependency('thoughtbot-factory_girl')
 		gem.add_dependency('ssl_requirement', '>= 0.1.0')
 
 #	Trying to remove Chronic
 #		gem.add_dependency('chronic')
 
+#	moved to 'development' dependency to see if it makes any difference
+		gem.add_development_dependency('thoughtbot-factory_girl')
+		#	adding these as well to see what happens
+		gem.add_development_dependency( 'ccls-html_test' )
+		gem.add_development_dependency( 'rcov' )
+		gem.add_development_dependency( 'mocha' )
+		gem.add_development_dependency( 'autotest-rails' )
+		gem.add_development_dependency( 'ZenTest' )
 	end
 	Jeweler::GemcutterTasks.new
 rescue LoadError
