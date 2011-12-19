@@ -58,13 +58,19 @@ begin
 #		gem.add_dependency('chronic')
 
 #	moved to 'development' dependency to see if it makes any difference
-		gem.add_development_dependency('thoughtbot-factory_girl')
-		#	adding these as well to see what happens
-		gem.add_development_dependency( 'ccls-html_test' )
-		gem.add_development_dependency( 'rcov' )
-		gem.add_development_dependency( 'mocha' )
-		gem.add_development_dependency( 'autotest-rails' )
-		gem.add_development_dependency( 'ZenTest' )
+#	It appears that a development dependency won't install,
+#	but will still challenge on uninstall if other gems uses.
+#	I don't know how true that actually is.
+#	'rake install' does actually install factory_girl, if not installed.
+#	Don't know how 'development' gets flagged here.
+#
+#		gem.add_development_dependency('thoughtbot-factory_girl')
+#		#	adding these as well to see what happens
+#		gem.add_development_dependency( 'ccls-html_test' )
+#		gem.add_development_dependency( 'rcov' )
+#		gem.add_development_dependency( 'mocha' )
+#		gem.add_development_dependency( 'autotest-rails' )
+#		gem.add_development_dependency( 'ZenTest' )
 	end
 	Jeweler::GemcutterTasks.new
 rescue LoadError
