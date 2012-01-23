@@ -72,12 +72,13 @@ module CommonLib::ActionControllerExtension::AccessibleViaProtocol
 				login_as send(options[:login])
 				args={}
 				if options[:method_for_create] && options[:attributes_for_create]
-					obj = send(options[:method_for_create])
+					obj = send(options[:method_for_create],
+						:updated_at => ( Time.now - 2.days ) )
 					args[:id] = obj.id
 					args[m_key] = send(options[:attributes_for_create])
 				end
 				before = obj.updated_at if obj
-				sleep 1 if obj  # if updated too quickly, updated_at won't change
+#				sleep 1 if obj  # if updated too quickly, updated_at won't change
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj
 				assert_not_equal( before.to_i,after.to_i, "updated_at did not change" ) if obj
@@ -207,12 +208,13 @@ module CommonLib::ActionControllerExtension::AccessibleViaProtocol
 				login_as send(options[:login])
 				args={}
 				if options[:method_for_create] && options[:attributes_for_create]
-					obj = send(options[:method_for_create])
+					obj = send(options[:method_for_create],
+						:updated_at => ( Time.now - 2.days ) )
 					args[:id] = obj.id
 					args[m_key] = send(options[:attributes_for_create])
 				end
 				before = obj.updated_at if obj
-				sleep 1 if obj  # if updated too quickly, updated_at won't change
+#				sleep 1 if obj  # if updated too quickly, updated_at won't change
 				turn_https_on
 				send(:put,:update, args)
 				after = obj.reload.updated_at if obj

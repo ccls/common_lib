@@ -143,12 +143,13 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 					login_as send(login)
 					args={}
 					if options[:method_for_create] && options[:attributes_for_create]
-						obj = send(options[:method_for_create])
+						obj = send(options[:method_for_create],
+							:updated_at => ( Time.now - 2.days ) )
 						args[:id] = obj.id
 						args[m_key] = send(options[:attributes_for_create])
 					end
 					before = obj.updated_at if obj
-					sleep 1 if obj	#	if updated too quickly, updated_at won't change
+#					sleep 1 if obj	#	if updated too quickly, updated_at won't change
 					send(:put,:update, args)
 					after = obj.reload.updated_at if obj
 					assert_not_equal( before.to_i,after.to_i, "updated_at did not change." ) if obj
@@ -160,12 +161,13 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 					login_as send(login)
 					args=options[:update]||{}
 					if options[:method_for_create] && options[:attributes_for_create]
-						obj = send(options[:method_for_create])
+						obj = send(options[:method_for_create],
+							:updated_at => ( Time.now - 2.days ) )
 						args[:id] = obj.id
 						args[m_key] = send(options[:attributes_for_create])
 					end
 					before = obj.updated_at if obj
-					sleep 1 if obj	#	if updated too quickly, updated_at won't change
+#					sleep 1 if obj	#	if updated too quickly, updated_at won't change
 					options[:model].constantize.any_instance.stubs(:create_or_update).returns(false)
 					send(:put,:update, args)
 					after = obj.reload.updated_at if obj
@@ -181,12 +183,13 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 					login_as send(login)
 					args=options[:update]||{}
 					if options[:method_for_create] && options[:attributes_for_create]
-						obj = send(options[:method_for_create])
+						obj = send(options[:method_for_create],
+							:updated_at => ( Time.now - 2.days ) )
 						args[:id] = obj.id
 						args[m_key] = send(options[:attributes_for_create])
 					end
 					before = obj.updated_at if obj
-					sleep 1 if obj	#	if updated too quickly, updated_at won't change
+#					sleep 1 if obj	#	if updated too quickly, updated_at won't change
 					options[:model].constantize.any_instance.stubs(:valid?).returns(false)
 					send(:put,:update, args)
 					after = obj.reload.updated_at if obj
