@@ -77,10 +77,28 @@ class CommonLib::ArrayExtensionTest < ActiveSupport::TestCase
 		assert_equal 2.0, y
 	end
 
-	test "should compute median" do
+	test "should compute average of empty array" do
+		x = []
+		y = x.average
+		assert_nil y
+	end
+
+	test "should compute median of odd length array" do
 		x = [ 1, 1, 4 ]
 		y = x.median
 		assert_equal 1, y
+	end
+
+	test "should compute median of even length array" do
+		x = [ 1, 1, 3, 4 ]
+		y = x.median
+		assert_equal 2, y
+	end
+
+	test "should compute median of empty array" do
+		x = []
+		y = x.median
+		assert_nil y
 	end
 
 	test "should swap values based on indexes" do

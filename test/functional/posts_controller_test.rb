@@ -22,6 +22,16 @@ class PostsControllerTest < ActionController::TestCase
 		assert_redirected_to post_path(assigns(:post))
 	end
 
+	test "should not create post when save fails" do
+		blog = create_blog
+		Post.any_instance.stubs(:create_or_update).returns(false)
+		assert_difference('Post.count',0) do
+			post :create, :post => new_post.attributes, :blog_id => blog.id
+		end
+		assert_response :success
+		assert_template 'new'
+	end
+
 	test "should show post" do
 		post = create_post
 		get :show, :id => post.id
@@ -38,6 +48,14 @@ class PostsControllerTest < ActionController::TestCase
 		post = create_post
 		put :update, :id => post.id, :post => new_post.attributes
 		assert_redirected_to post_path(assigns(:post))
+	end
+
+	test "should not update post when save fails" do
+		post = create_post
+		Post.any_instance.stubs(:create_or_update).returns(false)
+		put :update, :id => post.id, :post => new_post.attributes
+		assert_response :success
+		assert_template 'edit'
 	end
 
 	test "should destroy post" do

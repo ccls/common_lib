@@ -19,6 +19,15 @@ class BlogsControllerTest < ActionController::TestCase
 		assert_redirected_to blog_path(assigns(:blog))
 	end
 
+	test "should not create blog if save fails" do
+		Blog.any_instance.stubs(:create_or_update).returns(false)
+		assert_difference('Blog.count', 0) do
+			post :create, :blog => new_blog.attributes
+		end
+		assert_response :success
+		assert_template 'new'
+	end
+
 	test "should show blog" do
 		blog = create_blog
 		get :show, :id => blog.id
@@ -35,6 +44,14 @@ class BlogsControllerTest < ActionController::TestCase
 		blog = create_blog
 		put :update, :id => blog.id, :blog => new_blog.attributes
 		assert_redirected_to blog_path(assigns(:blog))
+	end
+
+	test "should not update blog if save fails" do
+		blog = create_blog
+		Blog.any_instance.stubs(:create_or_update).returns(false)
+		put :update, :id => blog.id, :blog => new_blog.attributes
+		assert_response :success
+		assert_template 'edit'
 	end
 
 	test "should destroy blog" do

@@ -3,8 +3,20 @@ require 'test_helper'
 class CommonLib::HashExtensionTest < ActiveSupport::TestCase
 
 	#	delete_keys_matching!(regex)
+	test "should delete keys matching regex" do
+		h = { :apple => '1', :orange => '2', :grape => '3' }
+		assert  h.keys.include?(:orange)
+		h.delete_keys_matching!(/ran/)
+		assert !h.keys.include?(:orange)
+	end
 
 	#	delete_keys!(*keys)
+	test "should delete selected keys" do
+		h = { :a => '1', :b => '2', :c => '3' }
+		assert  h.keys.include?(:b)
+		h.delete_keys!(:b)
+		assert !h.keys.include?(:b)
+	end
 
 	#	dig
 	test "should return Gold when all keys match dig" do

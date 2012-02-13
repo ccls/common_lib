@@ -40,11 +40,13 @@ module HashExtension	#	:nodoc:
 					if self[key].is_a?(Hash)
 						self[key].dig(*args)
 					else
-						nil
+						nil		#	This shouldn't ever happen
 					end
 				else
 					self[key]
 				end
+			else
+				nil
 			end
 		end
 
