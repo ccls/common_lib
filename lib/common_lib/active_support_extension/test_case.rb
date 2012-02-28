@@ -88,14 +88,28 @@ module CommonLib::ActiveSupportExtension::TestCase
 #	What? No assert_requires_absence method???
 #	Its usually conditional so would be pretty pointless
 #
-#
 
 		def assert_requires_past_date(*attr_names)
+			options = { :allow_today => true }
+			options.update(attr_names.extract_options!)
+
 			attr_names.each do |attr_name|
-				test "should require #{attr_name} be in the past" do
+				if options[:allow_today]
+					test "#{brand}should allow #{attr_name} to be today" do
+						object = create_object( attr_name => Date.today )
+						assert !object.errors.on_attr_and_type(attr_name,:not_past_date)
+					end
+				else
+					test "#{brand}should NOT allow #{attr_name} to be today" do
+						object = create_object( attr_name => Date.today )
+						assert object.errors.on_attr_and_type(attr_name,:not_past_date)
+					end
+				end
+				test "#{brand}should require #{attr_name} be in the past" do
 					#	can't assert difference of 1 as may be other errors
 					object = create_object( attr_name => Date.yesterday )
 					assert !object.errors.on_attr_and_type(attr_name,:not_past_date)
+					#	However, can assert difference of 0 as shouldn't create.
 					assert_difference( "#{model_name}.count", 0 ) do
 						object = create_object( attr_name => Date.tomorrow )
 						assert object.errors.on_attr_and_type(attr_name,:not_past_date)
@@ -106,7 +120,7 @@ module CommonLib::ActiveSupportExtension::TestCase
 	
 		def assert_requires_complete_date(*attr_names)
 			attr_names.each do |attr_name|
-				test "should require a complete date for #{attr_name}" do
+				test "#{brand}should require a complete date for #{attr_name}" do
 #
 #	Cannot assert that one was created as there may be other errors.
 #	We can only assert that there isn't a not_complete_date error.

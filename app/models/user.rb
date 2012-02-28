@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
 	validates_complete_date_for :birthday, :allow_nil => true
 	validates_past_date_for :birthday
 
+	validates_past_date_for :other_date, :allow_today => false, :allow_blank => true
 end

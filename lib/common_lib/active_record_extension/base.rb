@@ -32,6 +32,7 @@ module CommonLib::ActiveRecordExtension::Base
 
 		def validates_past_date_for(*attr_names)
 			configuration = { :on => :save,
+				:allow_today => true,
 				:message => "is in the future and must be in the past." }
 			configuration.update(attr_names.extract_options!)
 
@@ -70,7 +71,16 @@ module CommonLib::ActiveRecordExtension::Base
 #	>> Date.today < Date.today
 #	=> false
 #					if !date.blank? && Time.now < date
-					if !date.blank? && Date.today < date
+
+
+					base_date = if configuration[:allow_today]
+						Date.today
+					else
+						Date.yesterday
+					end
+#	actually, this allows today by default
+#					if !date.blank? && Date.today < date
+					if !date.blank? && base_date < date
 						record.errors.add(attr_name, 
 							ActiveRecord::Error.new(record,attr_name,:not_past_date,
 								{ :message => configuration[:message] }))
