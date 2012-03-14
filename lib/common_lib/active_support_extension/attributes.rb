@@ -6,6 +6,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 		base.class_eval do 
 			class << self
 				alias_methods = {
+					:not_require_unique_attributes => :not_require_unique_attribute,
+					:not_require_unique            => :not_require_unique_attribute,
 					:require_unique_attributes  => :require_unique_attribute,
 					:require_unique             => :require_unique_attribute,
 					:require_attributes_not_nil => :require_attribute_not_nil,
@@ -32,11 +34,45 @@ module CommonLib::ActiveSupportExtension::Attributes
 
 	module ClassMethods
 
+		def assert_should_not_require_unique_attribute(*attributes)
+			options = attributes.extract_options!
+			model = options[:model] || st_model_name
+			
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
+				attr = attr.to_s
+				title = "#{brand}should not require unique #{attr}"
+				scope = options[:scope]
+				unless scope.blank?
+					title << " scope "
+					title << (( scope.is_a?(Array) )?scope.join(','):scope.to_s)
+				end
+				test title do
+					o = create_object
+#					assert_no_difference "#{model}.count" do
+						attrs = { attr.to_sym => o.send(attr) }
+						if( scope.is_a?(String) || scope.is_a?(Symbol) )
+							attrs[scope.to_sym] = o.send(scope.to_sym)
+						elsif scope.is_a?(Array)
+							scope.each do |s|
+								attrs[s.to_sym] = o.send(s.to_sym)
+							end
+						end 
+#	this isn't perfect, cause if they are both blank and allowed blank
+#	it doesn't really test anything
+						object = create_object(attrs)
+						assert !object.errors.on_attr_and_type(attr.to_sym, :taken)
+#					end
+				end
+			end
+		end
+
 		def assert_should_require_unique_attribute(*attributes)
 			options = attributes.extract_options!
 			model = options[:model] || st_model_name
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				title = "#{brand}should require unique #{attr}"
 				scope = options[:scope]
@@ -66,7 +102,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 			options = attributes.extract_options!
 			model = options[:model] || st_model_name
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				test "#{brand}should require #{attr} not nil" do
 					assert_no_difference "#{model}.count" do
@@ -81,7 +118,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 			options = attributes.extract_options!
 			model = options[:model] || st_model_name
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				test "#{brand}should require #{attr}" do
 					assert_no_difference "#{model}.count" do
@@ -97,7 +135,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 			options = attributes.extract_options!
 			model = options[:model] || st_model_name
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				test "#{brand}should not require #{attr}" do
 					assert_difference( "#{model}.count", 1 ) do
@@ -121,7 +160,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 				options[:maximum] = range.max
 			end
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				if options.keys.include?(:is)
 					length = options[:is]
@@ -195,7 +235,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 			model_name = options[:model] || st_model_name
 			model = model_name.constantize
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				test "#{brand}should protect attribute #{attr}" do
 					assert model.accessible_attributes||model.protected_attributes,
@@ -215,7 +256,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 			model_name = options[:model] || st_model_name
 			model = model_name.constantize
 			
-			attributes.each do |attr|
+#			attributes.each do |attr|
+			attributes.flatten.each do |attr|
 				attr = attr.to_s
 				test "#{brand}should not protect attribute #{attr}" do
 					assert !(model.protected_attributes||[]).include?(attr),
