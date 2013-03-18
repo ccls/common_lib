@@ -19,27 +19,29 @@ begin
 		gem.authors = ["George 'Jake' Wendt"]
 		# gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
 
-		gem.files  = FileList['rails/init.rb']
-		gem.files += FileList['lib/**/*.rb']
+#		gem.files  = FileList['rails/init.rb']
+		gem.files  = FileList['lib/**/*.rb']
 		gem.files += FileList['lib/**/*.rake']
-		gem.files += FileList['generators/**/*']
+		gem.files += FileList['vendor/**/*.js']
+		gem.files += FileList['vendor/**/*.css']
+#		gem.files += FileList['generators/**/*']
 		gem.files -= FileList['**/versions/*']
 #   
 #		I'm not quite sure if it matters whether these files
 #		are included as 'files' or 'test_files', but
 #		they need to be included if I'm gonna use'em.
 #
-		gem.test_files  = FileList['test/unit/common_lib/*.rb']
+#		gem.test_files  = FileList['test/unit/common_lib/*.rb']
 
-		gem.add_dependency('rails', '~> 2')
-#	had to explicitly add rails components as greater
-#	versions were being loaded 
-		gem.add_dependency('activerecord', '~> 2')
-		gem.add_dependency('activeresource', '~> 2')
-		gem.add_dependency('activesupport', '~> 2')
-		gem.add_dependency('actionpack', '~> 2')
-		gem.add_dependency('ryanb-acts-as-list')
-		gem.add_dependency('ssl_requirement', '>= 0.1.0')
+#		gem.add_dependency('rails', '~> 2')
+##	had to explicitly add rails components as greater
+##	versions were being loaded 
+#		gem.add_dependency('activerecord', '~> 2')
+#		gem.add_dependency('activeresource', '~> 2')
+#		gem.add_dependency('activesupport', '~> 2')
+#		gem.add_dependency('actionpack', '~> 2')
+#		gem.add_dependency('ryanb-acts-as-list')
+#		gem.add_dependency('ssl_requirement', '>= 0.1.0')
 
 #	Trying to remove Chronic
 #		gem.add_dependency('chronic')

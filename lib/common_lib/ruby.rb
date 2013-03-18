@@ -1,0 +1,8 @@
+require "common_lib/ruby/array"
+require "common_lib/ruby/fixnum"
+require "common_lib/ruby/hash"
+require "common_lib/ruby/integer"
+require "common_lib/ruby/nil_class"
+require "common_lib/ruby/numeric"
+require "common_lib/ruby/object"
+require "common_lib/ruby/string"

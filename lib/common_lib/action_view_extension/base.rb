@@ -11,6 +11,10 @@ module CommonLib::ActionViewExtension::Base
 
 #	module InstanceMethods
 
+	def nbsp
+		"&nbsp;".html_safe
+	end
+
 		def mdy(date)
 			( date.nil? ) ? '&nbsp;' : date.strftime("%m/%d/%Y")
 		end

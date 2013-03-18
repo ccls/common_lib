@@ -42,7 +42,10 @@ class BlogsControllerTest < ActionController::TestCase
 
 	test "should update blog" do
 		blog = create_blog
-		put :update, :id => blog.id, :blog => new_blog.attributes
+		attributes = new_blog.attributes
+		attributes.delete('created_at')
+		attributes.delete('updated_at')
+		put :update, :id => blog.id, :blog => attributes
 		assert_redirected_to blog_path(assigns(:blog))
 	end
 

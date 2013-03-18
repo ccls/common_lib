@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::ObjectExtensionTest < ActiveSupport::TestCase
+class CommonLib::ObjectTest < ActiveSupport::TestCase
 
 #		def to_boolean
 #		def true?

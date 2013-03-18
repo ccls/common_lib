@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::StringExtensionTest < ActiveSupport::TestCase
+class CommonLib::StringTest < ActiveSupport::TestCase
 
 #		def to_params_hash
 #		def uniq

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::IntegerExtensionTest < ActiveSupport::TestCase
+class CommonLib::IntegerTest < ActiveSupport::TestCase
 
 #		def factorial
 

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::NilClassExtensionTest < ActiveSupport::TestCase
+class CommonLib::NilClassTest < ActiveSupport::TestCase
 
 #		def split(*args)
 #		def include?(*args)

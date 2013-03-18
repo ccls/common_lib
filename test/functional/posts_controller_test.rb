@@ -46,7 +46,10 @@ class PostsControllerTest < ActionController::TestCase
 
 	test "should update post" do
 		post = create_post
-		put :update, :id => post.id, :post => new_post.attributes
+		attributes = new_post.attributes
+		attributes.delete('created_at')
+		attributes.delete('updated_at')
+		put :update, :id => post.id, :post => attributes
 		assert_redirected_to post_path(assigns(:post))
 	end
 

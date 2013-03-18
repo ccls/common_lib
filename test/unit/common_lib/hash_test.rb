@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::HashExtensionTest < ActiveSupport::TestCase
+class CommonLib::HashTest < ActiveSupport::TestCase
 
 	#	delete_keys_matching!(regex)
 	test "should delete keys matching regex" do

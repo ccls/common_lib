@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CommonLib::ArrayExtensionTest < ActiveSupport::TestCase
+class CommonLib::ArrayTest < ActiveSupport::TestCase
 
 #		def arrange(new_array_index=[])
 #		def drop_blanks!
