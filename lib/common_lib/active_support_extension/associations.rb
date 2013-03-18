@@ -2,16 +2,11 @@ module CommonLib::ActiveSupportExtension::Associations
 
 	def self.included(base)
 		base.extend ClassMethods
-#		base.send(:include,InstanceMethods)
 		base.class_eval do 
 			class << self
 				alias_methods = {
 					:should_have_many                  => :should_have_many_,
-					:should_have_many_associations     => :should_have_many_,
-					:should_require_valid_associations => :requires_valid_associations,
-					:should_require_valid_association  => :requires_valid_associations,
-					:requires_valid_association        => :requires_valid_associations,
-					:requires_valid                    => :requires_valid_associations
+					:should_have_many_associations     => :should_have_many_
 				}
 				alias_methods.each do |alias_name,method_name|
 					alias_method( "assert_#{alias_name}",
@@ -26,7 +21,7 @@ module CommonLib::ActiveSupportExtension::Associations
 
 		def assert_should_initially_belong_to(*associations)
 			options = associations.extract_options!
-			model = options[:model] || st_model_name
+			model = options[:model] || model_name_without_test
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
 				title = "#{brand}should initially belong to #{assoc}"
@@ -51,14 +46,10 @@ module CommonLib::ActiveSupportExtension::Associations
 
 		def assert_should_belong_to(*associations)
 			options = associations.extract_options!
-			model = options[:model] || st_model_name
+			model = options[:model] || model_name_without_test
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
 				title = "#{brand}should belong to #{assoc}" 
-#				if !options[:as].blank?
-#					title << " as #{options[:as]}"
-#					as = options[:as]
-#				end
 				if !options[:class_name].blank?
 					title << " ( #{options[:class_name]} )"
 					class_name = options[:class_name].to_s
@@ -70,24 +61,25 @@ module CommonLib::ActiveSupportExtension::Associations
 					assert_not_nil object.send(assoc)
 					assert object.send(assoc).is_a?(class_name.constantize
 						) unless options[:polymorphic]
+#	Paperclip attachments don't get deleted on rollback.
+#	So we much destroy the object, and therefore the attachment, by hand.
+#	Only seems to matter with ...
+#		BirthDatumTest#assert_should_belong_to( :birth_datum_update )
+#		but does't seem to cause a problem elsewhere.
+object.send(assoc).destroy
+object.destroy
 				end
 			end
 		end
 
 		def assert_should_have_one(*associations)
 			options = associations.extract_options!
-			model = options[:model] || st_model_name
-#			foreign_key = if !options[:foreign_key].blank?
-#				options[:foreign_key].to_sym
-#			else
-#				"#{model.underscore}_id".to_sym
-#			end
+			model = options[:model] || model_name_without_test
 			associations.each do |assoc|
 				assoc = assoc.to_s
 				test "#{brand}should have one #{assoc}" do
 					object = create_object
 					assert_nil object.reload.send(assoc)
-#					send("create_#{assoc}", foreign_key => object.id)
 					send("create_#{assoc}", model.underscore => object )
 					assert_not_nil object.reload.send(assoc)
 					object.send(assoc).destroy
@@ -98,12 +90,7 @@ module CommonLib::ActiveSupportExtension::Associations
 
 		def assert_should_have_many_(*associations)
 			options = associations.extract_options!
-			model = options[:model] || st_model_name
-#			foreign_key = if !options[:foreign_key].blank?
-#				options[:foreign_key].to_sym
-#			else
-#				"#{model.underscore}_id".to_sym
-#			end
+			model = options[:model] || model_name_without_test
 			associations.each do |assoc|
 				class_name = ( assoc = assoc.to_s ).camelize
 				title = "#{brand}should have many #{assoc}"
@@ -125,15 +112,11 @@ module CommonLib::ActiveSupportExtension::Associations
 					else
 						command.push( model.underscore => object )
 					end
-#					send("create_#{class_name.singularize.underscore}", foreign_key => object.id)
-#					send("create_#{class_name.singularize.underscore}", model.underscore => object )
 					send *command
 					assert_equal 1, object.reload.send(assoc).length
 					if object.respond_to?("#{assoc}_count")
 						assert_equal 1, object.reload.send("#{assoc}_count")
 					end
-#					send("create_#{class_name.singularize.underscore}", foreign_key => object.id)
-#					send("create_#{class_name.singularize.underscore}", model.underscore => object )
 					send *command
 					assert_equal 2, object.reload.send(assoc).length
 					if object.respond_to?("#{assoc}_count")
@@ -145,7 +128,7 @@ module CommonLib::ActiveSupportExtension::Associations
 
 		def assert_should_habtm(*associations)
 			options = associations.extract_options!
-			model = options[:model] || st_model_name
+			model = options[:model] || model_name_without_test
 			associations.each do |assoc|
 				assoc = assoc.to_s
 				test "#{brand}should habtm #{assoc}" do
@@ -165,45 +148,7 @@ module CommonLib::ActiveSupportExtension::Associations
 			end
 		end
 
-		def assert_requires_valid_associations(*associations)
-#				options = associations.extract_options!
-#				model = options[:model] || st_model_name
-#	
-#				associations.each do |assoc|
-#					as = assoc = assoc.to_s
-#					as = options[:as] if !options[:as].blank?
-#	
-#					test "#{brand}should require foreign key #{as}_id" do
-#						assert_difference("#{model}.count",0) do
-#							object = create_object("#{as}_id".to_sym => nil)
-#							assert object.errors.on("#{as}_id".to_sym)
-#						end
-#					end
-#	
-#	#				test "#{brand}should require valid foreign key #{as}_id" do
-#	#					assert_difference("#{model}.count",0) do
-#	#						object = create_object("#{as}_id".to_sym => 0)
-#	#						assert object.errors.on("#{as}_id".to_sym)
-#	#					end
-#	#				end
-#	
-#					title = "#{brand}should require valid association #{assoc}"
-#					title << " as #{options[:as]}" if !options[:as].blank?
-#					test title do
-#						assert_difference("#{model}.count",0) { 
-#							object = create_object(
-#								assoc.to_sym => Factory.build(assoc.to_sym))
-#	#							as.to_sym => Factory.build(assoc.to_sym))
-#							assert object.errors.on("#{as}_id".to_sym)
-#						}    
-#					end 
-#	
-#				end
-
-		end
-
 	end	# ClassMethods
 
-end	# module CommonLib::ActiveSupportExtension::Associations
-ActiveSupport::TestCase.send(:include,
-	CommonLib::ActiveSupportExtension::Associations)
+end	# module ActiveSupportExtension::Associations
+ActiveSupport::TestCase.send(:include, CommonLib::ActiveSupportExtension::Associations)

@@ -2,10 +2,10 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 
 	def self.included(base)
 		base.extend ClassMethods
-		base.send(:include,InstanceMethods)
+#		base.send(:include,InstanceMethods)
 	end
 
-	module InstanceMethods
+#	module InstanceMethods
 
 		#	This needs to be static and not dynamic or the multiple
 		#	calls that would create it would overwrite each other.
@@ -17,7 +17,7 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			end
 		end
 
-	end	# module InstanceMethods
+#	end	# module InstanceMethods
 
 	module ClassMethods
 

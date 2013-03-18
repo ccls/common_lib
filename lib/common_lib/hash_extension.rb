@@ -1,16 +1,16 @@
 module CommonLib	#	:nodoc:
 module HashExtension	#	:nodoc:
-	def self.included(base)
-#		base.extend(ClassMethods)
-		base.instance_eval do
-			include InstanceMethods
-		end
-	end
-
+#	def self.included(base)
+##		base.extend(ClassMethods)
+#		base.instance_eval do
+#			include InstanceMethods
+#		end
+#	end
+#
 #	module ClassMethods	#	:nodoc:
 #	end
 
-	module InstanceMethods
+#	module InstanceMethods
 
 		#	delete all keys matching the given regex
 		#	and return the new hash
@@ -59,7 +59,7 @@ module HashExtension	#	:nodoc:
 			new_hash	#	originally didn't return new_hash, which didn't work for me.  returned self apparently.
 		end
 
-	end
+#	end
 
 end
 end

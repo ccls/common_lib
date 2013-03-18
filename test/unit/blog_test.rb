@@ -12,4 +12,9 @@ class BlogTest < ActiveSupport::TestCase
 	assert_should_have_many(:posts)
 	assert_should_initially_belong_to( :user, :foreign_key => 'owner_id' )
 
+protected
+
+	#	create_object is called from within the common class tests
+	alias_method :create_object, :create_blog
+
 end

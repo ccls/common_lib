@@ -1,16 +1,16 @@
 module CommonLib	#	:nodoc:
 module StringExtension	#	:nodoc:
-  def self.included(base)
-#    base.extend(ClassMethods)
-    base.instance_eval do
-      include InstanceMethods
-    end
-  end
+#  def self.included(base)
+##    base.extend(ClassMethods)
+#    base.instance_eval do
+#      include InstanceMethods
+#    end
+#  end
 
 #  module ClassMethods	#	:nodoc:
 #  end
 
-  module InstanceMethods
+#  module InstanceMethods
 
 		#	Convert a query string like that in a URL
 		#	to a Hash
@@ -28,7 +28,7 @@ module StringExtension	#	:nodoc:
 			self
 		end
 
-  end
+#  end
 
 end
 end

@@ -11,6 +11,8 @@ def brand	#	for auto-generated tests
 	"@@ "
 end
 require 'common_lib/active_support_extension'
-require 'common_lib/active_record_extension'
-require 'common_lib/action_controller_extension'
-require 'common_lib/action_view_extension'
+#require 'common_lib/active_record_extension'
+require 'common_lib/active_model'
+require 'common_lib/active_record'
+#require 'common_lib/action_controller_extension'
+#require 'common_lib/action_view_extension'

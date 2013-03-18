@@ -1,16 +1,16 @@
 module CommonLib	#	:nodoc:
 module IntegerExtension	#	:nodoc:
-	def self.included(base)
-#		base.extend(ClassMethods)
-		base.instance_eval do
-			include InstanceMethods
-		end
-	end
+#	def self.included(base)
+##		base.extend(ClassMethods)
+#		base.instance_eval do
+#			include InstanceMethods
+#		end
+#	end
 
 #	module ClassMethods	#	:nodoc:
 #	end
 
-	module InstanceMethods
+#	module InstanceMethods
 
 		#	Return n!
 		def factorial
@@ -19,7 +19,7 @@ module IntegerExtension	#	:nodoc:
 			return f
 		end
 
-	end
+#	end
 
 end
 end

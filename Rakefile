@@ -1,24 +1,11 @@
-require(File.join(File.dirname(__FILE__), 'config', 'boot'))
+#!/usr/bin/env rake
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-# Use the updated rdoc gem rather than version
-# included with ruby.
-require 'rdoc'
-require 'rdoc/rdoc'
+require File.expand_path('../config/application', __FILE__)
 
-require 'rake'
-require 'rake/testtask'
-require 'rdoc/task'
+CommonLib::Application.load_tasks
 
-desc 'Generate documentation for the gem.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-	rdoc.rdoc_dir = 'rdoc'
-	rdoc.title		= 'CCLS Common Lib'
-	rdoc.options << '--line-numbers' #<< '--inline-source'
-	rdoc.rdoc_files.include('README')
-	rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-require 'tasks/rails'
 
 begin
 	require 'jeweler'

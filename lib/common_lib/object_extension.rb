@@ -1,16 +1,16 @@
 module CommonLib	#	:nodoc:
 module ObjectExtension	#	:nodoc:
-	def self.included(base)
-#		base.extend(ClassMethods)
-		base.instance_eval do
-			include InstanceMethods
-		end
-	end
+#	def self.included(base)
+##		base.extend(ClassMethods)
+#		base.instance_eval do
+#			include InstanceMethods
+#		end
+#	end
 
 #	module ClassMethods	#	:nodoc:
 #	end
 
-	module InstanceMethods
+#	module InstanceMethods
 #
 #		#	originally from ActiveSupport::Callbacks::Callback
 ##	needs modified to actually work the way I'd like
@@ -61,7 +61,7 @@ module ObjectExtension	#	:nodoc:
 				( self.is_a?(String) ) ? self.downcase : self )
 		end
 
-	end
+#	end
 
 end
 end

@@ -7,4 +7,9 @@ class ProductTest < ActiveSupport::TestCase
 	assert_should_require_unique_attributes( :name )
 	assert_should_habtm( :vendors	)
 
+protected
+
+	#	create_object is called from within the common class tests
+	alias_method :create_object, :create_product
+
 end

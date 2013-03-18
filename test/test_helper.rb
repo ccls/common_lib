@@ -1,13 +1,15 @@
 ENV["RAILS_ENV"] = "test"
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
-
-#$LOAD_PATH.unshift File.dirname(__FILE__) # NEEDED for rake test:coverage
-#	not true if the task is corrected, which I now think is (not included here at the mo)
+require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
 
 class ActiveSupport::TestCase
-#	self.use_transactional_fixtures = true
-#	self.use_instantiated_fixtures  = false
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  #
+  # Note: You'll currently still have to declare fixtures explicitly in integration tests
+  # -- they do not yet inherit this setting
+  fixtures :all
+
+  # Add more helper methods to be used by all tests here...
 
 	fixtures :all
 
@@ -29,6 +31,24 @@ class ActiveSupport::TestCase
 		p = new_post(options)
 		p.save
 		p
+	end
+
+	def create_product(options={})
+		product = Factory.build(:product,options)
+		product.save
+		product
+	end
+
+	def create_vendor(options={})
+		vendor = Factory.build(:vendor,options)
+		vendor.save
+		vendor
+	end
+
+	def create_user(options={})
+		user = Factory.build(:user,options)
+		user.save
+		user
 	end
 
 end

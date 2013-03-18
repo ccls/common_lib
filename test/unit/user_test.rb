@@ -17,4 +17,9 @@ class UserTest < ActiveSupport::TestCase
 	assert_should_not_require(:other_date)
 	assert_requires_past_date(:other_date, :allow_today => false)
 
+protected
+
+	#	create_object is called from within the common class tests
+	alias_method :create_object, :create_user
+
 end

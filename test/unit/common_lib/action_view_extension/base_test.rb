@@ -10,7 +10,39 @@ class CommonLib::User
 	end
 end
 
+#module CommonLib::ActionViewExtension; end
+require 'common_lib/action_view_extension'
+
 class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
+
+	include CommonLib::ActionViewExtension::Base
+
+	setup :enable_content_for_usage
+	def enable_content_for_usage
+#
+# the following raises NoMethodError: undefined method `append' for nil:NilClass ????
+# I really don't understand.  I use content_for in other places just like this?
+# Actually, the other tests may be failing before the content_for call
+#
+# what is nil? This works in reality, but not in testing
+# wouldn't be surprised if this is controller related.
+#
+#   in rails 3, there is something called "@view_flow"
+# 
+# adding '_prepare_context' before the call fixes the nil, but then there's another error
+#
+# NoMethodError: undefined method `encoding_aware?' for nil:NilClass
+#    test/unit/helpers/action_view_base_helper_test.rb:340:in `new'
+#
+# don't use @content_for_head anymore.  Just use content_for(:head)
+#
+
+#	Is this the best way?  Doubt it, but it works.
+
+		_prepare_context	#	need this to set @view_flow so content_for works
+	end
+
+
 
 	def flash
 		{:notice => "Hello There"}
@@ -26,15 +58,15 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<input id="apple" name="apple" type="hidden" value="orange" />
 #<input type="submit" value="mytitle" />
 #</form>
-		assert_select response, 'form.form_link_to[action=/myurl]', 1 do
-			assert_select 'input', 2
+		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+			assert_select 'input', :count => 3
 		end
 	end
 
 	test "form_link_to without block" do
 		response = HTML::Document.new(form_link_to('mytitle','/myurl')).root
-		assert_select response, 'form.form_link_to[action=/myurl]', 1 do
-			assert_select 'input', 1
+		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+			assert_select 'input', :count => 2
 		end
 #<form class="form_link_to" action="/myurl" method="post">
 #<input type="submit" value="mytitle" />
@@ -50,11 +82,11 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
 #<input id="apple" name="apple" type="hidden" value="orange" /><input type="submit" value="mytitle" />
 #</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', 1 do
-			assert_select 'div', 1 do
-				assert_select 'input[name=_method][value=delete]',1
+		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
+			assert_select 'div', :count => 1 do
+				assert_select 'input[name=_method][value=delete]',:count => 1
 			end
-			assert_select 'input', 3
+			assert_select 'input', :count => 4
 		end
 	end
 
@@ -64,18 +96,18 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
 #<input type="submit" value="mytitle" />
 #</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', 1 do
-			assert_select 'div', 1 do
-				assert_select 'input[name=_method][value=delete]',1
+		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
+			assert_select 'div', :count => 1 do
+				assert_select 'input[name=_method][value=delete]',:count => 1
 			end
-			assert_select 'input', 2
+			assert_select 'input', :count => 3
 		end
 	end
 
 	test "button_link_to without block" do
 		response = HTML::Document.new(button_link_to('mytitle','/myurl')).root
-		assert_select response, 'a[href=/myurl]', 1 do
-			assert_select 'button[type=button]', 1
+		assert_select response, 'a[href=/myurl]', :count => 1 do
+			assert_select 'button[type=button]', :count => 1
 		end
 #<a href="/myurl" style="text-decoration:none;"><button type="button">mytitle</button></a>
 	end
@@ -86,7 +118,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		).root
 		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
 #<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", 1
+		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
 	end
 
 	test "flasher" do
@@ -111,7 +143,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		javascripts('myjavascript')
 		assert_equal 1, @javascripts.length
 #<script src="/javascripts/myjavascript.js" type="text/javascript"></script>
-		response = HTML::Document.new( @content_for_head).root
+		response = HTML::Document.new( content_for(:head) ).root
 		assert_select response, 'script[src=/javascripts/myjavascript.js]'
 	end
 
@@ -123,7 +155,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		stylesheets('mystylesheet')
 		assert_equal 1, @stylesheets.length
 #<link href="/stylesheets/mystylesheet.css" media="screen" rel="stylesheet" type="text/css" />
-		response = HTML::Document.new( @content_for_head).root
+		response = HTML::Document.new( content_for(:head) ).root
 		assert_select response, 'link[href=/stylesheets/mystylesheet.css]'
 	end
 
@@ -146,10 +178,10 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="label">name</span>
 #<span class="value">&nbsp;</span>
 #</div><!-- class='name' -->
-		assert_select response, 'div.name.field_wrapper', 1 do
-			assert_select 'label', 0
-			assert_select 'span.label', 1
-			assert_select 'span.value', 1
+		assert_select response, 'div.name.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
@@ -162,9 +194,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">&nbsp;</span>
 #</div><!-- class='dob date_spans' -->
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
-			assert_select 'label', 0
-			assert_select 'span.label','dob',1
-			assert_select 'span.value','&nbsp;',1
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.value',:text => '&nbsp;',:count => 1
 		end
 	end
 
@@ -177,9 +209,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">12/05/1971</span>
 #</div><!-- class='dob date_spans' -->
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
-			assert_select 'label', 0
-			assert_select 'span.label','dob',1
-			assert_select 'span.value','12/05/1971',1
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.value',:text => '12/05/1971',:count => 1
 		end
 	end
 
@@ -192,9 +224,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">no</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
-			assert_select 'label', 0
-			assert_select 'span.label','yes_or_no',1
-			assert_select 'span.value','No',1
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.value',:text => 'No',:count => 1
 		end
 	end
 
@@ -207,9 +239,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">yes</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
-			assert_select 'label', 0
-			assert_select 'span.label','yes_or_no',1
-			assert_select 'span.value','Yes',1
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.value',:text => 'Yes',:count => 1
 		end
 	end
 
@@ -222,9 +254,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<span class="value">no</span>
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
-			assert_select 'label', 0
-			assert_select 'span.label','yes_or_no',1
-			assert_select 'span.value','No',1
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.value',:text => 'No',:count => 1
 		end
 	end
 

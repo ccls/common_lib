@@ -1,14 +1,15 @@
 module CommonLib::ActionViewExtension::Base
+#class ActionView::Base
 
 	def self.included(base)
-		base.send(:include, InstanceMethods)
+#		base.send(:include, InstanceMethods)
 		base.class_eval do
 			alias_method_chain( :method_missing, :wrapping 
 				) unless base.respond_to?(:method_missing_without_wrapping)
 		end
 	end
 
-	module InstanceMethods
+#	module InstanceMethods
 
 		def mdy(date)
 			( date.nil? ) ? '&nbsp;' : date.strftime("%m/%d/%Y")
@@ -135,11 +136,11 @@ module CommonLib::ActionViewExtension::Base
 	#				send("_#{method_name}",*args) << 
 	#					(( block_given? )? capture(&block) : '')
 				end
-				if block_called_from_erb?(block)
-					concat(content)
-				else
+#				if block_called_from_erb?(block)
+#					concat(content)
+#				else
 					content
-				end
+#				end
 			else
 				method_missing_without_wrapping(symb,*args, &block)
 			end
@@ -173,11 +174,11 @@ module CommonLib::ActionViewExtension::Base
 			s << (( block_given? )? capture(&block) : '')
 			s << submit_tag(title, :name => nil ) << "\n" <<
 				"</form>\n"
-			if block_called_from_erb?(block)
-				concat(s)
-			else
+#			if block_called_from_erb?(block)
+#				concat(s)
+#			else
 				s
-			end
+#			end
 		end
 
 		def destroy_link_to( title, url, options={}, &block )
@@ -265,7 +266,7 @@ module CommonLib::ActionViewExtension::Base
 			end
 		end
 
-	end	#	module InstanceMethods
+#	end	#	module InstanceMethods
 
 end	#	module CommonLib::ActionViewExtension::Base
 ActionView::Base.send(:include, 
