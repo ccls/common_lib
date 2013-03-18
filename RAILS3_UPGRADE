@@ -1,0 +1,13 @@
+
+Attempting to upgrade this mess to Rails 3 compatibility.
+
+
+
+remove the _extension stuff
+	not all things will work right if do this
+		(action view helper tests apparently)
+
+
+Share javascripts and stylesheets as assets
+
+can I share locales file as an asset?
