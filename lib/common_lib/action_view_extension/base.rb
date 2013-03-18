@@ -1,13 +1,13 @@
 module CommonLib::ActionViewExtension::Base
 #class ActionView::Base
 
-	def self.included(base)
-#		base.send(:include, InstanceMethods)
-		base.class_eval do
-			alias_method_chain( :method_missing, :wrapping 
-				) unless base.respond_to?(:method_missing_without_wrapping)
-		end
-	end
+#	def self.included(base)
+##		base.send(:include, InstanceMethods)
+#		base.class_eval do
+#			alias_method_chain( :method_missing, :wrapping 
+#				) unless base.respond_to?(:method_missing_without_wrapping)
+#		end
+#	end
 
 #	module InstanceMethods
 
@@ -149,22 +149,23 @@ module CommonLib::ActionViewExtension::Base
 				method_missing_without_wrapping(symb,*args, &block)
 			end
 		end
+		alias_method_chain( :method_missing, :wrapping )
 
 
-		#	Just add the classes 'submit' and 'button'
-		#	for styling and function
-		def submit_link_to(*args,&block)
-			html_options = if block_given?
-				args[1] ||= {}
-			else
-				args[2] ||= {}
-			end
-			html_options.delete(:value)   #	possible key meant for submit button
-			html_options.delete('value')  #	possible key meant for submit button
-			( html_options[:class] ||= '' ) << ' submit button'
-			link_to( *args, &block )
-		end
-
+#		#	Just add the classes 'submit' and 'button'
+#		#	for styling and function
+#		def submit_link_to(*args,&block)
+#			html_options = if block_given?
+#				args[1] ||= {}
+#			else
+#				args[2] ||= {}
+#			end
+#			html_options.delete(:value)   #	possible key meant for submit button
+#			html_options.delete('value')  #	possible key meant for submit button
+#			( html_options[:class] ||= '' ) << ' submit button'
+#			link_to( *args, &block )
+#		end
+#
 
 		def form_link_to( title, url, options={}, &block )
 	#			"action='#{url}' " <<
@@ -202,41 +203,41 @@ module CommonLib::ActionViewExtension::Base
 			tag('img',options.merge({:src => src, :alt => alt}))
 		end
 
-		#	This style somehow for some reason actually submits the request TWICE?
-		#	In many cases, this is no big deal, but when using it to send
-		#	emails or something, the controller/action is called twice
-		#	resulting in 2 emails (if that's what your action does)
-		#	I'd really like to understand why.
-		def button_link_to( title, url, options={} )
-			classes = ['link']
-			classes << options[:class]
-			s =  "<a href='#{url_for(url)}' style='text-decoration:none;'>"
-			s << "<button type='button'>"
-			s << title
-			s << "</button></a>\n"
-		end
-
-		#	This creates a button that looks like a submit button
-		#	but is just a javascript controlled link.
-		#	I don't like it.
-		def old_button_link_to( title, url, options={} )
-	#		id = "id='#{options[:id]}'" unless options[:id].blank?
-	#		klass = if options[:class].blank?
-	#			"class='link'"
-	#		else
-	#			"class='#{options[:class]}'"
-	#		end
-	#		s =  "<button #{id} #{klass} type='button'>"
-			classes = ['link']
-			classes << options[:class]
-			s =  "<button class='#{classes.flatten.join(' ')}' type='button'>"
-			s << "<span class='href' style='display:none;'>"
-			s << url_for(url)
-			s << "</span>"
-			s << title
-			s << "</button>"
-			s
-		end
+#		#	This style somehow for some reason actually submits the request TWICE?
+#		#	In many cases, this is no big deal, but when using it to send
+#		#	emails or something, the controller/action is called twice
+#		#	resulting in 2 emails (if that's what your action does)
+#		#	I'd really like to understand why.
+#		def button_link_to( title, url, options={} )
+#			classes = ['link']
+#			classes << options[:class]
+#			s =  "<a href='#{url_for(url)}' style='text-decoration:none;'>"
+#			s << "<button type='button'>"
+#			s << title
+#			s << "</button></a>\n"
+#		end
+#
+#		#	This creates a button that looks like a submit button
+#		#	but is just a javascript controlled link.
+#		#	I don't like it.
+#		def old_button_link_to( title, url, options={} )
+#	#		id = "id='#{options[:id]}'" unless options[:id].blank?
+#	#		klass = if options[:class].blank?
+#	#			"class='link'"
+#	#		else
+#	#			"class='#{options[:class]}'"
+#	#		end
+#	#		s =  "<button #{id} #{klass} type='button'>"
+#			classes = ['link']
+#			classes << options[:class]
+#			s =  "<button class='#{classes.flatten.join(' ')}' type='button'>"
+#			s << "<span class='href' style='display:none;'>"
+#			s << url_for(url)
+#			s << "</span>"
+#			s << title
+#			s << "</button>"
+#			s
+#		end
 
 		def flasher
 			s = ''

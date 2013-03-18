@@ -28,22 +28,22 @@ module CommonLib::ActionViewExtension::FormBuilder
 
 
 
-		def submit_link_to(value=nil,options={})
-			#	submit_link_to will remove :value, which is intended for submit
-			#	so it MUST be executed first.  Unfortunately, my javascript
-			#	expects it to be AFTER the a tag.
-	#		s = submit(value,options.reverse_merge(
-	#				:id => "#{object_name}_submit_#{value.try(:downcase).try(:gsub,/\s+/,'_')}"
-	#			) ) << @template.submit_link_to(value,nil,options)
-			s1 = submit(value,options.reverse_merge(
-					:id => "#{object_name}_submit_#{value.try(:downcase).try(
-						:gsub,/\s+/,'_').try(
-						:gsub,/(&amp;|'|\/)/,'').try(
-						:gsub,/_+/,'_')}"
-				) ) 
-			s2 = @template.submit_link_to(value,nil,options)
-			s2 << s1
-		end 
+#		def submit_link_to(value=nil,options={})
+#			#	submit_link_to will remove :value, which is intended for submit
+#			#	so it MUST be executed first.  Unfortunately, my javascript
+#			#	expects it to be AFTER the a tag.
+#	#		s = submit(value,options.reverse_merge(
+#	#				:id => "#{object_name}_submit_#{value.try(:downcase).try(:gsub,/\s+/,'_')}"
+#	#			) ) << @template.submit_link_to(value,nil,options)
+#			s1 = submit(value,options.reverse_merge(
+#					:id => "#{object_name}_submit_#{value.try(:downcase).try(
+#						:gsub,/\s+/,'_').try(
+#						:gsub,/(&amp;|'|\/)/,'').try(
+#						:gsub,/_+/,'_')}"
+#				) ) 
+#			s2 = @template.submit_link_to(value,nil,options)
+#			s2 << s1
+#		end 
 
 		def hour_select(method,options={},html_options={})
 #			@template.hour_select(
@@ -106,9 +106,6 @@ module CommonLib::ActionViewExtension::FormBuilder
 			options.update(:class => [options[:class],'datepicker'].compact.join(' '))
 			@template.text_field( object_name, method, options )
 		end
-
-
-
 
 	def wrapped_check_box(*args,&block)
 		method      = args[0]

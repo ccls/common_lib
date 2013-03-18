@@ -5,6 +5,7 @@ module CommonLib::ActiveSupportExtension; end
 require 'common_lib/active_support_extension/test_case'
 require 'common_lib/active_support_extension/test_with_verbosity'
 require 'common_lib/active_support_extension/associations'
+require 'common_lib/active_support_extension/assertions'
 require 'common_lib/active_support_extension/attributes'
 #require 'common_lib/active_support_extension/pending'
 
@@ -28,4 +29,9 @@ Rails.backtrace_cleaner.add_silencer {|line|
 
 #	Return true or false.  Need to collect if adding multiple conditions.
 #	line =~ /common_lib\/active_support_extension\/test_case\.rb:/
+
+
+
+	line =~ /test_with_verbosity/
+
 } if defined? Rails 

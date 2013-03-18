@@ -29,21 +29,16 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			user_options = actions.extract_options!
 
 			options = {}
-			if ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+# ruby 193 uses symbols
+			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
+				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
 			actions += options[:actions]||[]
 
 			m_key = options[:model].try(:underscore).try(:to_sym)
-
-#			o = {
-#				:actions => {
-#					:new => {
-#						:request => [ :get, :new ]
-#					}
-#				}
-#			}
 
 			logins = Array(options[:logins]||options[:login])
 			logins.each do |login|
@@ -283,7 +278,9 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			user_options = actions.extract_options!
 
 			options = {}
-			if ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
+				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
@@ -395,7 +392,9 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			user_options = actions.extract_options!
 
 			options = {}
-			if ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
+				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
@@ -523,7 +522,9 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			user_options = actions.extract_options!
 
 			options = {}
-			if ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
+				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
