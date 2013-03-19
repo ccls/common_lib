@@ -47,6 +47,7 @@ gem 'american_date'
 gem "ryanb-acts-as-list", :require => 'acts_as_list'
 
 gem "jeweler"
+gem "hpricot"
 
 group :test do
 	gem 'test-unit'

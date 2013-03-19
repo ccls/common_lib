@@ -17,17 +17,6 @@ pkg/
 config/*database.yml
 db/test_*_schema.rb
 
-
-app/models.orig/
-db/migrate.orig/
-packages_updated.test
-s.git/
-test.unit.orig/
-test/unit.orig/
-misc/
-/*.war
-*_errors.txt
 *.swp
 /config/initializers/secret_token.rb
-Gemfile.lock
 
