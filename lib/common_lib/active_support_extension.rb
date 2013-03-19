@@ -1,6 +1,3 @@
-require 'active_support'
-require 'active_support/test_case'
-
 module CommonLib::ActiveSupportExtension; end
 require 'common_lib/active_support_extension/test_case'
 require 'common_lib/active_support_extension/test_with_verbosity'

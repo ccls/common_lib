@@ -1,5 +1,9 @@
-#require 'common_lib'
-
+#
+#	copied from Paperclip
+#	I'm not real sure what most of this is for
+#	All I want is to share my rake tasks.
+#	I would be nice to share my locales as well
+#
 module CommonLib
   require 'rails'
 

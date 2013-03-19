@@ -50,6 +50,11 @@ gem "jeweler"
 gem "hpricot"
 
 group :test do
+
+	gem "simplecov", :require => false
+
+	gem "ccls-html_test"
+
 	gem 'test-unit'
 	
 	gem "factory_girl", "~> 2.6.0"

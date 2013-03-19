@@ -3,8 +3,7 @@ log/
 doc/
 test/log
 *sqlite3
-coverage
-coverage.data
+/coverage*
 test/documents/
 db/seeds.rb
 db/schema.rb
