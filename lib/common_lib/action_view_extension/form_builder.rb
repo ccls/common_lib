@@ -106,7 +106,9 @@ class_eval %Q"
 "
 end
 
-
+#
+#	all are defined so this shouldn't be needed
+#
 
 #		def method_missing_with_field_wrapping(symb,*args, &block)
 #			method_name = symb.to_s
@@ -136,8 +138,6 @@ end
 #				method_missing_without_field_wrapping(symb,*args, &block)
 #			end
 #		end
-
-#	end	#	module InstanceMethods
 
 end
 ActionView::Helpers::FormBuilder.send(:include, 

@@ -3,9 +3,7 @@ module CommonLib::ActiveSupportExtension::TestCase
 	def self.included(base)
 		# basically to include the model_name method to the CLASS
 		base.extend ActiveModel::Naming
-
 		base.extend(ClassMethods)
-#		base.send(:include, InstanceMethods)
 	end
 
 	module ClassMethods
@@ -124,49 +122,47 @@ module CommonLib::ActiveSupportExtension::TestCase
 
 	end
 
-#	module InstanceMethods
 
-		at_exit { 
-			puts Dir.pwd() 
-			puts Time.now
-		}
+	at_exit { 
+		puts Dir.pwd() 
+		puts Time.now
+	}
 
-		#	basically a copy of assert_difference, but
-		#	without any explicit comparison as it is 
-		#	simply stating that something will change
-		#	(designed for updated_at)
-		def assert_changes(expression, message = nil, &block)
-			b = block.send(:binding)
-			exps = Array.wrap(expression)
-			before = exps.map { |e| eval(e, b) }
-			yield
-			exps.each_with_index do |e, i|
-				error = "#{e.inspect} didn't change"
-				error = "#{message}.\n#{error}" if message
-				assert_not_equal(before[i], eval(e, b), error)
-			end
+	#	basically a copy of assert_difference, but
+	#	without any explicit comparison as it is 
+	#	simply stating that something will change
+	#	(designed for updated_at)
+	def assert_changes(expression, message = nil, &block)
+		b = block.send(:binding)
+		exps = Array.wrap(expression)
+		before = exps.map { |e| eval(e, b) }
+		yield
+		exps.each_with_index do |e, i|
+			error = "#{e.inspect} didn't change"
+			error = "#{message}.\n#{error}" if message
+			assert_not_equal(before[i], eval(e, b), error)
 		end
+	end
 
-		#	Just a negation of assert_changes
-		def deny_changes(expression, message = nil, &block)
-			b = block.send(:binding)
-			exps = Array.wrap(expression)
-			before = exps.map { |e| eval(e, b) }
-			yield
-			exps.each_with_index do |e, i|
-				error = "#{e.inspect} changed"
-				error = "#{message}.\n#{error}" if message
-				assert_equal(before[i], eval(e, b), error)
-			end
+	#	Just a negation of assert_changes
+	def deny_changes(expression, message = nil, &block)
+		b = block.send(:binding)
+		exps = Array.wrap(expression)
+		before = exps.map { |e| eval(e, b) }
+		yield
+		exps.each_with_index do |e, i|
+			error = "#{e.inspect} changed"
+			error = "#{message}.\n#{error}" if message
+			assert_equal(before[i], eval(e, b), error)
 		end
+	end
 
-		def turn_off_paperclip_logging
-			#	Is there I way to silence the paperclip output?  Yes...
-			Paperclip.options[:log] = false
-			#	Is there I way to capture the paperclip output for comparison?  Don't know.
-		end
+	def turn_off_paperclip_logging
+		#	Is there I way to silence the paperclip output?  Yes...
+		Paperclip.options[:log] = false
+		#	Is there I way to capture the paperclip output for comparison?  Don't know.
+	end
 
-#	end	#	InstanceMethods
 end	#	ActiveSupportExtension::TestCase
 ActiveSupport::TestCase.send(:include, CommonLib::ActiveSupportExtension::TestCase)
 __END__

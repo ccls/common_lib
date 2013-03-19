@@ -124,6 +124,5 @@ module CommonLib::Array#	:nodoc:
 		contains_true ^ contains_false
 	end
 
-#	end
 end
 Array.send(:include, CommonLib::Array )

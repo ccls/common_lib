@@ -2,22 +2,17 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 
 	def self.included(base)
 		base.extend ClassMethods
-#		base.send(:include,InstanceMethods)
 	end
 
-#	module InstanceMethods
-
-		#	This needs to be static and not dynamic or the multiple
-		#	calls that would create it would overwrite each other.
-		def nawil_redirection(options={})
-			if options[:redirect]
-				send(options[:redirect])
-			else
-				root_path
-			end
+	#	This needs to be static and not dynamic or the multiple
+	#	calls that would create it would overwrite each other.
+	def nawil_redirection(options={})
+		if options[:redirect]
+			send(options[:redirect])
+		else
+			root_path
 		end
-
-#	end	# module InstanceMethods
+	end
 
 	module ClassMethods
 

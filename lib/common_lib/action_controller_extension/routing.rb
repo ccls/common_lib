@@ -6,9 +6,6 @@ module CommonLib::ActionControllerExtension::Routing
 
 	module ClassMethods
 
-#		def assert_route
-#		end
-
 		def assert_no_route(verb,action,args={})
 			test "#{brand}no route to #{verb} #{action} #{args.inspect}" do
 				assert_raise(ActionController::RoutingError){
