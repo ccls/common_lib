@@ -1,53 +1,48 @@
 module CommonLib::ActionViewExtension::Base
-#class ActionView::Base
 
-#	def self.included(base)
-##		base.send(:include, InstanceMethods)
-#		base.class_eval do
-#			alias_method_chain( :method_missing, :wrapping 
-#				) unless base.respond_to?(:method_missing_without_wrapping)
-#		end
-#	end
-
-#	module InstanceMethods
+	# Just a simple method to wrap the passed text in a span
+	# with class='required'
+	def required(text)
+		"<span class='required'>#{text}</span>".html_safe
+	end
 
 	def nbsp
 		"&nbsp;".html_safe
 	end
 
-		def mdy(date)
-			( date.nil? ) ? '&nbsp;' : date.strftime("%m/%d/%Y")
-		end
+	def mdy(date)
+		( date.nil? ) ? nbsp : date.strftime("%m/%d/%Y")
+	end
 
-		def time_mdy(time)
-			( time.nil? ) ? '&nbsp;' : time.strftime("%I:%M %p %m/%d/%Y")
-		end
+	def time_mdy(time)
+		( time.nil? ) ? nbsp : time.strftime("%I:%M %p %m/%d/%Y")
+	end
 
-		def field_wrapper(method,options={},&block)
-			classes = [method,options[:class]].compact.join(' ')
-			s =  "<div class='#{classes} field_wrapper'>\n"
-			s << yield 
-			s << "\n</div><!-- class='#{classes}' -->"
-		end
+	def field_wrapper(method,options={},&block)
+		classes = [method,options[:class]].compact.join(' ')
+		s =  "<div class='#{classes} field_wrapper'>\n"
+		s << yield 
+		s << "\n</div><!-- class='#{classes}' -->"
+	end
 
-		#	This is NOT a form field
-		def _wrapped_spans(object_name,method,options={})
-			s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
-			value = if options[:value]
-				options[:value]
-			else
-				object = instance_variable_get("@#{object_name}")
-				value = object.send(method)
-				value = (value.to_s.blank?)?'&nbsp;':value
-			end
-			s << "<span class='value'>#{value}</span>"
-		end
-
-		def _wrapped_date_spans(object_name,method,options={})
+	#	This is NOT a form field
+	def _wrapped_spans(object_name,method,options={})
+		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
+		value = if options[:value]
+			options[:value]
+		else
 			object = instance_variable_get("@#{object_name}")
-			_wrapped_spans(object_name,method,options.update(
-				:value => mdy(object.send(method)) ) )
+			value = object.send(method)
+			value = (value.to_s.blank?)?'&nbsp;':value
 		end
+		s << "<span class='value'>#{value}</span>"
+	end
+
+	def _wrapped_date_spans(object_name,method,options={})
+		object = instance_variable_get("@#{object_name}")
+		_wrapped_spans(object_name,method,options.update(
+			:value => mdy(object.send(method)) ) )
+	end
 
 #		def sex_select(object_name, method, 
 #				options={}, html_options={})
@@ -248,6 +243,7 @@ module CommonLib::ActionViewExtension::Base
 			s << "<noscript><p id='noscript' class='flash'>\n"
 			s << "Javascript is required for this site to be fully functional.\n"
 			s << "</p></noscript>\n"
+			s.html_safe
 		end
 
 		#	Created to stop multiple entries of same stylesheet
@@ -270,8 +266,6 @@ module CommonLib::ActionViewExtension::Base
 				end
 			end
 		end
-
-#	end	#	module InstanceMethods
 
 end	#	module CommonLib::ActionViewExtension::Base
 ActionView::Base.send(:include, 
