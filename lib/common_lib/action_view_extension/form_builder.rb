@@ -58,6 +58,23 @@ module CommonLib::ActionViewExtension::FormBuilder
 		@template.text_field( object_name, method, options )
 	end
 
+	def datetime_text_field(method, options = {})
+		format = options.delete(:format) || '%m/%d/%Y %H:%M'
+		tmp_value = if options[:value].blank?
+			tmp = self.object.send("#{method}") ||
+			      self.object.send("#{method}_before_type_cast")
+		else
+			options[:value]
+		end
+		begin
+			options[:value] = tmp_value.to_datetime.try(:strftime,format)
+		rescue NoMethodError, ArgumentError
+			options[:value] = tmp_value
+		end
+		options.update(:class => [options[:class],'datetimepicker'].compact.join(' '))
+		@template.text_field( object_name, method, options )
+	end
+
 	def wrapped_check_box(*args,&block)
 		method      = args[0]
 		content = @template.field_wrapper(method,:class => 'check_box') do
