@@ -10,7 +10,6 @@ class CommonLib::User
 	end
 end
 
-#module CommonLib::ActionViewExtension; end
 require 'common_lib/action_view_extension'
 
 class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
