@@ -22,6 +22,48 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 #	include CommonLib::ActionView
 #	include CommonLibHelper
 
+#	rails 3.2.8 now html_escapes ' to &#x27; in these input selectors
+
+	test "sex_select" do
+		output_buffer = form_for(FBModel.new,:url => '/'){|f| f.sex_select(:some_attribute) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_fb_model" id="new_fb_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><select id="fb_model_some_attribute" name="fb_model[some_attribute]"><option value="">-select-</option>
+<option value="M">male</option>
+<option value="F">female</option>
+<option value="DK">don&#x27;t know</option></select></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "wrapped_sex_select" do
+		output_buffer = form_for(FBModel.new,:url => '/'){|f| f.wrapped_sex_select(:some_attribute) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_fb_model" id="new_fb_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute sex_select field_wrapper'>
+<label for="fb_model_some_attribute">Some attribute</label><select id="fb_model_some_attribute" name="fb_model[some_attribute]"><option value="">-select-</option>
+<option value="M">male</option>
+<option value="F">female</option>
+<option value="DK">don&#x27;t know</option></select>
+</div><!-- class='some_attribute sex_select' --></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "datetime_text_field" do
+		output_buffer = form_for(FBModel.new,:url => '/'){|f| f.datetime_text_field(:some_attribute) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_fb_model" id="new_fb_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><input class="datetimepicker" id="fb_model_some_attribute" name="fb_model[some_attribute]" size="30" type="text" /></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "datetime_text_field with value" do
+		output_buffer = form_for(FBModel.new,:url => '/'){|f| f.datetime_text_field(:some_attribute, :value => 'sometestvalue' ) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_fb_model" id="new_fb_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><input class="datetimepicker" id="fb_model_some_attribute" name="fb_model[some_attribute]" size="30" type="text" value="sometestvalue" /></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "wrapped_datetime_text_field" do
+		output_buffer = form_for(FBModel.new,:url => '/'){|f| f.wrapped_datetime_text_field(:some_attribute) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_fb_model" id="new_fb_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute datetime_text_field field_wrapper'>
+<label for="fb_model_some_attribute">Some attribute</label><input class="datetimepicker" id="fb_model_some_attribute" name="fb_model[some_attribute]" size="30" type="text" />
+</div><!-- class='some_attribute datetime_text_field' --></form>}
+		assert_equal expected, output_buffer
+	end
+
 	test "date_text_field" do
 		output_buffer = form_for(SomeModel.new,:url => '/'){|f| 
 			concat f.date_text_field(:some_attribute) }
