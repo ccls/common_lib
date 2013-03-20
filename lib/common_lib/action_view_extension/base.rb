@@ -5,6 +5,7 @@ module CommonLib::ActionViewExtension::Base
 	def required(text)
 		"<span class='required'>#{text}</span>".html_safe
 	end
+	alias_method :req, :required
 
 	def nbsp
 		"&nbsp;".html_safe
