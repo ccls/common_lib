@@ -65,115 +65,145 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		assert_select response, 'span.required', :text => 'something', :count => 1
 	end
 
-	test "form_link_to with block" do
-		response = HTML::Document.new(
-			form_link_to('mytitle','/myurl') do
-				hidden_field_tag('apple','orange')
-			end).root
-#<form class='form_link_to' action='/myurl' method='post'>
-#<input id="apple" name="apple" type="hidden" value="orange" />
-#<input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
-			assert_select 'input', :count => 3
-		end
+#	mdy
+
+	test "mdy(nil) should return nbsp" do
+		response = mdy(nil)
+		assert_equal '&nbsp;', response
 	end
 
-	test "form_link_to without block" do
-		response = HTML::Document.new(form_link_to('mytitle','/myurl')).root
-		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
-			assert_select 'input', :count => 2
-		end
-#<form class="form_link_to" action="/myurl" method="post">
-#<input type="submit" value="mytitle" />
-#</form>
+	test "mdy(some valid date) should return mdy of date" do
+		response = mdy(Date.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
 	end
 
-	test "destroy_link_to with block" do
-		response = HTML::Document.new(
-			destroy_link_to('mytitle','/myurl') do
-				hidden_field_tag('apple','orange')
-			end).root
-#<form class="destroy_link_to" action="/myurl" method="post">
-#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
-#<input id="apple" name="apple" type="hidden" value="orange" /><input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
-			assert_select 'div', :count => 1 do
-				assert_select 'input[name=_method][value=delete]',:count => 1
-			end
-			assert_select 'input', :count => 4
-		end
+	test "mdy(some valid datetime) should return mdy of date" do
+		response = mdy(DateTime.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
 	end
 
-	test "destroy_link_to without block" do
-		response = HTML::Document.new(destroy_link_to('mytitle','/myurl')).root
-#<form class="destroy_link_to" action="/myurl" method="post">
-#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
-#<input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
-			assert_select 'div', :count => 1 do
-				assert_select 'input[name=_method][value=delete]',:count => 1
-			end
-			assert_select 'input', :count => 3
-		end
+	test "mdy(some valid time) should return mdy of date" do
+		response = mdy(Time.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
 	end
 
-#	test "button_link_to without block" do
-#		response = HTML::Document.new(button_link_to('mytitle','/myurl')).root
-#		assert_select response, 'a[href=/myurl]', :count => 1 do
-#			assert_select 'button[type=button]', :count => 1
-#		end
-##<a href="/myurl" style="text-decoration:none;"><button type="button">mytitle</button></a>
-#	end
-
-	test "aws_image_tag" do
-		response = HTML::Document.new(
-			aws_image_tag('myimage')
-		).root
-		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
-#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+	test "mdy('blah, blah, blah') should return nbsp" do
+		response = mdy('blah, blah, blah')
+		assert_equal '&nbsp;', response
 	end
 
-	test "flasher" do
-		response = HTML::Document.new(
-			flasher
-		).root
-#<p class="flash" id="notice">Hello There</p>
-#<noscript>
-#<p id="noscript" class="flash">Javascript is required for this site to be fully functional.</p>
-#</noscript>
-		assert_select response, 'p#notice.flash'
-		assert_select response, 'noscript' do
-			assert_select 'p#noscript.flash'
-		end
+#	mdy_or_nil
+
+	test "mdy_or_nil(nil) should return nil" do
+		response = mdy_or_nil(nil)
+		assert_nil response
 	end
 
-	test "javascripts" do
-		assert_nil @javascripts
-		javascripts('myjavascript')
-		assert @javascripts.include?('myjavascript')
-		assert_equal 1, @javascripts.length
-		javascripts('myjavascript')
-		assert_equal 1, @javascripts.length
-#<script src="/javascripts/myjavascript.js" type="text/javascript"></script>
-		response = HTML::Document.new( content_for(:head) ).root
-		assert_select response, 'script[src=/javascripts/myjavascript.js]'
+	test "mdy_or_nil(some valid date) should return mdy of date" do
+		response = mdy_or_nil(Date.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
 	end
 
-	test "stylesheets" do
-		assert_nil @stylesheets
-		stylesheets('mystylesheet')
-		assert @stylesheets.include?('mystylesheet')
-		assert_equal 1, @stylesheets.length
-		stylesheets('mystylesheet')
-		assert_equal 1, @stylesheets.length
-#<link href="/stylesheets/mystylesheet.css" media="screen" rel="stylesheet" type="text/css" />
-		response = HTML::Document.new( content_for(:head) ).root
-		assert_select response, 'link[href=/stylesheets/mystylesheet.css]'
+	test "mdy_or_nil(some valid datetime) should return mdy of date" do
+		response = mdy_or_nil(DateTime.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
 	end
+
+	test "mdy_or_nil(some valid time) should return mdy of date" do
+		response = mdy_or_nil(Time.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999', response
+	end
+
+	test "mdy_or_nil('blah, blah, blah') should return nil" do
+		response = mdy_or_nil('blah, blah, blah')
+		assert_nil response
+	end
+
+
+#	mdyhm
+
+	test "mdyhm(nil) should return nbsp" do
+		response = mdyhm(nil)
+		assert_equal '&nbsp;', response
+	end
+
+	test "mdyhm(some valid date) should return mdy of date" do
+		response = mdyhm(Date.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999 00:00 (+00:00)', response
+	end
+
+	test "mdyhm(some valid datetime) should return mdy of date" do
+		response = mdyhm(DateTime.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999 00:00 (+00:00)', response
+	end
+
+	test "mdyhm(some valid time) should return mdy of date" do
+		response = mdyhm(Time.parse('Dec 31, 1999 00:00:00 -0000'))
+		#	Time zone will reflect the CURRENT timezone (PDT or PST) which changes 
+		#	obviously so explicitly specifying one so test always works.
+		#	using +0000 will result in coversion to local zone (PST or PDT)
+		#	using -0000 will result in UTC (should anyway)
+		assert_equal '12/31/1999 00:00 (UTC)', response
+	end
+
+	test "mdyhm('blah, blah, blah') should return nbsp" do
+		response = mdyhm('blah, blah, blah')
+		assert_equal '&nbsp;', response
+	end
+
+#	mdyhm_or_nil
+
+	test "mdyhm_or_nil(nil) should return nbsp" do
+		response = mdyhm_or_nil(nil)
+		assert_nil response
+	end
+
+	test "mdyhm_or_nil(some valid date) should return mdy of date" do
+		response = mdyhm_or_nil(Date.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999 00:00 (+00:00)', response
+	end
+
+	test "mdyhm_or_nil(some valid datetime) should return mdy of date" do
+		response = mdyhm_or_nil(DateTime.parse('Dec 31, 1999'))
+		assert_equal '12/31/1999 00:00 (+00:00)', response
+	end
+
+	test "mdyhm_or_nil(some valid time) should return mdy of date" do
+		response = mdyhm(Time.parse('Dec 31, 1999 00:00:00 -0000'))
+		#	Time zone will reflect the CURRENT timezone (PDT or PST) which changes 
+		#	obviously so explicitly specifying one so test always works.
+		#	using +0000 will result in coversion to local zone (PST or PDT)
+		#	using -0000 will result in UTC (should anyway)
+		assert_equal '12/31/1999 00:00 (UTC)', response
+	end
+
+	test "mdyhm_or_nil('blah, blah, blah') should return nbsp" do
+		response = mdyhm_or_nil('blah, blah, blah')
+		assert_nil response
+	end
+
+
+#	time_mdy
+
+	#	apparently not used anywhere anymore.
+	#	could remove the method or test it manually in order to get 100%
+	test "time_mdy(nil) should return nbsp" do
+		response = time_mdy(nil)
+		assert_equal '&nbsp;', response
+	end
+
+	test "time_mdy(some valid time) should return formated time" do
+		response = time_mdy(Time.parse('Dec 24, 1999 11:59 pm'))
+		assert_equal "11:59 PM 12/24/1999", response
+	end
+
+	test "time_mdy('blah, blah, blah') should return nbsp" do
+		response = time_mdy('blah, blah, blah')
+		assert_equal '&nbsp;', response
+	end
+
+
+#	field_wrapper
 
 	test "field_wrapper" do
 		response = HTML::Document.new(
@@ -185,6 +215,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='mymethod' -->
 		assert_select response, 'div.mymethod.field_wrapper'
 	end
+
+
+#	_wrapped_spans
 
 	test "wrapped_spans without options" do
 		@user = CommonLib::User.new
@@ -200,6 +233,9 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select 'span.value', :count => 1
 		end
 	end
+
+
+#	_wrapped_date_spans
 
 	test "wrapped_date_spans blank" do
 		@user = CommonLib::User.new
@@ -230,6 +266,36 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select 'span.value',:text => '12/05/1971',:count => 1
 		end
 	end
+
+
+#	_wrapped_datetime_spans
+
+	test "wrapped_datetime_spans blank" do
+		@user = CommonLib::User.new
+		response = HTML::Document.new(
+			wrapped_datetime_spans(:user, :dob)).root
+		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.value',:text => '&nbsp;',:count => 1
+		end
+	end
+
+	test "wrapped_datetime_spans Dec 5, 1971" do
+		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
+		response = HTML::Document.new(
+			wrapped_datetime_spans(:user, :dob)).root
+		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.value',:text => '12/05/1971 00:00 (+00:00)',:count => 1
+		end
+	end
+
+
+
+
+#	_wrapped_yes_or_no_spans
 
 	test "wrapped_yes_or_no_spans blank" do
 		@user = CommonLib::User.new
@@ -277,17 +343,131 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 	end
 
 
-	#	apparently not used anywhere anymore.
-	#	could remove the method or test it manually in order to get 100%
-	test "time_mdy(nil) should return nbsp" do
-		response = time_mdy(nil)
-		assert_equal '&nbsp;', response
+
+#	method_missing_with_wrapping
+
+
+
+#	form_link_to
+
+	test "form_link_to with block" do
+		response = HTML::Document.new(
+			form_link_to('mytitle','/myurl') do
+				hidden_field_tag('apple','orange')
+			end).root
+#<form class='form_link_to' action='/myurl' method='post'>
+#<input id="apple" name="apple" type="hidden" value="orange" />
+#<input type="submit" value="mytitle" />
+#</form>
+		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+			assert_select 'input', :count => 3
+		end
 	end
 
-	test "time_mdy(some valid time) should return formated time" do
-		response = time_mdy(Time.parse('Dec 24, 1999 11:59 pm'))
-		assert_equal "11:59 PM 12/24/1999", response
+	test "form_link_to without block" do
+		response = HTML::Document.new(form_link_to('mytitle','/myurl')).root
+		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+			assert_select 'input', :count => 2
+		end
+#<form class="form_link_to" action="/myurl" method="post">
+#<input type="submit" value="mytitle" />
+#</form>
 	end
+
+#	destroy_link_to
+
+
+	test "destroy_link_to with block" do
+		response = HTML::Document.new(
+			destroy_link_to('mytitle','/myurl') do
+				hidden_field_tag('apple','orange')
+			end).root
+#<form class="destroy_link_to" action="/myurl" method="post">
+#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
+#<input id="apple" name="apple" type="hidden" value="orange" /><input type="submit" value="mytitle" />
+#</form>
+		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
+			assert_select 'div', :count => 1 do
+				assert_select 'input[name=_method][value=delete]',:count => 1
+			end
+			assert_select 'input', :count => 4
+		end
+	end
+
+	test "destroy_link_to without block" do
+		response = HTML::Document.new(destroy_link_to('mytitle','/myurl')).root
+#<form class="destroy_link_to" action="/myurl" method="post">
+#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
+#<input type="submit" value="mytitle" />
+#</form>
+		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
+			assert_select 'div', :count => 1 do
+				assert_select 'input[name=_method][value=delete]',:count => 1
+			end
+			assert_select 'input', :count => 3
+		end
+	end
+
+
+
+#	aws_image_tag
+
+	test "aws_image_tag" do
+		response = HTML::Document.new(
+			aws_image_tag('myimage')
+		).root
+		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
+#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
+		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+	end
+
+
+#	flasher
+
+	test "flasher" do
+		response = HTML::Document.new(
+			flasher
+		).root
+#<p class="flash" id="notice">Hello There</p>
+#<noscript>
+#<p id="noscript" class="flash">Javascript is required for this site to be fully functional.</p>
+#</noscript>
+		assert_select response, 'p#notice.flash'
+		assert_select response, 'noscript' do
+			assert_select 'p#noscript.flash'
+		end
+	end
+
+
+#	stylesheets
+
+	test "stylesheets" do
+		assert_nil @stylesheets
+		stylesheets('mystylesheet')
+		assert @stylesheets.include?('mystylesheet')
+		assert_equal 1, @stylesheets.length
+		stylesheets('mystylesheet')
+		assert_equal 1, @stylesheets.length
+#<link href="/stylesheets/mystylesheet.css" media="screen" rel="stylesheet" type="text/css" />
+		response = HTML::Document.new( content_for(:head) ).root
+		assert_select response, 'link[href=/stylesheets/mystylesheet.css]'
+	end
+
+
+#	javascripts
+
+	test "javascripts" do
+		assert_nil @javascripts
+		javascripts('myjavascript')
+		assert @javascripts.include?('myjavascript')
+		assert_equal 1, @javascripts.length
+		javascripts('myjavascript')
+		assert_equal 1, @javascripts.length
+#<script src="/javascripts/myjavascript.js" type="text/javascript"></script>
+		response = HTML::Document.new( content_for(:head) ).root
+		assert_select response, 'script[src=/javascripts/myjavascript.js]'
+	end
+
 
 
 

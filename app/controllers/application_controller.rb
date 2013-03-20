@@ -10,7 +10,7 @@ protected
 	def access_denied( 
 			message="You don't have permission to complete that action.", 
 			default=root_path )
-		session[:return_to] = request.request_uri
+		session[:return_to] = request.url	#	request_uri
 		flash[:error] = message
 		redirect_to default
 	end

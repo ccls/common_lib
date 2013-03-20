@@ -12,25 +12,28 @@ module CommonLib::ActionViewExtension::Base
 	end
 
 	def mdy(date)
-		( date.nil? ) ? nbsp : date.strftime("%m/%d/%Y")
+		( date.blank? or !date.respond_to?(:strftime) ) ? nbsp : date.strftime("%m/%d/%Y")
+	end
+
+	#	For use in CSV output as don't want the &nbsp;
+	def mdy_or_nil(date)
+		( date.blank? or !date.respond_to?(:strftime) ) ? nil : date.strftime("%m/%d/%Y")
 	end
 
 	def mdyhm(datetime)
-		(( datetime.nil? ) ? nbsp : datetime.strftime("%m/%d/%Y %H:%M (%Z)")).html_safe
+		( datetime.blank? or !datetime.respond_to?(:strftime) ) ? nbsp : 
+				datetime.strftime("%m/%d/%Y %H:%M (%Z)")
 	end
 
 	#	For use in CSV output as don't want the &nbsp;
 	def mdyhm_or_nil(datetime)
-		datetime.strftime("%m/%d/%Y %H:%M (%Z)") unless datetime.blank?
+		( datetime.blank? or !datetime.respond_to?(:strftime) ) ? nil : 
+				datetime.strftime("%m/%d/%Y %H:%M (%Z)")
 	end
 	
-	#	For use in CSV output as don't want the &nbsp;
-	def mdy_or_nil(datetime)
-		datetime.strftime("%m/%d/%Y") unless datetime.blank?
-	end
-
 	def time_mdy(time)
-		( time.nil? ) ? nbsp : time.strftime("%I:%M %p %m/%d/%Y")
+		( time.blank? or !time.respond_to?(:strftime) ) ? nbsp : 
+				time.strftime("%I:%M %p %m/%d/%Y")
 	end
 
 	def field_wrapper(method,options={},&block)

@@ -9,10 +9,13 @@ module CommonLib::ActionControllerExtension::TestCase
 #		@request.env['HTTPS'] = nil
 #	end
 
-	def assert_layout(layout)
-		layout = "layouts/#{layout}" unless layout.match(/^layouts/)
-		assert_equal layout, @response.layout
-	end
+#
+#	Apparently, I don't use this?
+#
+#	def assert_layout(layout)
+#		layout = "layouts/#{layout}" unless layout.match(/^layouts/)
+#		assert_equal layout, @response.layout
+#	end
 
 end	#	module CommonLib::ActionControllerExtension::TestCase
 ActionController::TestCase.send(:include,

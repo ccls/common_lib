@@ -8,6 +8,12 @@ class PostsControllerTest < ActionController::TestCase
 		assert_not_nil assigns(:posts)
 	end
 
+	test "should not get index with invalid blog id" do
+		get :index, :blog_id => 0
+		assert_not_nil flash[:error]
+		assert_redirected_to root_path
+	end
+
 	test "should get new" do
 		blog = create_blog
 		get :new, :blog_id => blog.id
