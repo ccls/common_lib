@@ -49,6 +49,23 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 	end
 #	delegate :flash, :to => :controller
 
+
+#	required
+
+	test "required(text) should" do
+		response = HTML::Document.new(required('something')).root
+		#"<span class='required'>something</span>"
+		assert_select response, 'span.required', :text => 'something', :count => 1
+	end
+
+#	req
+
+	test "req(text) should" do
+		response = HTML::Document.new(req('something')).root
+		#"<span class='required'>something</span>"
+		assert_select response, 'span.required', :text => 'something', :count => 1
+	end
+
 	test "form_link_to with block" do
 		response = HTML::Document.new(
 			form_link_to('mytitle','/myurl') do
@@ -259,6 +276,21 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select 'span.value',:text => 'No',:count => 1
 		end
 	end
+
+
+	#	apparently not used anywhere anymore.
+	#	could remove the method or test it manually in order to get 100%
+	test "time_mdy(nil) should return nbsp" do
+		response = time_mdy(nil)
+		assert_equal '&nbsp;', response
+	end
+
+	test "time_mdy(some valid time) should return formated time" do
+		response = time_mdy(Time.parse('Dec 24, 1999 11:59 pm'))
+		assert_equal "11:59 PM 12/24/1999", response
+	end
+
+
 
 #	test "wrapped_sex_select" do
 #		@user = CommonLib::User.new

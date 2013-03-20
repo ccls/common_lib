@@ -15,6 +15,20 @@ module CommonLib::ActionViewExtension::Base
 		( date.nil? ) ? nbsp : date.strftime("%m/%d/%Y")
 	end
 
+	def mdyhm(datetime)
+		(( datetime.nil? ) ? nbsp : datetime.strftime("%m/%d/%Y %H:%M (%Z)")).html_safe
+	end
+
+	#	For use in CSV output as don't want the &nbsp;
+	def mdyhm_or_nil(datetime)
+		datetime.strftime("%m/%d/%Y %H:%M (%Z)") unless datetime.blank?
+	end
+	
+	#	For use in CSV output as don't want the &nbsp;
+	def mdy_or_nil(datetime)
+		datetime.strftime("%m/%d/%Y") unless datetime.blank?
+	end
+
 	def time_mdy(time)
 		( time.nil? ) ? nbsp : time.strftime("%I:%M %p %m/%d/%Y")
 	end
@@ -43,6 +57,12 @@ module CommonLib::ActionViewExtension::Base
 		object = instance_variable_get("@#{object_name}")
 		_wrapped_spans(object_name,method,options.update(
 			:value => mdy(object.send(method)) ) )
+	end
+
+	def _wrapped_datetime_spans(object_name,method,options={})
+		object = instance_variable_get("@#{object_name}")
+		_wrapped_spans(object_name,method,options.update(
+			:value => mdyhm(object.send(method)) ) )
 	end
 
 	#	This is NOT a form field
