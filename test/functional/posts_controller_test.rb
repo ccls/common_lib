@@ -28,6 +28,18 @@ class PostsControllerTest < ActionController::TestCase
 		assert_redirected_to post_path(assigns(:post))
 	end
 
+	test "should not create invalid post" do
+		blog = create_blog
+		#	a test for the field_error stuff in common_lib.rb
+		#	a post requires a title so that field will test it
+		#	also tests the error_messages helper
+		assert_difference('Post.count',0) do
+			post :create, :post => {}, :blog_id => blog.id
+		end
+		assert_response :success
+		assert_template 'new'
+	end
+
 	test "should not create post when save fails" do
 		blog = create_blog
 		Post.any_instance.stubs(:create_or_update).returns(false)

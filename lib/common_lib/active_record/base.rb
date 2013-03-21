@@ -12,11 +12,12 @@ class ActiveRecord::Base
 		if File.exists?(validation_file)
 			h = YAML::load( ERB.new( IO.read( validation_file )).result)
 
+			#	if the yml file is empty, h is false ( added "if h" condition )
 			h.each do |validation|
 				attributes=[validation.delete(:attributes), validation.delete(:attribute)
 					].compact.flatten
 				self.validates *attributes, validation
-			end
+			end if h
 #		else
 #			puts "YAML validations file not found so not using."
 		end

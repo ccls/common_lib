@@ -18,3 +18,8 @@ Factory.define :user do |f|
 	f.sequence(:name) { |n| "Name #{n}" }
 	f.sequence(:zip_code) { |n| sprintf("%05d",n) }
 end
+
+Factory.define :hash_like do |f|
+	f.sequence(:key)  { |n| "Key #{n}" }
+	f.sequence(:value){ |n| "Value #{n}" }
+end

@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
 	validates_past_date_for :birthday
 
 	validates_past_date_for :other_date, :allow_today => false, :allow_blank => true
+
+	alias_attribute :username, :name
+
 end

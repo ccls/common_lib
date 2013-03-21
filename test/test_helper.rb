@@ -23,6 +23,12 @@ class ActiveSupport::TestCase
 		p
 	end
 
+	def create_hash_like(options={})
+		p = Factory.build(:hash_like,options)
+		p.save
+		p
+	end
+
 	def new_post(options={})
 		Factory.build(:post,options)
 	end

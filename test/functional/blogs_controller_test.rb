@@ -1,6 +1,9 @@
 require 'test_helper'
 
 class BlogsControllerTest < ActionController::TestCase
+
+	assert_no_route :get, :fake_action
+
 	test "should get index" do
 		get :index
 		assert_response :success

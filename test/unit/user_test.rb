@@ -19,6 +19,28 @@ class UserTest < ActiveSupport::TestCase
 	assert_should_not_require(:other_date)
 	assert_requires_past_date(:other_date, :allow_today => false)
 
+
+	test "should have aliased username to name" do
+		user = Factory(:user)
+		assert_equal user.name, user.username
+	end
+
+	test "should include username in aliased_attributes" do
+		assert User.aliased_attributes.has_key?(:username),
+			User.aliased_attributes.keys.join(',')
+		assert User.aliased_attributes.has_key?('username'),
+			User.aliased_attributes.keys.join(',')
+	end
+
+	test "should have blank random without any" do
+		assert User.random.blank?
+	end
+
+	test "should return only user with random" do
+		user = Factory(:user)
+		assert_equal user, User.random
+	end
+
 protected
 
 	#	create_object is called from within the common class tests
