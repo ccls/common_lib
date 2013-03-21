@@ -1,0 +1,6 @@
+-
+  :attribute: :name
+  :presence: true
+  :uniqueness: true
+  :length:
+    :in: !ruby/range 5..250

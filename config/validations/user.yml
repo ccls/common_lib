@@ -1,0 +1,21 @@
+-
+  :attribute: :name
+  :presence: true
+  :uniqueness: true
+  :length:
+    :in: !ruby/range 5..250
+-
+  :attribute: :zip_code
+  :presence: true
+  :length:
+    :is: 5
+-
+  :attribute: :birthday
+  :complete_date:
+    :allow_nil: true
+  :past_date: true
+-
+  :attribute: :other_date
+  :past_date:
+    :allow_today: false
+    :allow_blank: true

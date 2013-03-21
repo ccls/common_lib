@@ -1,22 +1,17 @@
-
 -
   :attributes:
   - :title
   - :user
   - :owner_id
   :presence: true
-
 -
   :attributes: :title
   :length:
     :minimum: 5
   :allow_blank: true
-
 -
   :attributes: :title
   :uniqueness: true
-
 -
   :attributes: :some_blank_string
   :absence: true
-

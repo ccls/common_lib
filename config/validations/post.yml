@@ -1,0 +1,10 @@
+-
+  :attributes: :title
+  :length:
+    :maximum: 250
+  :presence: true
+-
+  :attributes:
+  - :blog
+  - :blog_id
+  :presence: true
