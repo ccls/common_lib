@@ -10,7 +10,7 @@ class PrivatesControllerTest < ActionController::TestCase
 	}
 
 	def create_private(options={})
-		Private.create(options)
+		Factory(:private,options)
 	end
 
 	def factory_attributes(options={})

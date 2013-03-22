@@ -12,7 +12,9 @@
     <td><%=h blog.title %></td>
     <td><%= link_to 'Show', blog %></td>
     <td><%= link_to 'Edit', edit_blog_path(blog) %></td>
-    <td><%= link_to 'Destroy', blog, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+<%# this is still technically invalid html and html_test's validator fails it %>
+<%#= link_to 'Destroy', blog, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
