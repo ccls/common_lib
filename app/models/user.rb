@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
 
 	attr_protected :role
 
+	validates_uniqueness_of_with_nilification :email
+
 end

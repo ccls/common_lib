@@ -54,6 +54,11 @@ class UserTest < ActiveSupport::TestCase
 		end 
 	end 
 
+	test "should nilify blank email address" do
+		user = Factory(:user, :email => '')
+		assert_nil user.email
+	end
+
 protected
 
 	#	create_object is called from within the common class tests

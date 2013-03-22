@@ -15,11 +15,11 @@ protected
 		redirect_to default
 	end
 
-	#	used in roles_controller
-	def may_not_be_user_required
-		current_user.may_not_be_user?(@user) || access_denied(
-			"You may not be this user to do this", user_path(current_user))
-	end
+#	#	used in roles_controller
+#	def may_not_be_user_required
+#		current_user.may_not_be_user?(@user) || access_denied(
+#			"You may not be this user to do this", user_path(current_user))
+#	end
 
 #	def redirections
 #		@redirections ||= HashWithIndifferentAccess.new({
@@ -43,10 +43,10 @@ protected
 	end
 	alias_method :login_required, :current_user_required
 
-	def no_current_user_required
-		logged_in? &&
-			access_denied("You must be logged out to do that",root_path)
-	end
-	alias_method :no_login_required, :no_current_user_required
+#	def no_current_user_required
+#		logged_in? &&
+#			access_denied("You must be logged out to do that",root_path)
+#	end
+#	alias_method :no_login_required, :no_current_user_required
 
 end

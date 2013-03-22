@@ -15,3 +15,8 @@
 -
   :attributes: :some_blank_string
   :absence: true
+-
+  :attribute: :limited_value
+  :inclusion:
+    :in: <%= %w( apples oranges ) %>
+  :allow_nil: true
