@@ -156,7 +156,7 @@ module CommonLib::ActionViewExtension::Base
 	def flasher
 		s = ''
 		flash.each do |key, msg|
-			s << content_tag( :p, msg, :id => key, :class => 'flash' )
+			s << content_tag( :p, msg, :id => key, :class => "flash #{key}" )
 			s << "\n"
 		end
 		s << "<noscript><p id='noscript' class='flash'>\n"
