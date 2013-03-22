@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
 
 	alias_attribute :username, :name
 
+	attr_protected :role
+
 end

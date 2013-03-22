@@ -64,38 +64,31 @@ class ActiveSupport::TestCase
 
 
 	def login_as( user=nil )
-#		uid = ( user.is_a?(User) ) ? user.uid : user
-#		if !uid.blank?
-#			@request.session[:calnetuid] = uid
-#			stub_ucb_ldap_person()
-#			User.find_create_and_update_by_uid(uid)
-#
-#			CASClient::Frameworks::Rails::Filter.stubs(
-#				:filter).returns(true)
-#			# No longer using the GatewayFilter stuff.
-#			# CASClient::Frameworks::Rails::GatewayFilter.stubs(
-#			# :filter).returns(true)
-#		end
+		user_id = ( user.is_a?(User) ) ? user.id : user
+		if !user_id.blank?
+			assert_not_logged_in
+			s = @request.session[:user_id] = user_id
+			assert_logged_in
+		else
+			assert_not_logged_in
+		end
 	end
 
 	def assert_redirected_to_login
-#		assert_response :redirect
-#		assert_match "https://auth-test.berkeley.edu/cas/login",
-#			@response.redirect_url
+		assert_not_nil flash[:error]
+		assert_redirected_to login_path
 	end
 
 	def assert_redirected_to_logout
-#		assert_response :redirect
-#		assert_match "https://auth-test.berkeley.edu/cas/logout",
-#			@response.redirect_url
+		assert_redirected_to logout_path
 	end
 
 	def assert_logged_in
-#		assert_not_nil session[:calnetuid]
+		assert_not_nil session[:user_id]
 	end
 
 	def assert_not_logged_in
-#		assert_nil session[:calnetuid]
+		assert_nil session[:user_id]
 	end
 
 	def active_user(options={})
@@ -107,90 +100,46 @@ class ActiveSupport::TestCase
 	end
 	alias_method :user, :active_user
 
-	def superuser(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('superuser')
-#		u
-	end
-#	alias_method :super_user, :superuser
-
 	def administrator(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('administrator')
-#		u
+		u = active_user(options.merge(:role => 'administrator'))
 	end
-#	alias_method :admin, :admin_user
-#	alias_method :administrator, :admin_user
-
-#	def interviewer(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('interviewer')
-#		u
-#	end
-
-	def reader(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('reader')
-#		u
-	end
-#	alias_method :employee, :reader
 
 	def editor(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('editor')
-#		u
+		u = active_user(options.merge(:role => 'editor'))
 	end
 
-	def exporter(options={})
-#		u = active_user(options)
-#		u.roles << Role.find_or_create_by_name('exporter')
-#		u
+	def reader(options={})
+		u = active_user(options.merge(:role => 'reader'))
 	end
 
 	class << self
 
-		def site_superusers
-#			@site_superusers ||= %w( superuser )
-		end
-
-		def non_site_superusers
-#			@non_site_superusers ||= ( all_test_roles - site_superusers )
-		end
-
 		def site_administrators
-#			@site_administrators ||= %w( superuser administrator )
+			@site_administrators ||= %w( administrator )
 		end
 
 		def non_site_administrators
-#			@non_site_administrators ||= ( all_test_roles - site_administrators )
-		end
-
-		def site_exporters
-#			@site_exporters ||= %w( superuser administrator exporter )
-		end
-
-		def non_site_exporters
-#			@non_site_exporters ||= ( all_test_roles - site_exporters )
+			@non_site_administrators ||= ( all_test_roles - site_administrators )
 		end
 
 		def site_editors
-#			@site_editors ||= %w( superuser administrator exporter editor )
+			@site_editors ||= %w( administrator exporter )
 		end
 
 		def non_site_editors
-#			@non_site_editors ||= ( all_test_roles - site_editors )
+			@non_site_editors ||= ( all_test_roles - site_editors )
 		end
 
 		def site_readers
-#			@site_readers ||= %w( superuser administrator exporter editor reader )
+			@site_readers ||= %w( administrator editor reader )
 		end
 
 		def non_site_readers
-#			@non_site_readers ||= ( all_test_roles - site_readers )
+			@non_site_readers ||= ( all_test_roles - site_readers )
 		end
 
 		def all_test_roles
-#			@all_test_roles = %w( superuser administrator exporter editor reader active_user )
+			@all_test_roles = %w( administrator editor reader )
 		end
 
 	end	#	class << self

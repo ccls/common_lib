@@ -29,4 +29,24 @@ protected
 #		})
 #	end
 
+	def current_user	
+		@current_user ||= session[:user_id] && User.find(session[:user_id])
+	end	
+
+	def logged_in?
+		!current_user.nil?
+	end
+
+	def current_user_required
+		logged_in? || 
+			access_denied("You must be logged in to do that",login_path)
+	end
+	alias_method :login_required, :current_user_required
+
+	def no_current_user_required
+		logged_in? &&
+			access_denied("You must be logged out to do that",root_path)
+	end
+	alias_method :no_login_required, :no_current_user_required
+
 end

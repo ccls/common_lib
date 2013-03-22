@@ -57,6 +57,20 @@ CommonLib::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
 
 
+	resource :user_session
+
+#	match 'signup' =>  'users#new',
+#		:as => :signup
+	match 'signin' =>  'user_sessions#new',
+		:as => :signin
+	match 'login' =>   'user_sessions#new',
+		:as => :login
+	match 'signout' => 'user_sessions#destroy',
+		:as => :signout
+	match 'logout' =>  'user_sessions#destroy',
+		:as => :logout
+
+	resources :privates
 
 	resources :blogs,
 			:shallow => true do

@@ -23,3 +23,6 @@ Factory.define :hash_like do |f|
 	f.sequence(:key)  { |n| "Key #{n}" }
 	f.sequence(:value){ |n| "Value #{n}" }
 end
+Factory.define :private do |f|
+	f.sequence(:name)  { |n| "Name #{n}" }
+end
