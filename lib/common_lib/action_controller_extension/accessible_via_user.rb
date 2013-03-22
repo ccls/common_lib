@@ -27,8 +27,8 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 # ruby 193 uses symbols
 			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
-			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
-				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+#			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+#				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
 			actions += options[:actions]||[]
@@ -275,8 +275,8 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			options = {}
 			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
-			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
-				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+#			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+#				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
 			actions += options[:actions]||[]
@@ -389,8 +389,8 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			options = {}
 			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
-			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
-				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+#			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+#				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
 			actions += options[:actions]||[]
@@ -519,8 +519,8 @@ module CommonLib::ActionControllerExtension::AccessibleViaUser
 			options = {}
 			if ( self.constants.include?(:ASSERT_ACCESS_OPTIONS) )
 				options.merge!(self::ASSERT_ACCESS_OPTIONS)
-			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
-				options.merge!(self::ASSERT_ACCESS_OPTIONS)
+#			elsif ( self.constants.include?('ASSERT_ACCESS_OPTIONS') )
+#				options.merge!(self::ASSERT_ACCESS_OPTIONS)
 			end
 			options.merge!(user_options)
 			actions += options[:actions]||[]

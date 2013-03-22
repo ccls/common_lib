@@ -6,8 +6,9 @@
 #
 require 'simplecov'
 SimpleCov.start 'rails' do
-	add_filter 'lib/method_missing_with_authorization.rb'
-	add_filter 'lib/ucb_ldap-1.4.2'
+	add_filter 'lib/common_lib/railtie.rb'
+#	add_filter 'lib/method_missing_with_authorization.rb'
+#	add_filter 'lib/ucb_ldap-1.4.2'
 	merge_timeout 72000
 end
 #

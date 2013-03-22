@@ -69,7 +69,7 @@ module CommonLib::ActiveSupportExtension::TestCase
 								object.errors.full_messages.to_sentence
 					end
 				end
-				test "#{brand}should require #{attr_name} be in the past" do
+				test "#{brand}should require Date #{attr_name} be in the past" do
 					object = model.constantize.new
 					object.send("#{attr_name}=", Date.yesterday)
 					object.valid?		#	could be, but probably isn't
@@ -80,6 +80,41 @@ module CommonLib::ActiveSupportExtension::TestCase
 
 					object = model.constantize.new
 					object.send("#{attr_name}=", Date.tomorrow)
+					assert !object.valid?
+					assert object.errors.matching?(attr_name,
+						'is in the future and must be in the past'),
+						"Expected #{attr_name}:is not a past date, but only got " <<
+							object.errors.full_messages.to_sentence
+				end
+#	doesn't seem to actually compare as a DateTime
+				test "#{brand}should require DateTime #{attr_name} be in the past" do
+					object = model.constantize.new
+					object.send("#{attr_name}=", DateTime.yesterday)
+					object.valid?		#	could be, but probably isn't
+					assert !object.errors.matching?(attr_name,
+						'is in the future and must be in the past'),
+						"Expected #{attr_name}:is NOT not a past date, but only got " <<
+							object.errors.full_messages.to_sentence
+
+					object = model.constantize.new
+					object.send("#{attr_name}=", DateTime.tomorrow)
+					assert !object.valid?
+					assert object.errors.matching?(attr_name,
+						'is in the future and must be in the past'),
+						"Expected #{attr_name}:is not a past date, but only got " <<
+							object.errors.full_messages.to_sentence
+				end
+				test "#{brand}should require ActiveSupport::TimeWithZone #{attr_name} be in the past" do
+					object = model.constantize.new
+					object.send("#{attr_name}=", (Time.zone.now - 1.day))
+					object.valid?		#	could be, but probably isn't
+					assert !object.errors.matching?(attr_name,
+						'is in the future and must be in the past'),
+						"Expected #{attr_name}:is NOT not a past date, but only got " <<
+							object.errors.full_messages.to_sentence
+
+					object = model.constantize.new
+					object.send("#{attr_name}=", (Time.zone.now + 1.day))
 					assert !object.valid?
 					assert object.errors.matching?(attr_name,
 						'is in the future and must be in the past'),
