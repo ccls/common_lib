@@ -42,7 +42,7 @@ module CommonLib::ActiveSupportExtension::Attributes
 				scope = options[:scope]
 				unless scope.blank?
 					title << " scope "
-					title << (( scope.is_a?(Array) )?scope.join(','):scope.to_s)
+					title << (( scope.is_a?(Array) ) ? scope.join(',') : scope.to_s )
 				end
 				test title do
 					o = create_object
@@ -70,7 +70,7 @@ module CommonLib::ActiveSupportExtension::Attributes
 				scope = options[:scope]
 				unless scope.blank?
 					title << " scope "
-					title << (( scope.is_a?(Array) )?scope.join(','):scope.to_s)
+					title << (( scope.is_a?(Array) ) ? scope.join(',') : scope.to_s)
 				end
 				test title do
 					o = create_object

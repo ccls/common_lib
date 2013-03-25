@@ -65,6 +65,13 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 		assert_equal expected, output_buffer
 	end
 
+	test "date_text_field with value" do
+		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
+			concat f.date_text_field(:some_attribute, :value => 'sometestvalue') }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><input class="datepicker" id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" value="sometestvalue" /></form>}
+		assert_equal expected, output_buffer
+	end
+
 	test "wrapped_date_text_field" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			concat f.wrapped_date_text_field(:some_attribute) }
