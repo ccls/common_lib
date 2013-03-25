@@ -1,5 +1,4 @@
 class Validator < ActiveRecord::Base
-#  attr_accessible :absence_1, :absence_2, :complete_date_1, :complete_date_2, :past_date_1, :past_date_2
 
 	#	tests the validations file
 	validations_from_yaml_file
