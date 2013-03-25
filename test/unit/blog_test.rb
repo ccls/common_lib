@@ -19,14 +19,6 @@ class BlogTest < ActiveSupport::TestCase
 		{ :good_values => %w( apples oranges ) + [nil],
 			:bad_values => %w( bananas grapefruit ) })
 
-
-	test "should require some_blank_string to be blank" do
-		blog = Factory.build(:blog,:some_blank_string => "I'm not blank")
-		assert !blog.valid?
-		assert blog.errors.matching?(:some_blank_string,
-			"is present and must be absent"), blog.errors.full_messages.to_sentence
-	end
-
 	test "should have blank blank_string" do
 		#	testing assert_blank
 		assert_blank ""

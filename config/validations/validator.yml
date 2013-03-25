@@ -1,0 +1,20 @@
+-
+  :attributes: 
+  - :absence_2
+  :absence: true
+-
+  :attributes: 
+  - :past_date_2
+  :past_date:
+    :allow_blank: true
+-
+  :attributes: 
+  - :past_date_4
+  :past_date:
+    :allow_today: false
+    :allow_blank: true
+-
+  :attributes: 
+  - :complete_date_2
+  :complete_date:
+    :allow_blank: true

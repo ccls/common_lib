@@ -26,3 +26,5 @@ end
 Factory.define :private do |f|
 	f.sequence(:name)  { |n| "Name #{n}" }
 end
+Factory.define :validator do |f|
+end

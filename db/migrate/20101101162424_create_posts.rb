@@ -1,5 +1,5 @@
 class CreatePosts < ActiveRecord::Migration
-	def self.up
+	def change
 		create_table :posts do |t|
 			t.integer    :author_id
 			t.references :blog
@@ -8,9 +8,5 @@ class CreatePosts < ActiveRecord::Migration
 			t.text :body
 			t.timestamps
 		end
-	end
-
-	def self.down
-		drop_table :posts
 	end
 end
