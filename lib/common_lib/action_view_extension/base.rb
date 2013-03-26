@@ -41,6 +41,7 @@ module CommonLib::ActionViewExtension::Base
 		s =  "<div class='#{classes} field_wrapper'>\n"
 		s << yield 
 		s << "\n</div><!-- class='#{classes}' -->"
+		s.html_safe
 	end
 
 	#	This is NOT a form field
@@ -54,6 +55,7 @@ module CommonLib::ActionViewExtension::Base
 			value = (value.to_s.blank?)?'&nbsp;':value
 		end
 		s << "<span class='value'>#{value}</span>"
+		s.html_safe
 	end
 
 	def _wrapped_date_spans(object_name,method,options={})
