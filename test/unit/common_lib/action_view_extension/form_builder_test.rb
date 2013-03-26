@@ -7,14 +7,10 @@ class CommonLibFormBuilderModel
 	def to_key; end
 end
 
-#	needed to include field_wrapper ( I think )
-require 'common_lib/action_view_extension'
-
 class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 
-	#	needed to include field_wrapper ( I think )
+	#	needed to include field_wrapper
 	include CommonLib::ActionViewExtension::Base
-	include CommonLib::ActionViewExtension::FormBuilder
 
 #	rails 3.2.8 now html_escapes ' to &#x27; in these input selectors
 

@@ -1,5 +1,12 @@
 module CommonLib::ActionViewExtension::Base
 
+	def self.included(base)
+		base.class_eval do
+			#	This NEEDS to be HERE or gets stuck at method_missing_without_wrapping call????
+			alias_method_chain( :method_missing, :wrapping )
+		end
+	end
+
 	# Just a simple method to wrap the passed text in a span
 	# with class='required'
 	def required(text)
@@ -122,7 +129,6 @@ module CommonLib::ActionViewExtension::Base
 			method_missing_without_wrapping(symb,*args, &block)
 		end
 	end
-	alias_method_chain( :method_missing, :wrapping )
 
 	def form_link_to( title, url, options={}, &block )
 		extra_tags = extra_tags_for_form(options)

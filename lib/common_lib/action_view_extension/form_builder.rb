@@ -104,7 +104,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 	%w( adna_select collection_select country_select 
 			datetime_select date_text_field datetime_text_field 
 			file_field password_field
-			hour_select minute_select meridiem_select
+			hour_select minute_select meridiem_select gender_select
 			grouped_collection_select pos_neg_select select sex_select text_area
 			text_field yndk_select ynodk_select ynrdk_select ynordk_select
 		).each do |unwrapped_method_name|
