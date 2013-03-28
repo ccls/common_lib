@@ -27,7 +27,6 @@ module ActiveModel
 						( allow_today ) ? Time.now : ( Time.now - 1.day )
 					else
 #						puts "Comparing #{attribute} as Date"
-#						( allow_today ) ? Date.today : Date.yesterday
 						( allow_today ) ? Date.current : Date.yesterday
 					end
 					if !value.blank? && value > base_date
@@ -56,7 +55,7 @@ module ActiveModel
 #						( allow_today ) ? Time.now : ( Time.now - 1.day )
 #					else
 ##puts "Comparing as Date"
-#						( allow_today ) ? Date.today : Date.yesterday
+#						( allow_today ) ? Date.current : Date.yesterday
 #					end
 ##	usually dates
 ##Sample @@ should allow collected_at to be today: Comparing as Date

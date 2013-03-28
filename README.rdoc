@@ -29,6 +29,27 @@ And the following would be used by ALL ccls apps and gems and probably included 
 Unfortunately, this has all gotten kinda muddled, making it a bit confusing.  This would take at least a day of importing and merging and testing and installing and testing and ...
 
 
+
+---
+== Date.today
+
+DO NOT USE Date.today, unless the following is what you want.
+
+It will compute a Date and disregard the time zone.
+
+In rails, this means that occassionally Date.today == Date.tomorrow
+or Date.today == Date.yesterday, depending on what time it is.
+
+The Rails methods of Date.tomorrow and Date.yesterday reference
+Date.current, which uses the Time.zone,  making them more accurate.
+
+
+I think that DateTime.now and Time.now also ignore the timezone.
+
+Use DateTime.current or Time.zone.now
+
+
+
 == Gemified with Jeweler
 
  vi Rakefile
