@@ -51,7 +51,8 @@ module CommonLib::ActiveSupportExtension::TestCase
 				if options[:allow_today]
 					test "#{brand}should allow #{attr_name} to be today" do
 						object = model.constantize.new
-						object.send("#{attr_name}=", Date.today)
+#						object.send("#{attr_name}=", Date.today)
+						object.send("#{attr_name}=", Date.current)
 						object.valid?		#	could be, but probably isn't
 						assert !object.errors.matching?(attr_name,
 							'is in the future and must be in the past'),
@@ -61,7 +62,8 @@ module CommonLib::ActiveSupportExtension::TestCase
 				else
 					test "#{brand}should NOT allow #{attr_name} to be today" do
 						object = model.constantize.new
-						object.send("#{attr_name}=", Date.today)
+#						object.send("#{attr_name}=", Date.today)
+						object.send("#{attr_name}=", Date.current)
 						assert !object.valid?
 						assert object.errors.matching?(attr_name,
 							'is in the future and must be in the past'),

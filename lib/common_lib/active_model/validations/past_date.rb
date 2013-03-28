@@ -20,14 +20,15 @@ module ActiveModel
 					allow_today = ( options.has_key?(:allow_today) ) ? options[:allow_today] : true
 
 					base_date = if value.is_a?(ActiveSupport::TimeWithZone)
-						#puts "Comparing as ActiveSupport::TimeWithZone"
+#						puts "Comparing #{attribute} as ActiveSupport::TimeWithZone"
 						( allow_today ) ? Time.zone.now : ( Time.zone.now - 1.day )
 					elsif value.is_a?(DateTime)
-						#puts "Comparing as DateTime"
+#						puts "Comparing #{attribute} as DateTime"
 						( allow_today ) ? Time.now : ( Time.now - 1.day )
 					else
-						#puts "Comparing as Date"
-						( allow_today ) ? Date.today : Date.yesterday
+#						puts "Comparing #{attribute} as Date"
+#						( allow_today ) ? Date.today : Date.yesterday
+						( allow_today ) ? Date.current : Date.yesterday
 					end
 					if !value.blank? && value > base_date
 						#	associated default error message is in config/locales/en.yml
