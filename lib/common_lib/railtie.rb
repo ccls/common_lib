@@ -19,11 +19,19 @@ module CommonLib
 #    end
 
     rake_tasks { 
-			load "tasks/common_lib.rake" 
-			load "tasks/csv.rake" 
-			load "tasks/database.rake" 
+#
+#	Use caution.  This would load the files in the app's lib/tasks/
+#	Not sure if that was in addition to the gem, or instead of, but
+#	it loaded them twice so they ran twice.
+#
+#			load "tasks/common_lib.rake" 
+#			load "tasks/csv.rake" 
+#			load "tasks/database.rake" 
+
+			
+			Dir["#{File.dirname(__FILE__)}/../tasks/**/*.rake"].sort.each { |ext| load ext }
+
 		}
-#Dir["#{File.dirname(__FILE__)}/../tasks/**/*.rake"].sort.each { |ext| load ext }
   end
 
 #  class Railtie
