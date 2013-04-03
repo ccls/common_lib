@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rails'
-
-gem 'sqlite3'
 
 group :assets do
   gem 'sass-rails'
@@ -10,18 +7,21 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-
-#       ruby 1.9.3 requirement to parse american date
-#       format Month/Day/Year Date.parse('12/31/2000')
-gem 'american_date'
-
-gem "ryanb-acts-as-list", :require => 'acts_as_list'
-
-gem "jeweler"
-gem "hpricot"
-
 group :test do
+
+	gem 'rails'
+
+	gem 'sqlite3'
+	gem 'jquery-rails'
+
+	#       ruby 1.9.3 requirement to parse american date
+	#       format Month/Day/Year Date.parse('12/31/2000')
+	gem 'american_date'
+
+	gem "ryanb-acts-as-list", :require => 'acts_as_list'
+	
+	gem "jeweler"
+	gem "hpricot"
 
 	gem "simplecov", :require => false
 

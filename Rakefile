@@ -33,6 +33,8 @@ begin
 #
 #		gem.test_files  = FileList['test/unit/common_lib/*.rb']
 
+#	I think that this is now getting the dependencies from the Gemfile (non :test)
+
 #		gem.add_dependency('rails', '~> 2')
 ##	had to explicitly add rails components as greater
 ##	versions were being loaded 
