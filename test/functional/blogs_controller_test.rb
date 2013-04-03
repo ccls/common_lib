@@ -10,9 +10,9 @@ class BlogsControllerTest < ActionController::TestCase
 	}
 
 	def factory_attributes(options={})
-#		Factory.attributes_for(:blog,options)
+#		FactoryGirl.attributes_for(:blog,options)
 #	using build will create associations which is import if it is a requirement
-		Factory.build(:blog,options).attributes
+		FactoryGirl.build(:blog,options).attributes
 	end
 
 #	assert_access_with_login({    :logins => site_administrators })

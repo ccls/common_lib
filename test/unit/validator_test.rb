@@ -14,14 +14,14 @@ class ValidatorTest < ActiveSupport::TestCase
 	assert_requires_complete_date(:complete_date_2)
 
 	test "should require absence of absence_1" do
-		validator = Factory.build(:validator,:absence_1 => "I'm not blank")
+		validator = FactoryGirl.build(:validator,:absence_1 => "I'm not blank")
 		assert !validator.valid?
 		assert validator.errors.matching?(:absence_1,
 			"is present and must be absent"), validator.errors.full_messages.to_sentence
 	end
 
 	test "should require absence of absence_2" do
-		validator = Factory.build(:validator,:absence_2 => "I'm not blank")
+		validator = FactoryGirl.build(:validator,:absence_2 => "I'm not blank")
 		assert !validator.valid?
 		assert validator.errors.matching?(:absence_2,
 			"is present and must be absent"), validator.errors.full_messages.to_sentence
@@ -30,7 +30,7 @@ class ValidatorTest < ActiveSupport::TestCase
 protected
 
 	def create_validator(options={})
-		validator = Factory.build(:validator,options)
+		validator = FactoryGirl.build(:validator,options)
 		validator.save
 		validator
 	end

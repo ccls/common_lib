@@ -21,7 +21,7 @@ class UserTest < ActiveSupport::TestCase
 
 
 	test "should have aliased username to name" do
-		user = Factory(:user)
+		user = FactoryGirl.create(:user)
 		assert_equal user.name, user.username
 	end
 
@@ -37,25 +37,25 @@ class UserTest < ActiveSupport::TestCase
 	end
 
 	test "should return only user with random" do
-		user = Factory(:user)
+		user = FactoryGirl.create(:user)
 		assert_equal user, User.random
 	end
 
 	test "should require properly formated email address" do
 		%w( asdf me@some@where.com me@somewhere ).each do |bad_email|
-			user = Factory.build(:user,:email => bad_email)
+			user = FactoryGirl.build(:user,:email => bad_email)
 			assert !user.valid?
 			assert user.errors.matching?(:email,'is invalid')
 		end 
 		%w( me@some.where.com a.b.c@def.ghi a.b+c@def.ghi.jkl ).each do |good_email|
-			user = Factory.build(:user,:email => good_email)
+			user = FactoryGirl.build(:user,:email => good_email)
 			user.valid?	#	can I guarantee its valid?
 			assert !user.errors.matching?(:email,'is invalid')
 		end 
 	end 
 
 	test "should nilify blank email address" do
-		user = Factory(:user, :email => '')
+		user = FactoryGirl.create(:user, :email => '')
 		assert_nil user.email
 	end
 

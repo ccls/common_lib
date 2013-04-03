@@ -17,7 +17,7 @@ class PostTest < ActiveSupport::TestCase
 
 	test "changing title should not change created_at" do
 		#	a test for deny_changes
-		post = Factory(:post)
+		post = FactoryGirl.create(:post)
 		deny_changes("Post.find(#{post.id}).created_at") {
 			post.update_attributes(:title => "my new title")
 		}
@@ -25,7 +25,7 @@ class PostTest < ActiveSupport::TestCase
 
 	test "changing title should change updated_at" do
 		#	a test for assert_changes
-		post = Factory(:post)
+		post = FactoryGirl.create(:post)
 		assert_changes("Post.find(#{post.id}).updated_at") {
 			post.update_attributes(:title => "my new title")
 		}

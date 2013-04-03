@@ -14,7 +14,7 @@ class ActiveSupport::TestCase
 	# Add more helper methods to be used by all tests here...
 
 	def new_blog(options={})
-		Factory.build(:blog,options)
+		FactoryGirl.build(:blog,options)
 	end
 
 	def create_blog(options={})
@@ -24,13 +24,13 @@ class ActiveSupport::TestCase
 	end
 
 	def create_hash_like(options={})
-		p = Factory.build(:hash_like,options)
+		p = FactoryGirl.build(:hash_like,options)
 		p.save
 		p
 	end
 
 	def new_post(options={})
-		Factory.build(:post,options)
+		FactoryGirl.build(:post,options)
 	end
 
 	def create_post(options={})
@@ -40,19 +40,19 @@ class ActiveSupport::TestCase
 	end
 
 	def create_product(options={})
-		product = Factory.build(:product,options)
+		product = FactoryGirl.build(:product,options)
 		product.save
 		product
 	end
 
 	def create_vendor(options={})
-		vendor = Factory.build(:vendor,options)
+		vendor = FactoryGirl.build(:vendor,options)
 		vendor.save
 		vendor
 	end
 
 	def create_user(options={})
-		user = Factory.build(:user,options)
+		user = FactoryGirl.build(:user,options)
 		user.save
 		user
 	end
@@ -92,7 +92,7 @@ class ActiveSupport::TestCase
 	end
 
 	def active_user(options={})
-		u = Factory(:user, options)
+		u = FactoryGirl.create(:user, options)
 		#	leave this special save here just in case I change things.
 		#	although this would need changed for UCB CAS.
 		#	u.save_without_session_maintenance

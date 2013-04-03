@@ -10,11 +10,11 @@ class PrivatesControllerTest < ActionController::TestCase
 	}
 
 	def create_private(options={})
-		Factory(:private,options)
+		FactoryGirl.create(:private,options)
 	end
 
 	def factory_attributes(options={})
-		Factory.attributes_for(:private,options)
+		FactoryGirl.attributes_for(:private,options)
 	end
 
 	assert_access_with_login({    :logins => site_administrators })
