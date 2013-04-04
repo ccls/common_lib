@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ccls-common_lib"
-  s.version = "1.0.16"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
-  s.date = "2013-04-03"
+  s.date = "2013-04-04"
   s.description = "CCLS Common Lib gem"
   s.email = "github@jakewendt.com"
   s.extra_rdoc_files = [
@@ -66,30 +66,9 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rails>, [">= 0"])
-      s.add_runtime_dependency(%q<sqlite3>, [">= 0"])
-      s.add_runtime_dependency(%q<jquery-rails>, [">= 0"])
-      s.add_runtime_dependency(%q<american_date>, [">= 0"])
-      s.add_runtime_dependency(%q<ryanb-acts-as-list>, [">= 0"])
-      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
-      s.add_runtime_dependency(%q<hpricot>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, [">= 0"])
-      s.add_dependency(%q<sqlite3>, [">= 0"])
-      s.add_dependency(%q<jquery-rails>, [">= 0"])
-      s.add_dependency(%q<american_date>, [">= 0"])
-      s.add_dependency(%q<ryanb-acts-as-list>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<hpricot>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, [">= 0"])
-    s.add_dependency(%q<sqlite3>, [">= 0"])
-    s.add_dependency(%q<jquery-rails>, [">= 0"])
-    s.add_dependency(%q<american_date>, [">= 0"])
-    s.add_dependency(%q<ryanb-acts-as-list>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<hpricot>, [">= 0"])
   end
 end
 
