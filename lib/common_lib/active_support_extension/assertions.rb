@@ -71,7 +71,10 @@ module CommonLib::ActiveSupportExtension::Assertions
 #	could be a naming problem if both nil and blank are passed
 
 					test "should NOT allow #{value||'nil'} for #{field}" do
-						object = model.constantize.new(field => value)
+#						object = model.constantize.new(field => value)
+#	what if field is protected?
+						object = model.constantize.new
+						object.send("#{field}=", value)
 						assert_equal object.send(field), value
 						object.valid?
 						assert object.errors.matching?(field,'is not included in the list')
@@ -84,7 +87,10 @@ module CommonLib::ActiveSupportExtension::Assertions
 #	could be a naming problem if both nil and blank are passed
 
 					test "should allow #{value||'nil'} for #{field}" do
-						object = model.constantize.new(field => value)
+#						object = model.constantize.new(field => value)
+#	what if field is protected?
+						object = model.constantize.new
+						object.send("#{field}=", value)
 						assert_equal object.send(field), value
 						object.valid?
 						assert !object.errors.include?(field)
