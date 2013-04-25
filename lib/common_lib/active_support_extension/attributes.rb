@@ -55,7 +55,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 						end
 					end 
 					object = create_object(attrs)
-					assert !object.errors.matching?(attr,'has already been taken')
+					assert !object.errors.matching?(attr,'has already been taken'),
+						object.errors.full_messages.to_sentence
 				end
 			end
 		end
@@ -84,7 +85,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 							end
 						end 
 						object = create_object(attrs)
-						assert object.errors.matching?(attr,'has already been taken')
+						assert object.errors.matching?(attr,'has already been taken'),
+							object.errors.full_messages.to_sentence
 					end
 				end
 			end
@@ -102,7 +104,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 					assert !object.valid?
 					#		message could be a number of things ...
 					# "is not included in the list","can't be blank"
-					assert object.errors.include?(attr.to_sym)
+					assert object.errors.include?(attr.to_sym),
+						object.errors.full_messages.to_sentence
 				end
 			end
 		end
@@ -117,9 +120,11 @@ module CommonLib::ActiveSupportExtension::Attributes
 					object = model.constantize.new
 					object.send("#{attr}=", nil)
 					assert !object.valid?
-					assert object.errors.include?(attr.to_sym)
+					assert object.errors.include?(attr.to_sym),
+						object.errors.full_messages.to_sentence
 					assert object.errors.matching?(attr,"can't be blank") ||
-						object.errors.matching?(attr,'is too short')
+						object.errors.matching?(attr,'is too short'),
+						object.errors.full_messages.to_sentence
 				end
 			end
 		end
@@ -135,9 +140,11 @@ module CommonLib::ActiveSupportExtension::Attributes
 					object.send("#{attr}=", nil)
 					#	don't know if it will be true or false, but must be called
 					object.valid?	
-					assert !object.errors.include?(attr.to_sym)
+					assert !object.errors.include?(attr.to_sym),
+						object.errors.full_messages.to_sentence
 					if attr =~ /^(.*)_id$/
-						assert !object.errors.include?($1.to_sym)
+						assert !object.errors.include?($1.to_sym),
+							object.errors.full_messages.to_sentence
 					end
 				end
 			end
@@ -164,8 +171,10 @@ module CommonLib::ActiveSupportExtension::Attributes
 						assert !object.valid?
 						assert_equal length-1, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert object.errors.include?(attr.to_sym)
-						assert object.errors.matching?(attr,'is the wrong length')
+						assert object.errors.include?(attr.to_sym),
+							object.errors.full_messages.to_sentence
+						assert object.errors.matching?(attr,'is the wrong length'),
+							object.errors.full_messages.to_sentence
 
 						value = 'x'*(length+1)
 						object = model.constantize.new
@@ -173,8 +182,10 @@ module CommonLib::ActiveSupportExtension::Attributes
 						assert !object.valid?
 						assert_equal length+1, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert object.errors.include?(attr.to_sym)
-						assert object.errors.matching?(attr,'is the wrong length')
+						assert object.errors.include?(attr.to_sym),
+							object.errors.full_messages.to_sentence
+						assert object.errors.matching?(attr,'is the wrong length'),
+							object.errors.full_messages.to_sentence
 					end
 				end
 
@@ -188,7 +199,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 						object.valid?
 						assert_equal min, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert !object.errors.matching?(attr,'is too short')
+						assert !object.errors.matching?(attr,'is too short'),
+							object.errors.full_messages.to_sentence
 
 						value = 'x'*(min-1)
 						object = model.constantize.new
@@ -196,8 +208,10 @@ module CommonLib::ActiveSupportExtension::Attributes
 						assert !object.valid?
 						assert_equal min-1, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert object.errors.include?(attr.to_sym)
-						assert object.errors.matching?(attr,'is too short')
+						assert object.errors.include?(attr.to_sym),
+							object.errors.full_messages.to_sentence
+						assert object.errors.matching?(attr,'is too short'),
+							object.errors.full_messages.to_sentence
 					end
 				end
 
@@ -211,7 +225,8 @@ module CommonLib::ActiveSupportExtension::Attributes
 						object.valid?
 						assert_equal max, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert !object.errors.matching?(attr,'is too long')
+						assert !object.errors.matching?(attr,'is too long'),
+							object.errors.full_messages.to_sentence
 
 						value = 'x'*(max+1)
 						object = model.constantize.new
@@ -219,8 +234,10 @@ module CommonLib::ActiveSupportExtension::Attributes
 						assert !object.valid?
 						assert_equal max+1, object.send(attr.to_sym).length
 						assert_equal object.send(attr.to_sym), value
-						assert object.errors.include?(attr.to_sym)
-						assert object.errors.matching?(attr,'is too long')
+						assert object.errors.include?(attr.to_sym),
+							object.errors.full_messages.to_sentence
+						assert object.errors.matching?(attr,'is too long'),
+							object.errors.full_messages.to_sentence
 					end
 				end
 
