@@ -6,6 +6,13 @@ class ActiveRecord::Base
 	#	be working well.
 	#
 	#	Not all validations are going to work, but so far so good.
+	#	
+	#	http://codereview.stackexchange.com/questions/159/use-of-a-regex-stored-inside-yaml-file
+	#		email_regex: !ruby/regexp /^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i
+	#	http://stackoverflow.com/questions/3337020/how-to-specify-ranges-in-yaml
+	#		:in: !ruby/range 5..250
+	#	http://www.opensource.apple.com/source/ruby/ruby-14/ruby/lib/yaml/rubytypes.rb
+	#	http://yaml4r.sourceforge.net/doc/page/objects_in_yaml.htm
 	#
 	def self.validations_from_yaml_file
 		validation_file = File.join(Rails.root,"config/validations/#{self.to_s.underscore}.yml")
