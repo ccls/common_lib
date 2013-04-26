@@ -50,6 +50,31 @@ Use DateTime.current or Time.zone.now
 
 
 
+
+---
+== validations_from_yaml_file
+
+This ActiveRecord::Base method takes no arguments and is straight forward but deserves a few notes.
+
+Firstly, it will look for a '.yml' file in config/validations/ with the class name underscored.
+
+Each entry is read in as a hash and passed to 'validates'.
+
+Most validations are straight forward, with 2 current exceptions.  I tried many ways.  Searched online
+for some time.  Got a lot of negative feedback.  Mostly "why do it", "don't do it", "not standard", blah, blah.
+So.  Of course I did it anyway.  The 2 objects that cause the most confusion are ranges, useful in length limitations,
+and regexps, useful in formatting emails, ssns, zip codes, phone numbers, ...  The solution is rather simple
+and built in to ruby.  These things simply need a bit to declare what object they are.
+
+* Ranges
+  * :in: !ruby/range 4..250
+
+* Regular Expressions
+  * :with: !ruby/regexp '/^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i'
+  * note that the single quotes around the regexp are unneccessary and problematic if the regex contains one.
+
+
+---
 == Gemified with Jeweler
 
  vi Rakefile
