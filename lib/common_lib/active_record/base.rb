@@ -17,6 +17,8 @@ class ActiveRecord::Base
 	#	/opt/local/lib/ruby1.9/1.9.1/syck/rubytypes.rb
 	#	/opt/local/lib/ruby1.9/1.9.1/psych/visitors/to_ruby.rb
 	#
+	#	I really like this and I may very well make it a default at some point.
+	#
 	def self.validations_from_yaml_file
 		validation_file = File.join(Rails.root,"config/validations/#{self.to_s.underscore}.yml")
 		if File.exists?(validation_file)
