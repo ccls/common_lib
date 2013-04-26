@@ -73,6 +73,21 @@ and built in to ruby.  These things simply need a bit to declare what object the
   * :with: !ruby/regexp '/^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i'
   * note that the single quotes around the regexp are unneccessary and problematic if the regex contains one.
 
+For other references, see ...
+
+http://codereview.stackexchange.com/questions/159/use-of-a-regex-stored-inside-yaml-file
+
+http://stackoverflow.com/questions/3337020/how-to-specify-ranges-in-yaml
+
+http://www.opensource.apple.com/source/ruby/ruby-14/ruby/lib/yaml/rubytypes.rb
+
+http://yaml4r.sourceforge.net/doc/page/objects_in_yaml.htm
+
+Or ...
+
+ /opt/local/lib/ruby1.9/1.9.1/syck/rubytypes.rb
+ /opt/local/lib/ruby1.9/1.9.1/psych/visitors/to_ruby.rb
+
 
 ---
 == Gemified with Jeweler
