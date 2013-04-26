@@ -14,6 +14,9 @@ class ActiveRecord::Base
 	#	http://www.opensource.apple.com/source/ruby/ruby-14/ruby/lib/yaml/rubytypes.rb
 	#	http://yaml4r.sourceforge.net/doc/page/objects_in_yaml.htm
 	#
+	#	/opt/local/lib/ruby1.9/1.9.1/syck/rubytypes.rb
+	#	/opt/local/lib/ruby1.9/1.9.1/psych/visitors/to_ruby.rb
+	#
 	def self.validations_from_yaml_file
 		validation_file = File.join(Rails.root,"config/validations/#{self.to_s.underscore}.yml")
 		if File.exists?(validation_file)
