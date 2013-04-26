@@ -138,6 +138,9 @@ def self.inherited(subclass)
 			alias_method_chain :alias_attribute, :memory
 		end
 	end
+
+	#	figures. rails seems to use this. causing problems.  will super fix?
+	super
 end
 
 end	#	class ActiveRecord::Base
