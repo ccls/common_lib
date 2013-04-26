@@ -120,14 +120,24 @@ class ActiveRecord::Base
 	end
 
 
-	cattr_accessor :aliased_attributes
-	def self.alias_attribute_with_memory(new_name, old_name)
-		self.aliased_attributes ||= {}.with_indifferent_access
-		self.aliased_attributes[new_name] = old_name
-		alias_attribute_without_memory(new_name, old_name)
+def self.inherited(subclass)
+	#
+	#	using cattr_accessor here outside of a method is an epic fail!!!!!
+	#	this same attribute is shared amongst all subclasses
+	#	wrapped everything in this inherited method and the subclass.class_eval.
+	#	Works?
+	#
+	subclass.class_eval do
+		cattr_accessor :aliased_attributes
+		def self.alias_attribute_with_memory(new_name, old_name)
+			self.aliased_attributes ||= {}.with_indifferent_access
+			self.aliased_attributes[new_name] = old_name
+			alias_attribute_without_memory(new_name, old_name)
+		end
+		class << self
+			alias_method_chain :alias_attribute, :memory
+		end
 	end
-	class << self
-		alias_method_chain :alias_attribute, :memory
-	end
+end
 
 end	#	class ActiveRecord::Base
