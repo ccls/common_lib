@@ -26,6 +26,13 @@ class BlogTest < ActiveSupport::TestCase
 		assert_blank ""
 	end
 
+	test "should have no aliased attributes" do
+		#	User uses aliased attributes, but Blog does not
+		#	Check to ensure that aliased_attributes is part of the model 
+		#	and not for every ActiveRecord model
+		assert_empty Blog.aliased_attributes
+	end
+
 protected
 
 	#	create_object is called from within the common class tests

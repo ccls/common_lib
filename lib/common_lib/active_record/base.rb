@@ -72,14 +72,6 @@ class ActiveRecord::Base
 			:value => :description
 		}.update(args.extract_options!)
 
-		#	I guess we must explicitly remember the options
-		#	so that can reference the 'key' in []
-#		@@acts_like_a_hash_options = options
-#		@@acts_like_a_hash_memory  = {}
-#
-#	Using @@ seems to share the variable in ActiveRecord::Base
-#	Using cattr_accessor seems to share it in the subclass
-#
 		cattr_accessor :acts_like_a_hash_options
 		cattr_accessor :acts_like_a_hash_memory
 
@@ -100,13 +92,6 @@ class ActiveRecord::Base
 					where(self.arel_table[self.acts_like_a_hash_options[:key]].matches(key)).first
 			end
 
-#NameError: undefined local variable or method `options' for #<Class:0x107229540>
-#class << self
-#			define_method "[]" do |key|
-#				where(options[:key] => key.to_s)
-#			end
-#end
-
 		end	#	class_eval do
 	end	#	def acts_like_a_hash(*args)
 
@@ -120,45 +105,25 @@ class ActiveRecord::Base
 	end
 
 
-#def self.inherited(subclass)
-#
-#DEPRECATION WARNING: It looks like something (probably a gem/plugin) is overriding the ActiveRecord::Base.inherited method. It is important that this hook executes so that your models are set up correctly. A workaround has been added to stop this causing an error in 3.2, but future versions will simply not work if the hook is overridden. If you are using Kaminari, please upgrade as it is known to have had this problem.
-#
-#The following may help track down the problem: ["/opt/local/lib/ruby1.9/gems/1.9.1/gems/ccls-common_lib-1.2.0/lib/common_lib/active_record/base.rb", 123]
-#
-#	#
-#	#	using cattr_accessor here outside of a method is an epic fail!!!!!
-#	#	this same attribute is shared amongst all subclasses
-#	#	wrapped everything in this inherited method and the subclass.class_eval.
-#	#	Works?	No.
-#	#
-#	subclass.class_eval do
+	#	for those classes that don't use the feature, just add the method.
+	def self.aliased_attributes
+		{}
+	end
 
-		cattr_accessor :aliased_attributes
-		def self.alias_attribute_with_memory(new_name, old_name)
-			self.aliased_attributes ||= {}.with_indifferent_access
-			self.aliased_attributes[new_name] = old_name
-			alias_attribute_without_memory(new_name, old_name)
+	#	cattr_accessor here would create a class variable for ActiveRecord::Base
+	#	What I want is the subclass to have one so just wait until its used the first time
+	#	and create the class variable them
+	#		cattr_accessor :aliased_attributes
+	def self.alias_attribute_with_memory(new_name, old_name)
+		unless self.class_variable_defined? '@@aliased_attributes'
+			cattr_accessor :aliased_attributes
+			self.aliased_attributes = {}.with_indifferent_access
 		end
-		class << self
-			alias_method_chain :alias_attribute, :memory
-		end
-
-#	end
-#
-#	#	figures. rails seems to use this. causing problems.  will super fix?
-#	super
-#end
-
-#	even something this simple with the super will spark failure
-#	despite some suggestions otherwise online
-#	how 'bout an alias_method_chain :inherited, :kiss_my_
-#	def self.inherited(subclass)
-#		super
-#	end
-
-
-#	perhaps I should be extending active record base rather than just stuffing this in?
-
+		self.aliased_attributes[new_name] = old_name
+		alias_attribute_without_memory(new_name, old_name)
+	end
+	class << self
+		alias_method_chain :alias_attribute, :memory
+	end
 
 end	#	class ActiveRecord::Base
