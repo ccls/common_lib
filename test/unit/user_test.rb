@@ -59,6 +59,10 @@ class UserTest < ActiveSupport::TestCase
 		assert_nil user.email
 	end
 
+	test "should have aliased attributes" do
+		assert_equal User.aliased_attributes, {'username' => :name }
+	end
+
 protected
 
 	#	create_object is called from within the common class tests
