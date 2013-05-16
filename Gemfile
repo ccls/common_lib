@@ -29,10 +29,11 @@ group :test do
 
 	gem 'test-unit'
 	
-	gem "factory_girl"
+#	gem "factory_girl"
 	gem "factory_girl_rails"
 
 #	gem "mocha", '0.10.5', :require => false #	0.11.4
-	gem "mocha", :require => false #	0.11.4
+#	gem "mocha", :require => false #	0.11.4
+	gem "mocha", '0.13.3', :require => false #	0.14.0 seems to require unstubbing
 
 end
