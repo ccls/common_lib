@@ -1,4 +1,5 @@
 module CommonLib::ActiveSupportExtension; end
+if defined?(Rails) and Rails.env == 'test'
 require 'common_lib/active_support_extension/test_case'
 require 'common_lib/active_support_extension/test_with_verbosity'
 require 'common_lib/active_support_extension/associations'
@@ -32,3 +33,4 @@ Rails.backtrace_cleaner.add_silencer {|line|
 	line =~ /test_with_verbosity/
 
 } if defined? Rails 
+end
