@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ccls-common_lib"
-  s.version = "1.2.2"
+  s.version = "1.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
-  s.date = "2013-04-29"
+  s.date = "2013-05-16"
   s.description = "CCLS Common Lib gem"
   s.email = "github@jakewendt.com"
   s.extra_rdoc_files = [
@@ -59,16 +59,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/ccls/common_lib"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
+  s.rubygems_version = "2.0.3"
   s.summary = "CCLS Common Lib gem"
-
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
 end
 
