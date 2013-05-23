@@ -5,7 +5,11 @@ require 'common_lib/active_support_extension/test_with_verbosity'
 require 'common_lib/active_support_extension/associations'
 require 'common_lib/active_support_extension/assertions'
 require 'common_lib/active_support_extension/attributes'
-#require 'common_lib/active_support_extension/pending'
+
+#	due to the complications of rake and autotest using
+#	differing versions of Test::Unit and MiniTest
+#	I have modified and am reincluding pending
+require 'common_lib/active_support_extension/pending'
 
 
 Rails.backtrace_cleaner.add_silencer {|line|
