@@ -70,7 +70,8 @@ module ActiveSupport
 #	self.to_s => test_should_be_pending(RoleTest)
 
 #						@@pending_cases << "#{$3} at #{$1}, line #{$2}"
-						@@pending_cases << ["#{self.to_s} [#{$1}:#{$2}]",description]
+#						@@pending_cases << ["#{self.to_s} [#{$1}:#{$2}]",description]
+						@@pending_cases << [self.to_s,"[#{$1}:#{$2}]",description]
 
 #  1) Skipped:
 #test_should_not_update_attribute_if_new_data_is_blank(BcInfoTest) [/opt/local/lib/ruby1.9/gems/1.9.1/gems/activesupport-3.2.13/lib/active_support/testing/pending.rb:15]:
@@ -93,8 +94,10 @@ module ActiveSupport
 								@@pending_cases.each_with_index do |test_case,i|
 #									puts " #{i+1}) Pending:"
 									printf "%4d) Pending:\n", i+1
-									puts test_case[0]
-									puts test_case[1]
+									puts test_case
+#	if i just puts the array it will append carriage returns after each element
+#									puts test_case[0]
+#									puts test_case[1]
 									puts
 								end
 								puts
