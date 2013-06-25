@@ -29,5 +29,6 @@
 -
   :attribute: :email
   :format:
-    :with: !ruby/regexp '/^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i'
+    :with: !ruby/regexp '/\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i'
+#    :with: !ruby/regexp '/^([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})$/i'
   :allow_blank: true

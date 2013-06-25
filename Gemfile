@@ -12,7 +12,7 @@ group :test do
 	gem 'rails', '~> 3.2'
 
 	gem 'sqlite3'
-	gem 'jquery-rails'
+#	gem 'jquery-rails'
 
 	#       ruby 1.9.3 requirement to parse american date
 	#       format Month/Day/Year Date.parse('12/31/2000')
