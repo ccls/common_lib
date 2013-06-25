@@ -9,7 +9,7 @@ end
 
 group :test do
 
-	gem 'rails'
+	gem 'rails', '~> 3.2'
 
 	gem 'sqlite3'
 	gem 'jquery-rails'
