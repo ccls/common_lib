@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ZenTest (4.9.1)
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
       mail (~> 2.5.3)
@@ -30,6 +31,8 @@ GEM
       multi_json (~> 1.0)
     american_date (1.1.0)
     arel (3.0.2)
+    autotest-rails (4.1.2)
+      ZenTest (~> 4.5)
     builder (3.0.4)
     ccls-html_test (0.3.5)
     coffee-rails (3.2.2)
@@ -123,7 +126,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ZenTest (= 4.9.1)
   american_date
+  autotest-rails
   ccls-html_test
   coffee-rails
   factory_girl_rails

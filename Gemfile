@@ -36,4 +36,9 @@ group :test do
 #	gem "mocha", :require => false #	0.11.4
 	gem "mocha", '0.13.3', :require => false #	0.14.0 seems to require unstubbing
 
+
+	gem "autotest-rails", :require => 'autotest/rails'
+
+	gem 'ZenTest', '=4.9.1'
+
 end
