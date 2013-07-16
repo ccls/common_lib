@@ -71,7 +71,9 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 	test "wrapped_date_text_field" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			concat f.wrapped_date_text_field(:some_attribute) }
-		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute date_text_field field_wrapper'>\n<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input class="datepicker" id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" />\n</div><!-- class='some_attribute date_text_field' --></form>}
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute date_text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input class="datepicker" id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" />
+</div><!-- class='some_attribute date_text_field' --></form>}
 		assert_equal expected, output_buffer
 	end
 
@@ -81,21 +83,29 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 			concat f.wrapped_date_text_field(:some_attribute){
 				'testing'
 			} }
-		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute date_text_field field_wrapper'>\n<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input class="datepicker" id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" />testing\n</div><!-- class='some_attribute date_text_field' --></form>}
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute date_text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input class="datepicker" id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" />testing
+</div><!-- class='some_attribute date_text_field' --></form>}
 		assert_equal expected, output_buffer
 	end
 
 	test "meridiem_select" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			concat f.meridiem_select(:some_attribute) }
-		expected = %{<form accept-charset=\"UTF-8\" action=\"/\" class=\"new_common_lib_form_builder_model\" id=\"new_common_lib_form_builder_model\" method=\"post\"><div style=\"margin:0;padding:0;display:inline\"><input name=\"utf8\" type=\"hidden\" value=\"&#x2713;\" /></div><select id=\"common_lib_form_builder_model_some_attribute\" name=\"common_lib_form_builder_model[some_attribute]\"><option value=\"\">Meridiem</option>\n<option value=\"AM\">AM</option>\n<option value=\"PM\">PM</option></select></form>}
+		expected = %{<form accept-charset=\"UTF-8\" action=\"/\" class=\"new_common_lib_form_builder_model\" id=\"new_common_lib_form_builder_model\" method=\"post\"><div style=\"margin:0;padding:0;display:inline\"><input name=\"utf8\" type=\"hidden\" value=\"&#x2713;\" /></div><select id=\"common_lib_form_builder_model_some_attribute\" name=\"common_lib_form_builder_model[some_attribute]\"><option value=\"\">Meridiem</option>
+<option value=\"AM\">AM</option>
+<option value=\"PM\">PM</option></select></form>}
 		assert_equal expected, output_buffer
 	end
 
 	test "wrapped_meridiem_select" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			concat f.wrapped_meridiem_select(:some_attribute) }
-		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute meridiem_select field_wrapper'>\n<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><select id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]"><option value="">Meridiem</option>\n<option value="AM">AM</option>\n<option value="PM">PM</option></select>\n</div><!-- class='some_attribute meridiem_select' --></form>}
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute meridiem_select field_wrapper'>
+<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><select id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]"><option value="">Meridiem</option>
+<option value="AM">AM</option>
+<option value="PM">PM</option></select>
+</div><!-- class='some_attribute meridiem_select' --></form>}
 		assert_equal expected, output_buffer
 	end
 
@@ -130,12 +140,22 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 	test "wrapped_text_field with post_test" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			f.wrapped_text_field(:some_attribute, :post_text => "I'm after" ) }
-		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><input id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" /></form>}
 		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute text_field field_wrapper'>
 <label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" /><span>I'm after</span>
 </div><!-- class='some_attribute text_field' --></form>}
 		assert_equal expected, output_buffer
 	end
+
+	test "wrapped_check_box with post_test" do
+		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
+			f.wrapped_check_box(:some_attribute, :post_text => "I'm after" ) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute check_box field_wrapper'>
+<input name="common_lib_form_builder_model[some_attribute]" type="hidden" value="0" /><input id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" type="checkbox" value="1" /><label for="common_lib_form_builder_model_some_attribute">Some attribute</label><span>I'm after</span>
+</div><!-- class='some_attribute check_box' --></form>}
+		assert_equal expected, output_buffer
+	end
+
+
 
 	test "some missing method" do
 		assert_raises(NoMethodError) {

@@ -80,10 +80,12 @@ module CommonLib::ActionViewExtension::FormBuilder
 		content = @template.field_wrapper(method,:class => 'check_box') do
 			options    = args.detect{|i| i.is_a?(Hash) }
 			label_text = options.delete(:label_text) unless options.nil?
+			post_text  = options.delete(:post_text) unless options.nil?
 #	INVERTED ORDER SO NOT INCLUDED BELOW
 			s  = check_box(*args,&block) <<
 				self.label( method, label_text )
 			s << (( block_given? )? @template.capture(&block) : '')
+			s << (( post_text.blank? ) ? '' : "<span>#{post_text}</span>".html_safe )
 		end
 		content.html_safe
 	end
