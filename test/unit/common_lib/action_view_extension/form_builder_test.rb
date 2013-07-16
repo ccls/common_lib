@@ -127,6 +127,16 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 		assert_equal expected, output_buffer
 	end
 
+	test "wrapped_text_field with post_test" do
+		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
+			f.wrapped_text_field(:some_attribute, :post_text => "I'm after" ) }
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><input id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" /></form>}
+		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_attribute">Some attribute</label><input id="common_lib_form_builder_model_some_attribute" name="common_lib_form_builder_model[some_attribute]" size="30" type="text" /><span>I'm after</span>
+</div><!-- class='some_attribute text_field' --></form>}
+		assert_equal expected, output_buffer
+	end
+
 	test "some missing method" do
 		assert_raises(NoMethodError) {
 			form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 

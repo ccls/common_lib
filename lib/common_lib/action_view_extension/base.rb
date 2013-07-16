@@ -51,13 +51,21 @@ module CommonLib::ActionViewExtension::Base
 		s.html_safe
 	end
 
+# t is RedCloth.textualize NOT I18n.translate
+
 	#	This is NOT a form field
 	def _wrapped_spans(object_name,method,options={})
-		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
+			object = instance_variable_get("@#{object_name}")
+#		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
+		s =  "<span class='label'>#{options[:label_text]||I18n.translate(
+			"#{object.class.to_s.underscore}.#{method}",
+			:scope => "activerecord.attributes",
+			:default => method.to_s)}</span>\n"	#	if method is a symbol, tries to translate it too.
 		value = if options[:value]
 			options[:value]
 		else
-			object = instance_variable_get("@#{object_name}")
+#	moved to top
+#			object = instance_variable_get("@#{object_name}")
 			value = object.send(method)
 			value = (value.to_s.blank?)?'&nbsp;':value
 		end

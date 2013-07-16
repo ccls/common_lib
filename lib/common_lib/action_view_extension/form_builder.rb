@@ -108,19 +108,28 @@ module CommonLib::ActionViewExtension::FormBuilder
 			grouped_collection_select pos_neg_select select sex_select text_area
 			text_field yndk_select ynodk_select ynrdk_select ynordk_select
 		).each do |unwrapped_method_name|
-class_eval %Q"
-	def wrapped_#{unwrapped_method_name}(*args,&block)
+#class_eval %Q"
+#	def wrapped_#{unwrapped_method_name}(*args,&block)
+	define_method "wrapped_#{unwrapped_method_name}" do |*args,&block|
 		method      = args[0]
-		content = @template.field_wrapper(method,:class => '#{unwrapped_method_name}') do
+#		content = @template.field_wrapper(method,:class => '#{unwrapped_method_name}') do
+		content = @template.field_wrapper(method,:class => unwrapped_method_name) do
 			options    = args.detect{|i| i.is_a?(Hash) }
 			label_text = options.delete(:label_text) unless options.nil?
-			s  = self.label( method, label_text ) <<
-				#{unwrapped_method_name}(*args,&block)
-			s << (( block_given? )? @template.capture(&block) : '')
+			post_text  = options.delete(:post_text) unless options.nil?
+			#	removing these from the options hash will stop them from being 
+			#	passed on to the unwrapped_method
+#			s  = self.label( method, label_text ) <<
+#				#{unwrapped_method_name}(*args,&block)
+			s  = self.label( method, label_text ) 
+			s << send(unwrapped_method_name,*args,&block)
+#			s << (( block_given? )? @template.capture(&block) : '')
+			s << (( block )? block.call : '')
+			s << (( post_text.blank? ) ? '' : "<span>#{post_text}</span>".html_safe )
 		end
 		content.html_safe
 	end
-"
+#"
 end
 
 #
