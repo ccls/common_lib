@@ -1,4 +1,5 @@
-versions
+tmp/
+versions/
 log/
 doc/
 test/log
