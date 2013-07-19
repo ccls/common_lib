@@ -57,6 +57,9 @@ module CommonLib::ActionViewExtension::Base
 	def _wrapped_spans(object_name,method,options={})
 			object = instance_variable_get("@#{object_name}")
 #		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
+
+#	could also "object.class.human_attribute_name method" ?
+
 		s =  "<span class='label'>#{options[:label_text]||I18n.translate(
 			"#{object.class.to_s.underscore}.#{method}",
 			:scope => "activerecord.attributes",
@@ -70,6 +73,7 @@ module CommonLib::ActionViewExtension::Base
 			value = (value.to_s.blank?)?'&nbsp;':value
 		end
 		s << "<span class='value'>#{value}</span>"
+		s << (( options.has_key?(:post_text) ) ? "<span class='post_text'>#{options[:post_text]}</span>" : "")
 		s.html_safe
 	end
 
@@ -88,9 +92,11 @@ module CommonLib::ActionViewExtension::Base
 	#	This is NOT a form field
 	def _wrapped_yes_or_no_spans(object_name,method,options={})
 		object = instance_variable_get("@#{object_name}")
-		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
-		value = (object.send("#{method}?"))?'Yes':'No'
-		s << "<span class='value'>#{value}</span>"
+		_wrapped_spans(object_name,method,options.update(
+			:value => (object.send("#{method}?"))?'Yes':'No') )
+#		s =  "<span class='label'>#{options[:label_text]||method}</span>\n"
+#		value = (object.send("#{method}?"))?'Yes':'No'
+#		s << "<span class='value'>#{value}</span>"
 	end
 
 	def method_missing_with_wrapping(symb,*args, &block)

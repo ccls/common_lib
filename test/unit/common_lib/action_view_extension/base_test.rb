@@ -230,6 +230,17 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		end
 	end
 
+	test "wrapped_spans with post text" do
+		@user = CommonLib::User.new
+		response = HTML::Document.new(
+			wrapped_spans(:user, :name, :post_text => 'blah')).root
+		assert_select response, 'div.name.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :count => 1
+			assert_select 'span.value', :count => 1
+			assert_select 'span.post_text', :count => 1, :text => 'blah'
+		end
+	end
 
 #	_wrapped_date_spans
 
@@ -260,6 +271,18 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'dob',:count => 1
 			assert_select 'span.value',:text => '12/05/1971',:count => 1
+		end
+	end
+
+	test "wrapped_date_spans Dec 5, 1971 with post text" do
+		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
+		response = HTML::Document.new(
+			wrapped_date_spans(:user, :dob, :post_text => 'happy bday')).root
+		assert_select response, 'div.dob.date_spans.field_wrapper' do
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.value',:text => '12/05/1971',:count => 1
+			assert_select 'span.post_text',:text => 'happy bday',:count => 1
 		end
 	end
 
@@ -335,6 +358,18 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'yes_or_no',:count => 1
 			assert_select 'span.value',:text => 'No',:count => 1
+		end
+	end
+
+	test "wrapped_yes_or_no_spans false with post text" do
+		@user = CommonLib::User.new(:yes_or_no => false)
+		response = HTML::Document.new(
+			wrapped_yes_or_no_spans(:user, :yes_or_no, :post_text => 'blah')).root
+		assert_select response, 'div.yes_or_no.field_wrapper' do
+			assert_select 'label', :count => 0
+			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.value',:text => 'No',:count => 1
+			assert_select 'span.post_text',:text => 'blah',:count => 1
 		end
 	end
 
