@@ -169,7 +169,9 @@ module CommonLib::ActionViewExtension::Base
 		#	in console @controller is nil
 		protocol = @controller.try(:request).try(:protocol) || 'http://'
 		host = 's3.amazonaws.com/'
-		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
+#		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
+		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 
+			Rails.application.class.parent.to_s.downcase || 'ccls'
 		src = "#{protocol}#{host}#{bucket}/images/#{image}"
 		alt = options.delete(:alt) || options.delete('alt') || image
 		tag('img',options.merge({:src => src, :alt => alt}))

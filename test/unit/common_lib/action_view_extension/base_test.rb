@@ -442,13 +442,23 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 
 #	aws_image_tag
+#	must use ::RAILS_APP_NAME to ensure proper namespace
 
-	test "aws_image_tag" do
-		response = HTML::Document.new(
-			aws_image_tag('myimage')
-		).root
-		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
-#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
+	test "aws_image_tag with RAILS_APP_NAME set" do
+		::RAILS_APP_NAME = bucket = 'yadayada'
+		response = HTML::Document.new( aws_image_tag('myimage')).root
+		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
+		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+		#	otherwise it sticks around
+		Object.send(:remove_const,:RAILS_APP_NAME)
+	end
+
+	test "aws_image_tag without RAILS_APP_NAME set" do
+		response = HTML::Document.new( aws_image_tag('myimage')).root
+		assert !defined?(::RAILS_APP_NAME), "RAILS_APP_NAME is set?" # :#{Object.const_get(:RAILS_APP_NAME)}:"
+		bucket = 'commonlib'
+		assert_equal bucket, Rails.application.class.parent.to_s.downcase
+		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
 		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
 	end
 
