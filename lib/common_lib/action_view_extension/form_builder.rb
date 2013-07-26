@@ -110,9 +110,9 @@ module CommonLib::ActionViewExtension::FormBuilder
 			grouped_collection_select pos_neg_select select sex_select text_area
 			text_field yndk_select ynodk_select ynrdk_select ynordk_select
 		).each do |unwrapped_method_name|
+	define_method "wrapped_#{unwrapped_method_name}" do |*args,&block|
 #class_eval %Q"
 #	def wrapped_#{unwrapped_method_name}(*args,&block)
-	define_method "wrapped_#{unwrapped_method_name}" do |*args,&block|
 		method      = args[0]
 #		content = @template.field_wrapper(method,:class => '#{unwrapped_method_name}') do
 		content = @template.field_wrapper(method,:class => unwrapped_method_name) do
@@ -121,13 +121,35 @@ module CommonLib::ActionViewExtension::FormBuilder
 			post_text  = options.delete(:post_text) unless options.nil?
 			#	removing these from the options hash will stop them from being 
 			#	passed on to the unwrapped_method
+
 #			s  = self.label( method, label_text ) <<
-#				#{unwrapped_method_name}(*args,&block)
+#				#{unwrapped_method_name}(*args)
+##				#{unwrapped_method_name}(*args,&block)
+##	why pass the block along? usually a good idea, but these methods don't use it. (at least I don't see any)
+##	if they did, then why capture it again too?
+#			s << (( block_given? )? @template.capture(&block) : '')
+#			s << (( post_text.blank? ) ? '' : \"<span>\#{post_text}</span>\".html_safe )
+
+#	I would prefer to do this the newer way, but
+#	when a wrapped method has a block with a wrapped method
+#	it ends up being rendered a couple times ??
+
 			s  = self.label( method, label_text ) 
 			s << send(unwrapped_method_name,*args,&block)
+#			s << (( block )? block.call : '')	
 #			s << (( block_given? )? @template.capture(&block) : '')
-			s << (( block )? block.call : '')
+#	the new way won't work with block_given?, but template.capture still does.
+			s << (( block )? @template.capture(&block) : '')
+#if block	#block_given? 
+#	puts "BLOCK GIVEN"
+##puts @template.concat(&block)
+#puts @template.capture(&block)
+#else
+#	puts "NO BLOCK GIVEN"
+#end
 			s << (( post_text.blank? ) ? '' : "<span>#{post_text}</span>".html_safe )
+
+
 		end
 		content.html_safe
 	end

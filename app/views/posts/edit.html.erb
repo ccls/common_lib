@@ -3,6 +3,9 @@
 <%= form_for(@post) do |f| %>
   <%= f.error_messages %>
 
+<%= f.wrapped_text_field :position do %>
+	<span>This is a test of the wrapped_* block methods </span>
+
   <p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
@@ -14,6 +17,7 @@
   <p>
     <%= f.submit 'Update' %>
   </p>
+<% end %>
 <% end %>
 
 <%= link_to 'Show', @post %> |

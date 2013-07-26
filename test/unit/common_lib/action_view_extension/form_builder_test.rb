@@ -3,6 +3,7 @@ require 'test_helper'
 class CommonLibFormBuilderModel
 	extend ActiveModel::Naming
 	attr_accessor :some_attribute
+	attr_accessor :some_other_attribute
 	attr_accessor :some_attribute_before_type_cast #	for date_text_field
 	def to_key; end
 end
@@ -147,7 +148,7 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 		assert_equal expected, output_buffer
 	end
 
-	test "wrapped_text_field with post_test" do
+	test "wrapped_text_field with post_text" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			f.wrapped_text_field(:some_attribute, :post_text => "I'm after" ) }
 		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute text_field field_wrapper'>
@@ -156,7 +157,33 @@ class CommonLib::ActionViewExtension::FormBuilderTest < ActionView::TestCase
 		assert_equal expected, output_buffer
 	end
 
-	test "wrapped_check_box with post_test" do
+	test "wrapped_text_field with block with wrapped_text_field" do
+		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
+			f.wrapped_text_field(:some_attribute){
+				f.wrapped_text_field(:some_other_attribute)
+			} }
+		expected = %{<form accept-charset="UTF-8\" action=\"/\" class=\"new_common_lib_form_builder_model\" id=\"new_common_lib_form_builder_model\" method=\"post\"><div style=\"margin:0;padding:0;display:inline\"><input name=\"utf8\" type=\"hidden\" value=\"&#x2713;\" /></div><div class='some_attribute text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_attribute\">Some attribute</label><input id=\"common_lib_form_builder_model_some_attribute\" name=\"common_lib_form_builder_model[some_attribute]\" size=\"30\" type=\"text\" /><div class='some_other_attribute text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_other_attribute\">Some other attribute</label><input id=\"common_lib_form_builder_model_some_other_attribute\" name=\"common_lib_form_builder_model[some_other_attribute]\" size=\"30\" type=\"text\" />
+</div><!-- class='some_other_attribute text_field' -->
+</div><!-- class='some_attribute text_field' --></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "wrapped_check_box with a block and post_text" do
+		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
+			f.wrapped_check_box(:some_attribute, :post_text => "I'm after" ){
+				f.wrapped_text_field(:some_other_attribute)
+			} }
+		expected = %{<form accept-charset="UTF-8\" action=\"/\" class=\"new_common_lib_form_builder_model\" id=\"new_common_lib_form_builder_model\" method=\"post\"><div style=\"margin:0;padding:0;display:inline\"><input name=\"utf8\" type=\"hidden\" value=\"&#x2713;\" /></div><div class='some_attribute check_box field_wrapper'>
+<input name="common_lib_form_builder_model[some_attribute]\" type=\"hidden\" value=\"0\" /><input id=\"common_lib_form_builder_model_some_attribute\" name=\"common_lib_form_builder_model[some_attribute]\" type=\"checkbox\" value=\"1\" /><label for=\"common_lib_form_builder_model_some_attribute\">Some attribute</label><div class='some_other_attribute text_field field_wrapper'>
+<label for="common_lib_form_builder_model_some_other_attribute\">Some other attribute</label><input id=\"common_lib_form_builder_model_some_other_attribute\" name=\"common_lib_form_builder_model[some_other_attribute]\" size=\"30\" type=\"text\" />
+</div><!-- class='some_other_attribute text_field' --><span>I'm after</span>
+</div><!-- class='some_attribute check_box' --></form>}
+		assert_equal expected, output_buffer
+	end
+
+	test "wrapped_check_box with post_text" do
 		output_buffer = form_for(CommonLibFormBuilderModel.new,:url => '/'){|f| 
 			f.wrapped_check_box(:some_attribute, :post_text => "I'm after" ) }
 		expected = %{<form accept-charset="UTF-8" action="/" class="new_common_lib_form_builder_model" id="new_common_lib_form_builder_model" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div><div class='some_attribute check_box field_wrapper'>
