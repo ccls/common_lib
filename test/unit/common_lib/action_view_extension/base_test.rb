@@ -10,6 +10,22 @@ class CommonLib::User
 	end
 end
 
+#	Use a class that is unique to this test!
+class AppModel
+	attr_accessor :dob_before_type_cast	#	for date_text_field validation
+	attr_accessor :yes_or_no, :yndk, :dob, :sex, :name
+	attr_accessor :int_field
+	def initialize(*args,&block)
+		yield self if block_given?
+	end
+	def yes_or_no?
+		!!yes_or_no
+	end
+	def self.human_attribute_name(attribute,options={})
+		attribute	#	just return the attribute
+	end
+end
+
 class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	setup :enable_content_for_usage
@@ -507,6 +523,295 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #<script src="/javascripts/myjavascript.js" type="text/javascript"></script>
 		response = HTML::Document.new( content_for(:head) ).root
 		assert_select response, 'script[src=/javascripts/myjavascript.js]'
+	end
+
+
+
+	test "padk(1) should return 'Present'" do
+		assert_equal 'Present', padk(1)
+	end
+
+	test "padk(2) should return 'Absent'" do
+		assert_equal 'Absent', padk(2)
+	end
+
+	test "padk(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", padk(999)
+	end
+
+	test "padk(0) should return '&nbsp;'" do
+		assert_equal "&nbsp;", padk(0)
+	end
+
+	test "padk() should return '&nbsp;'" do
+		assert_equal "&nbsp;", padk()
+	end
+
+
+	test "adna(1) should return 'Agree'" do
+		assert_equal 'Agree', adna(1)
+	end
+
+	test "adna(2) should return 'Do Not Agree'" do
+		assert_equal 'Do Not Agree', adna(2)
+	end
+
+	test "adna(555) should return 'N/A'" do
+		assert_equal "N/A", adna(555)
+	end
+
+	test "adna(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", adna(999)
+	end
+
+	test "adna(0) should return '&nbsp;'" do
+		assert_equal "&nbsp;", adna(0)
+	end
+
+	test "adna() should return '&nbsp;'" do
+		assert_equal "&nbsp;", adna()
+	end
+
+
+	test "yndk(1) should return 'Yes'" do
+		assert_equal 'Yes', yndk(1)
+	end
+
+	test "yndk(2) should return 'No'" do
+		assert_equal 'No', yndk(2)
+	end
+
+	test "yndk(3) should return '&nbsp;'" do
+		assert_equal '&nbsp;', yndk(3)
+	end
+
+	test "yndk(888) should return '&nbsp;'" do
+		assert_equal "&nbsp;", yndk(888)
+	end
+
+	test "yndk(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", yndk(999)
+	end
+
+	test "yndk() should return '&nbsp;'" do
+		assert_equal "&nbsp;", yndk()
+	end
+
+	test "ynodk(1) should return 'Yes'" do
+		assert_equal 'Yes', ynodk(1)
+	end
+
+	test "ynodk(2) should return 'No'" do
+		assert_equal 'No', ynodk(2)
+	end
+
+	test "ynodk(3) should return 'Other'" do
+		assert_equal 'Other', ynodk(3)
+	end
+
+	test "ynodk(888) should return '&nbsp;'" do
+		assert_equal "&nbsp;", ynodk(888)
+	end
+
+	test "ynodk(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", ynodk(999)
+	end
+
+	test "ynodk() should return '&nbsp;'" do
+		assert_equal "&nbsp;", ynodk()
+	end
+
+	test "ynrdk(1) should return 'Yes'" do
+		assert_equal 'Yes', ynrdk(1)
+	end
+
+	test "ynrdk(2) should return 'No'" do
+		assert_equal 'No', ynrdk(2)
+	end
+
+	test "ynrdk(3) should return '&nbsp;'" do
+		assert_equal '&nbsp;', ynrdk(3)
+	end
+
+	test "ynrdk(888) should return 'Refused'" do
+		assert_equal "Refused", ynrdk(888)
+	end
+
+	test "ynrdk(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", ynrdk(999)
+	end
+
+	test "ynrdk() should return '&nbsp;'" do
+		assert_equal "&nbsp;", ynrdk()
+	end
+
+	test "ynordk(1) should return 'Yes'" do
+		assert_equal 'Yes', ynordk(1)
+	end
+
+	test "ynordk(2) should return 'No'" do
+		assert_equal 'No', ynordk(2)
+	end
+
+	test "ynordk(3) should return 'Other'" do
+		assert_equal 'Other', ynordk(3)
+	end
+
+	test "ynordk(888) should return 'Refused'" do
+		assert_equal "Refused", ynordk(888)
+	end
+
+	test "ynordk(999) should return 'Don't Know'" do
+		assert_equal "Don't Know", ynordk(999)
+	end
+
+	test "ynordk() should return '&nbsp;'" do
+		assert_equal "&nbsp;", ynordk()
+	end
+
+	test "posneg(1) should return 'Positive'" do
+		assert_equal 'Positive', posneg(1)
+	end
+
+	test "posneg(2) should return 'Negative'" do
+		assert_equal 'Negative', posneg(2)
+	end
+
+	test "posneg() should return '&nbsp;'" do
+		assert_equal "&nbsp;", posneg()
+	end
+
+	test "unwrapped _wrapped_padk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_padk_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_padk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_padk_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_adna_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_adna_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_adna_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_adna_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_yndk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_yndk_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_yndk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_yndk_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_ynrdk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_ynrdk_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_ynrdk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_ynrdk_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_ynodk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_ynodk_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_ynodk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_ynodk_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_ynordk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_ynordk_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_ynordk_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_ynordk_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
+	end
+
+	test "unwrapped _wrapped_pos_neg_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			_wrapped_pos_neg_spans(:app_model, :int_field)).root
+		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+	end
+
+	test "wrapped_pos_neg_spans" do
+		@app_model = AppModel.new
+		response = HTML::Document.new(
+			wrapped_pos_neg_spans(:app_model, :int_field)).root
+		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.value', :text => '&nbsp;', :count => 1
+		end
 	end
 
 end

@@ -4,6 +4,7 @@ HWIA = HashWithIndifferentAccess
 module CommonLib; end
 
 require "common_lib/ruby"
+require "common_lib/translation_table"
 
 def brand	#	for auto-generated tests
 	"@@ "

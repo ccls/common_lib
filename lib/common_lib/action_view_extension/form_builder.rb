@@ -75,6 +75,41 @@ module CommonLib::ActionViewExtension::FormBuilder
 		@template.text_field( object_name, method, options )
 	end
 
+	def yndk_select(method,options={},html_options={})
+		@template.select(object_name, method, YNDK.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def ynrdk_select(method,options={},html_options={})
+		@template.select(object_name, method, YNRDK.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def ynodk_select(method,options={},html_options={})
+		@template.select(object_name, method, YNODK.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def ynordk_select(method,options={},html_options={})
+		@template.select(object_name, method, YNORDK.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def padk_select(method,options={},html_options={})
+		@template.select(object_name, method, PADK.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def adna_select(method,options={},html_options={})
+		@template.select(object_name, method, ADNA.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
+	def pos_neg_select(method, options={}, html_options={})
+		@template.select(object_name, method, POSNEG.selector_options,
+			{:include_blank => true}.merge(objectify_options(options)), html_options)
+	end
+
 	def wrapped_check_box(*args,&block)
 		method      = args[0]
 		content = @template.field_wrapper(method,:class => 'check_box') do
@@ -107,7 +142,8 @@ module CommonLib::ActionViewExtension::FormBuilder
 			datetime_select date_text_field datetime_text_field 
 			file_field password_field
 			hour_select minute_select meridiem_select gender_select
-			grouped_collection_select pos_neg_select select sex_select text_area
+			grouped_collection_select padk_select
+			pos_neg_select select sex_select text_area
 			text_field yndk_select ynodk_select ynrdk_select ynordk_select
 		).each do |unwrapped_method_name|
 	define_method "wrapped_#{unwrapped_method_name}" do |*args,&block|
@@ -155,39 +191,6 @@ module CommonLib::ActionViewExtension::FormBuilder
 	end
 #"
 end
-
-#
-#	all are defined so this shouldn't be needed
-#
-
-#		def method_missing_with_field_wrapping(symb,*args, &block)
-#			method_name = symb.to_s
-#			if method_name =~ /^wrapped_(.+)$/
-#				unwrapped_method_name = $1	#	check_box, select, ...
-#				method      = args[0]	#	attribute name
-#				content = @template.field_wrapper(method,:class => unwrapped_method_name) do
-#					s = if respond_to?(unwrapped_method_name)
-#						options    = args.detect{|i| i.is_a?(Hash) }
-#						label_text = options.delete(:label_text) unless options.nil?
-#						if unwrapped_method_name == 'check_box'
-#							send("#{unwrapped_method_name}",*args,&block) <<
-#							self.label( method, label_text )
-#						else
-#							self.label( method, label_text ) <<
-#							send("#{unwrapped_method_name}",*args,&block)
-#						end
-#					else
-#						send("_#{method_name}",*args,&block)
-#					end
-#					s << (( block_given? )? @template.capture(&block) : '')
-#				end
-#				#	ActionView::TemplateError (private method `block_called_from_erb?' 
-#				( @template.send(:block_called_from_erb?,block) ) ? 
-#					@template.concat(content) : content
-#			else
-#				method_missing_without_field_wrapping(symb,*args, &block)
-#			end
-#		end
 
 end
 ActionView::Helpers::FormBuilder.send(:include, 
