@@ -241,8 +241,20 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='name' -->
 		assert_select response, 'div.name.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :count => 1
+			assert_select 'span.label', :count => 1, :text => 'Name'
 			assert_select 'span.value', :count => 1
+		end
+	end
+
+	test "wrapped_spans with label text" do
+		@user = CommonLib::User.new
+		response = HTML::Document.new(
+			wrapped_spans(:user, :name, :label_text => 'blah')).root
+		assert_select response, 'div.name.field_wrapper', :count => 1 do
+			assert_select 'label', :count => 0
+			assert_select 'span.label', :count => 1, :text => 'blah'
+			assert_select 'span.value', :count => 1
+			assert_select 'span.post_text', :count => 0
 		end
 	end
 
@@ -252,7 +264,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_spans(:user, :name, :post_text => 'blah')).root
 		assert_select response, 'div.name.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :count => 1
+			assert_select 'span.label', :count => 1, :text => 'Name'
 			assert_select 'span.value', :count => 1
 			assert_select 'span.post_text', :count => 1, :text => 'blah'
 		end
@@ -270,7 +282,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='dob date_spans' -->
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.label',:text => 'Dob',:count => 1
 			assert_select 'span.value',:text => '&nbsp;',:count => 1
 		end
 	end
@@ -285,7 +297,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='dob date_spans' -->
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.label',:text => 'Dob',:count => 1
 			assert_select 'span.value',:text => '12/05/1971',:count => 1
 		end
 	end
@@ -296,7 +308,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_date_spans(:user, :dob, :post_text => 'happy bday')).root
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.label',:text => 'Dob',:count => 1
 			assert_select 'span.value',:text => '12/05/1971',:count => 1
 			assert_select 'span.post_text',:text => 'happy bday',:count => 1
 		end
@@ -311,7 +323,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_datetime_spans(:user, :dob)).root
 		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.label',:text => 'Dob',:count => 1
 			assert_select 'span.value',:text => '&nbsp;',:count => 1
 		end
 	end
@@ -322,7 +334,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_datetime_spans(:user, :dob)).root
 		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'dob',:count => 1
+			assert_select 'span.label',:text => 'Dob',:count => 1
 			assert_select 'span.value',:text => '12/05/1971 00:00 (+00:00)',:count => 1
 		end
 	end
@@ -342,7 +354,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.label',:text => 'Yes or no',:count => 1
 			assert_select 'span.value',:text => 'No',:count => 1
 		end
 	end
@@ -357,7 +369,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.label',:text => 'Yes or no',:count => 1
 			assert_select 'span.value',:text => 'Yes',:count => 1
 		end
 	end
@@ -372,7 +384,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #</div><!-- class='yes_or_no' -->
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.label',:text => 'Yes or no',:count => 1
 			assert_select 'span.value',:text => 'No',:count => 1
 		end
 	end
@@ -383,7 +395,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_yes_or_no_spans(:user, :yes_or_no, :post_text => 'blah')).root
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
-			assert_select 'span.label',:text => 'yes_or_no',:count => 1
+			assert_select 'span.label',:text => 'Yes or no',:count => 1
 			assert_select 'span.value',:text => 'No',:count => 1
 			assert_select 'span.post_text',:text => 'blah',:count => 1
 		end
@@ -685,7 +697,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_padk_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -695,7 +707,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_padk_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -704,7 +716,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_adna_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -714,7 +726,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_adna_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -723,7 +735,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_yndk_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -733,7 +745,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_yndk_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -742,7 +754,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_ynrdk_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -752,7 +764,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_ynrdk_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -761,7 +773,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_ynodk_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -771,7 +783,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_ynodk_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -780,7 +792,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_ynordk_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -790,7 +802,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_ynordk_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
@@ -799,7 +811,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		@app_model = AppModel.new
 		response = HTML::Document.new(
 			_wrapped_pos_neg_spans(:app_model, :int_field)).root
-		assert_select response, 'span.label', :text => 'int_field', :count => 1
+		assert_select response, 'span.label', :text => 'Int field', :count => 1
 		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
 	end
 
@@ -809,7 +821,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 			wrapped_pos_neg_spans(:app_model, :int_field)).root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
-			assert_select 'span.label', :text => 'int_field', :count => 1
+			assert_select 'span.label', :text => 'Int field', :count => 1
 			assert_select 'span.value', :text => '&nbsp;', :count => 1
 		end
 	end
