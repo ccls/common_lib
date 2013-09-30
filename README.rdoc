@@ -89,6 +89,15 @@ Or ...
  /opt/local/lib/ruby1.9/1.9.1/psych/visitors/to_ruby.rb
 
 
+
+== Testing
+---
+
+ sudo /opt/local/share/mariadb/support-files/mysql.server start &
+
+ c ; /bin/rm -rf coverage* ; bundle exec rake ; mv coverage coverage-one-run ; open coverage-one-run/index.html ; nice +20 bundle exec autotest
+
+
 ---
 == Gemified with Jeweler
 
