@@ -65,13 +65,28 @@ module CommonLib::ActionViewExtension::Base
 #			:scope => "activerecord.attributes",
 #			:default => method.to_s)}</span>\n"	#	if method is a symbol, tries to translate it too.
 
+
+
+
+#
+#		label = if options[:label_text].present?
+#			options[:label_text]
+#		else
+#			l = ( I18n.translate("#{object.class.to_s.underscore}.#{method}",
+#				:scope => "activerecord.attributes", :raise => true ) rescue false ) ||
+#				method.to_s
+#			l.send( :humanize or :titleize or :gsub('_', ' ') or ......
+#		end
+#
+#	titleize - capitalizes all words
+#	humanize - capitalizes only the first word ( same as other rails helpers, but I don't like )
+#	
+#
+
 		s =  "<span class='label'>#{options[:label_text] ||
 			( I18n.translate("#{object.class.to_s.underscore}.#{method}",
 				:scope => "activerecord.attributes", :raise => true ) rescue false ) ||
 			method.to_s.humanize }</span>\n"	#	if method is a symbol, tries to translate it too.
-
-		#	titleize - capitalizes all words
-		#	humanize - capitalizes only the first word ( same as other rails helpers )
 
 		value = if options[:value]
 			options[:value]
