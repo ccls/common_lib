@@ -31,7 +31,8 @@ group :test do
 	gem "jeweler"
 	gem "hpricot"
 
-	gem "simplecov", :require => false
+	#	simplecov-0.8.1 or one of its dependencies causes autotest to not actually run tests?
+	gem "simplecov", '0.7.1', :require => false
 
 	gem "ccls-html_test"
 
