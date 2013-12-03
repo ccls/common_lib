@@ -50,4 +50,7 @@ group :test do
 
 	gem 'ZenTest', '=4.9.1'
 
+
+	gem 'jakewendt-test_with_verbosity'
+
 end
