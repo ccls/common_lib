@@ -18,7 +18,10 @@ require 'common_lib/action_view_extension'
 
 
 #	pretty much always as don't expect this to be used outside of a rails app
-require 'common_lib/railtie' if defined?(Rails)
+if defined?(Rails)
+require 'common_lib/railtie' 
+require 'common_lib/engine' 
+end
 
 
 
