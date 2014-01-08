@@ -45,6 +45,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    descendants_tracker (0.0.3)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.3.0)
@@ -55,12 +56,13 @@ GEM
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
     git (1.2.6)
-    github_api (0.10.1)
-      addressable
-      faraday (~> 0.8.1)
+    github_api (0.11.1)
+      addressable (~> 2.3)
+      descendants_tracker (~> 0.0.1)
+      faraday (~> 0.8, < 0.10)
       hashie (>= 1.2)
-      multi_json (~> 1.4)
-      nokogiri (~> 1.5.2)
+      multi_json (>= 1.7.5, < 2.0)
+      nokogiri (~> 1.6.0)
       oauth2
     hashie (2.0.5)
     highline (1.6.20)
@@ -69,13 +71,13 @@ GEM
     httpauth (0.2.0)
     i18n (0.6.9)
     jakewendt-test_with_verbosity (0.0.0)
-    jeweler (1.8.8)
+    jeweler (2.0.0)
       builder
-      bundler (~> 1.0)
+      bundler (>= 1.0)
       git (>= 1.2.5)
-      github_api (= 0.10.1)
+      github_api
       highline (>= 1.6.15)
-      nokogiri (= 1.5.10)
+      nokogiri (>= 1.5.10)
       rake
       rdoc
     journey (1.0.4)
@@ -87,12 +89,14 @@ GEM
       treetop (~> 1.4.8)
     metaclass (0.0.1)
     mime-types (1.25.1)
+    mini_portile (0.5.2)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
     multi_json (1.8.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    nokogiri (1.5.10)
+    nokogiri (1.6.1)
+      mini_portile (~> 0.5.0)
     oauth2 (0.9.2)
       faraday (~> 0.8)
       httpauth (~> 0.2)
