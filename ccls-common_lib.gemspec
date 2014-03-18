@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ccls-common_lib"
-  s.version = "1.4.0"
+  s.version = "4.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
-  s.date = "2013-12-03"
+  s.date = "2014-03-18"
   s.description = "CCLS Common Lib gem"
   s.email = "github@jakewendt.com"
   s.extra_rdoc_files = [
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
     "lib/common_lib/active_support_extension/attributes.rb",
     "lib/common_lib/active_support_extension/pending.rb",
     "lib/common_lib/active_support_extension/test_case.rb",
+    "lib/common_lib/engine.rb",
     "lib/common_lib/railtie.rb",
     "lib/common_lib/ruby.rb",
     "lib/common_lib/ruby/array.rb",
