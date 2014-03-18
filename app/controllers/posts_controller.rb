@@ -20,7 +20,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		@post = Post.new(params[:post])
+		@post = Post.new(params[:post].merge(:blog_id => params[:blog_id]))
 		if @post.save
 			redirect_to(@post, :notice => 'Post was successfully created.')
 		else

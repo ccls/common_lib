@@ -4,7 +4,7 @@ class PostTest < ActiveSupport::TestCase
 
 	assert_should_create_default_object
 
-	assert_should_act_as_list( :scope => :blog_id )
+#	assert_should_act_as_list( :scope => :blog_id )
 	assert_should_require_attributes( :title )
 	assert_should_require_attribute_length( :title, :maximum => 250 )
 	assert_should_not_require_attributes( :body)

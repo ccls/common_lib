@@ -18,5 +18,6 @@ config/*database.yml
 db/test_*_schema.rb
 
 *.swp
+/config/secrets.yml
 /config/initializers/secret_token.rb
 

@@ -3,7 +3,7 @@
 <%= form_for(@post) do |f| %>
   <%= f.error_messages %>
 
-<%= f.wrapped_text_field :position do %>
+<%= f.wrapped_yndk_select :position do %>
 	<span>This is a test of the wrapped_* block methods </span>
 
   <p>
@@ -12,7 +12,7 @@
   </p>
   <p>
     <%= f.label :body %><br />
-    <%= f.text_area :body %>
+    <%= f.text_area :body, :rows => 20, :cols => 40  %>
   </p>
   <p>
     <%= f.submit 'Update' %>

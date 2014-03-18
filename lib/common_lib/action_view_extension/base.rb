@@ -229,7 +229,7 @@ module CommonLib::ActionViewExtension::Base
 		args.each do |javascript|
 			unless @javascripts.include?(javascript.to_s)
 				@javascripts.push(javascript.to_s)
-				content_for(:head,javascript_include_tag(javascript).to_s)
+				content_for(:head,javascript_include_tag(javascript, :type => 'text/javascript').to_s)
 			end
 		end
 	end

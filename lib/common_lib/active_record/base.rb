@@ -88,7 +88,7 @@ class ActiveRecord::Base
 			# Treats the class a bit like a Hash and
 			# searches for a record with a matching key.
 			def self.[](key)
-				self.acts_like_a_hash_memory[key.downcase.to_s] ||=
+				self.acts_like_a_hash_memory[key.to_s.downcase.to_s] ||=
 					where(self.arel_table[self.acts_like_a_hash_options[:key]].matches(key)).first
 			end
 

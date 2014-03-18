@@ -1,0 +1,51 @@
+
+added 'protected_attributes' gem
+
+had to add attr_accessible lists
+or attr_protected with nothing
+
+changed Bundler statement
+
+changed 'match' routes to 'get'
+
+need to set rows and cols for text areas?
+
+text fields no longer have size set by default (and is not required?)
+
+
+removed from environments files
+	config.whiny_nils = true # not in rails 4
+	config.active_record.mass_assignment_sanitizer = :strict # not in rails 4
+	config.active_record.auto_explain_threshold_in_seconds = 0.5 # not in rails 4
+	config.action_dispatch.best_standards_support = :builtin
+
+
+add to environments files
+	config.eager_load is set to nil. Please update your config/environments/*.rb files accordingly:
+
+  * development - set it to false
+  * test - set it to false (unless you use a tool that preloads your test environment)
+  * production - set it to true
+
+
+
+simple_cov coverage only seems to cover the app stuff now.
+need to investigate
+
+
+
+testing (autotest at least) is picking up EVERYTHING in the entire directory structure that matches "test_*"
+
+
+also seems to load all ruby in my "archive" dirs.  Not sure if this is just testing.
+
+
+
+
+
+DEPRECATION WARNING: ActionController::Integration is deprecated and will be removed, use ActionDispatch::Integration instead. (called from <top (required)> at /Users/jakewendt/github_repo/ccls/common_lib/config/application.rb:8)
+
+DEPRECATION WARNING: ActionController::IntegrationTest is deprecated and will be removed, use ActionDispatch::IntegrationTest instead. (called from <top (required)> at /Users/jakewendt/github_repo/ccls/common_lib/config/application.rb:8)
+
+DEPRECATION WARNING: You didn't set config.secret_key_base. Read the upgrade documentation to learn more about this new config option. (called from env_config at /opt/local/lib/ruby2.0/gems/2.0.0/gems/railties-4.0.3/lib/rails/application.rb:141)
+

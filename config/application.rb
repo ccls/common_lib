@@ -4,7 +4,8 @@ require 'rails/all'
 
 if defined?(Bundler)
 	# If you precompile assets before deploying to production, use this line
-	Bundler.require(*Rails.groups(:assets => %w(development test)))
+#	Bundler.require(*Rails.groups(:assets => %w(development test)))
+	Bundler.require(:default, Rails.env)
 	# If you want your assets lazily compiled in production, use this line
 	# Bundler.require(:default, :assets, Rails.env)
 end
@@ -80,5 +81,16 @@ module CommonLib
 
 		# Version of your assets, change this if you want to expire all your assets
 		config.assets.version = '1.0'
+
+
+
+#	I followed instructions to secrets.yml, but app doesn't actually read it?
+#	I will probably have to removing the following line when 4.1 is used.
+#	http://stackoverflow.com/questions/21136363/using-config-secrets-yml-in-rails-4-0-2-version
+#	https://github.com/rails/rails/pull/13298
+config.secret_key_base = YAML.load(File.open("#{Rails.root}/config/secrets.yml"))[Rails.env]['secret_key_base']
+
+
+
 	end
 end

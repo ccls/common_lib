@@ -172,6 +172,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 
 			s  = self.label( method, label_text ) 
 			s << send(unwrapped_method_name,*args,&block)
+
 #			s << (( block )? block.call : '')	
 #			s << (( block_given? )? @template.capture(&block) : '')
 #	the new way won't work with block_given?, but template.capture still does.

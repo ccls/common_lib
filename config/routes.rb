@@ -61,13 +61,13 @@ CommonLib::Application.routes.draw do
 
 #	match 'signup' =>  'users#new',
 #		:as => :signup
-	match 'signin' =>  'user_sessions#new',
+	get 'signin' =>  'user_sessions#new',
 		:as => :signin
-	match 'login' =>   'user_sessions#new',
+	get 'login' =>   'user_sessions#new',
 		:as => :login
-	match 'signout' => 'user_sessions#destroy',
+	get 'signout' => 'user_sessions#destroy',
 		:as => :signout
-	match 'logout' =>  'user_sessions#destroy',
+	get 'logout' =>  'user_sessions#destroy',
 		:as => :logout
 
 	resources :privates
