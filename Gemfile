@@ -20,7 +20,8 @@ group :test do
 	gem "hpricot"
 
 	#	simplecov-0.8.1 or one of its dependencies causes autotest to not actually run tests?
-	gem "simplecov", '0.7.1', :require => false
+#	gem "simplecov", '0.7.1', :require => false
+	gem "simplecov", :require => false
 
 	gem "ccls-html_test"
 
@@ -30,11 +31,12 @@ group :test do
 
 #	gem "mocha", '0.10.5', :require => false #	0.11.4
 #	gem "mocha", :require => false #	0.11.4
-	gem "mocha", '0.13.3', :require => false #	0.14.0 seems to require unstubbing
+#	gem "mocha", '0.13.3', :require => false #	0.14.0 seems to require unstubbing
+	gem "mocha", :require => false #	0.14.0 seems to require unstubbing
 
 	gem "autotest-rails", :require => 'autotest/rails'
 
-	gem 'ZenTest', '=4.9.1'
+	gem 'ZenTest'	#, '=4.9.1'
 
 	gem 'jakewendt-test_with_verbosity'
 
