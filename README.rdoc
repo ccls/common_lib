@@ -95,7 +95,7 @@ Or ...
 
  sudo /opt/local/share/mariadb/support-files/mysql.server start
 
- c ; /bin/rm -rf coverage* ; bundle exec rake ; mv coverage coverage-one-run ; open coverage-one-run/index.html ; nice +20 bundle exec autotest
+ c ; /bin/rm -rf coverage* ; bundle exec rake ; mv coverage coverage-one-run ; open coverage-one-run/index.html ; nice +20 bundle exec autotest -v  --no-full-after-failed
 
 
 ---

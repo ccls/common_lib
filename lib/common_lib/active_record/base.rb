@@ -1,5 +1,26 @@
 class ActiveRecord::Base
 
+#	def self.inherited(subclass)
+#		subclass.class_eval do
+#			validation_file = File.join(Rails.root,"config/validations/#{self.to_s.underscore}.yml")
+#			if File.exists?(validation_file)
+#				h = YAML::load( ERB.new( IO.read( validation_file )).result)
+#
+#				#	if the yml file is empty, h is false ( added "if h" condition )
+#				h.each do |validation|
+#					attributes=[validation.delete(:attributes), validation.delete(:attribute)
+#						].compact.flatten
+#					self.validates *attributes, validation
+#				end if h
+#			end
+#		end
+#		super
+#	end
+#
+#		This will need some thought.  Some of my models define things that are called
+#		from within these validations, so need to be defined first.  Not sure how to do that.
+#
+
 	#
 	#	I have found that the validations are really cluttering up the models.
 	#	Moving them into a yml file and pulling them in like so seems to 
@@ -20,6 +41,7 @@ class ActiveRecord::Base
 	#	I really like this and I may very well make it a default at some point.
 	#
 	def self.validations_from_yaml_file
+#		warn "validations_from_yaml_file is now a default from common_lib. You can remove the call from your model."
 		validation_file = File.join(Rails.root,"config/validations/#{self.to_s.underscore}.yml")
 		if File.exists?(validation_file)
 			h = YAML::load( ERB.new( IO.read( validation_file )).result)
