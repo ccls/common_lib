@@ -192,7 +192,10 @@ module CommonLib::ActionViewExtension::Base
 	def aws_image_tag(image,options={})
 		#	in console @controller is nil
 		#	rails 4 this seems to be controller not @controller now
-		protocol = controller.try(:request).try(:protocol) || 'http://'
+#		protocol = controller.try(:request).try(:protocol) || 'http://'
+		#	production returns http:// even when it is clearly https:// ?
+		#	double slash seems to make everyone happy
+		protocol = '//'	#controller.try(:request).try(:protocol) || '//'
 		host = 's3.amazonaws.com/'
 #		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
 		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 

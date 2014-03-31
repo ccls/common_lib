@@ -476,7 +476,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		::RAILS_APP_NAME = bucket = 'yadayada'
 		response = HTML::Document.new( aws_image_tag('myimage')).root
 		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+#		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+		assert_select response, "img[src=//s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
 		#	otherwise it sticks around
 		Object.send(:remove_const,:RAILS_APP_NAME)
 	end
@@ -487,7 +488,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		bucket = 'commonlib'
 		assert_equal bucket, Rails.application.class.parent.to_s.downcase
 		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+#		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+		assert_select response, "img[src=//s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
 	end
 
 
