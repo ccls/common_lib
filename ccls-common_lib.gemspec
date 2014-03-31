@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ccls-common_lib"
-  s.version = "4.0.0"
+  s.version = "4.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["George 'Jake' Wendt"]
-  s.date = "2014-03-18"
+  s.date = "2014-03-31"
   s.description = "CCLS Common Lib gem"
   s.email = "github@jakewendt.com"
   s.extra_rdoc_files = [
