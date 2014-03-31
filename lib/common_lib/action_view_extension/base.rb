@@ -191,7 +191,8 @@ module CommonLib::ActionViewExtension::Base
 
 	def aws_image_tag(image,options={})
 		#	in console @controller is nil
-		protocol = @controller.try(:request).try(:protocol) || 'http://'
+		#	rails 4 this seems to be controller not @controller now
+		protocol = controller.try(:request).try(:protocol) || 'http://'
 		host = 's3.amazonaws.com/'
 #		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 'ccls'
 		bucket = ( defined?(RAILS_APP_NAME) && RAILS_APP_NAME ) || 
