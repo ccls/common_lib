@@ -1,86 +1,41 @@
-#	##	From `script/generate simply_testable` ...
-#	#
-#	#	This was originally used to run my gem tests in the context
-#	#	of the application.  I don't do this anymore.
-#	#
-#	#Dir["#{File.dirname(__FILE__)}/config/autotest/**/*rb"].sort.each { |ext| load ext }
-#	
-#	
-#	
-#	
-#	##!/usr/bin/env ruby
-#	
-#	gem 'activesupport'	#, '~> 2'
-#	require 'active_support/core_ext'	#	for alias_method_chain
-#	#
-#	##	how do I colorize with the whole red green thing
-#	#
-#	class Autotest
-#	#
-#	#
-#	#	jruby needed this for proper testing.
-#	#	I don't use jruby for the ODMS app.
-#	#
-#	##	def run_tests_with_correct_unit_diff
-#	##		#http://syntatic.wordpress.com/2009/08/13/jruby-1-3-0-with-autotest/
-#	##		self.unit_diff = if RUBY_PLATFORM == 'java'
-#	##			"unit_diff"
-#	##		else
-#	##			"unit_diff -u"
-#	##		end
-#	##		run_tests_without_correct_unit_diff
-#	##	end
-#	##	alias_method_chain :run_tests, :correct_unit_diff
-#	#
-#	#
-#	# If I remember correctly, 
-#	#	when a test would fail, autotest would rerun it until it
-#	#	passed and then autotest would rerun ALL TESTS.
-#	#	While this may be the best way, there are A LOT of tests
-#	#	for the ODMS app and running them all takes about 2 hours.
-#	#
-#		def rerun_all_tests_with_flag
-#			#
-#			#		use some sort of command line option to stop this
-#			#		surprised this doesn't exist
-#			#
-#	
-#			#	perhaps set this flag in a file so that can be modified
-#			#	without restarting autotest.
-#	
-#	#		unless ENV['AUTOTEST_RERUN_ALL'] == 'false'
-#	#	default to doing it my way.
-#	#	out of the box, this take WAY TOO LONG
-#			if ENV['AUTOTEST_RERUN_ALL'] == 'true'
-#				rerun_all_tests_without_flag
-#			end
-#		end
-#		alias_method_chain :rerun_all_tests, :flag
-#	
-#	end
+#!/usr/bin/env ruby
+##	the above is just so vim colorizes correctly
 
-
+#
+#	~/.autotest is read before the local .autotest
+#
+#	Also, be careful not to over exclude.  "doc" excluded all of my "document" related tests.
+#
+#	HOOK MUST RETURN FALSE TO ALLOW OTHER HOOKS OF SAME NAME TO BE EXECUTED!
+#
 
 Autotest.add_hook :initialize do |autotest|
-	%w{ abstract_notes/ ICF_Master_Trackers/ OLD_UNUSED_FILES/ anand/ bc_infos/ birth_data/ data/ development/ dumps/ gitignored/ production/ solr/ tracking2k/ }.each do |exception|
+  %w{ .autotest .git .svn .hg .DS_Store ._* vendor/ tmp/ log/ doc/ versions/ 
+			.bundle/ Gemfile coverage/ coverage-one-run/ config/ solr/ 
+			app/assets/ app/views/layouts/ lib/tasks/ }.each do |exception|
+		puts "Adding exception #{exception} from ~/.autotest"
 		autotest.add_exception(exception)
 	end
-end
 
+	%w{ abstract_notes/ ICF_Master_Trackers/ OLD_UNUSED_FILES/ anand/ bc_infos/ birth_data/ data/ development/ 
+			misc/ test/assets/ dumps/ gitignored/ production/ tracking2k/ }.each do |exception|
+		puts "Adding exception #{exception} from .autotest"
+		autotest.add_exception(exception)
+	end
 
-
-
-
-class Autotest
-  def rerun_all_tests
-		puts
-		puts	"My Autotest.rerun_all_tests was called"
-		puts
-  end
-end
-
-Autotest.add_hook :post_initialize do |autotest|
 	#	by default it is 'minitest/autorun' which if fine, but I can't figure
 	#	out how to stop it from running all tests when one file changes.
 	autotest.testlib           = "test/unit"
+
+	false	#	MUST DO THIS SO OTHER :initialize hooks work
 end
+
+
+
+#	FYI, "complex" pluralized names in fixtures don't get mapped correctly.
+#		counties, people, etc.
+
+#	app/helpers/*rb don't get mapped to tests either.
+#	helpers may need to be moved from test/unit/helpers/ to test/helpers/
+#	make more sense anyway.
+#	same with app/mailers/ to.  Move test/functional/MAILER_TESTS to test/mailers/
