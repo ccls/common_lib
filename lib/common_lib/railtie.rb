@@ -18,7 +18,7 @@ module CommonLib
 #      end
 #    end
 
-    rake_tasks { 
+#    rake_tasks { 
 #
 #	Use caution.  This would load the files in the app's lib/tasks/
 #	Not sure if that was in addition to the gem, or instead of, but
@@ -27,11 +27,11 @@ module CommonLib
 #			load "tasks/common_lib.rake" 
 #			load "tasks/csv.rake" 
 #			load "tasks/database.rake" 
-
-			
-			Dir["#{File.dirname(__FILE__)}/../tasks/**/*.rake"].sort.each { |ext| load ext }
-
-		}
+#
+#			
+#			Dir["#{File.dirname(__FILE__)}/../tasks/**/*.rake"].sort.each { |ext| load ext }
+#
+#		}
   end
 
 #  class Railtie
