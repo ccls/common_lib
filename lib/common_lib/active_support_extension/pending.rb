@@ -114,3 +114,10 @@ module ActiveSupport
 		end	#	module Pending
 	end	#	module Testing
 end	#	module ActiveSupport
+
+#
+#	As of Rails 4.1, pending is gone.  No biggy as I wasn't using that version.
+#	But this change caused my file to not be included.
+#	I'd rather use built in code, but I don't like "skip"'s style.
+#
+ActiveSupport::TestCase.send(:include, ActiveSupport::Testing::Pending)

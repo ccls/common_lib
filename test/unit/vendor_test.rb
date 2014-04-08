@@ -9,6 +9,10 @@ class VendorTest < ActiveSupport::TestCase
 	assert_should_require_unique_attributes( :name )
 	assert_should_habtm( :products )
 
+	test "should be pending" do
+		pending
+	end
+
 protected
 
 	#	create_object is called from within the common class tests
