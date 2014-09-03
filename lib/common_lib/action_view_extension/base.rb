@@ -145,9 +145,9 @@ module CommonLib::ActionViewExtension::Base
 					label_text = options.delete(:label_text) unless options.nil?
 					if unwrapped_method_name == 'check_box'
 						send("#{unwrapped_method_name}",*args,&block) <<
-						label( object_name, method, label_text )
+						label( object_name, method, label_text, class: 'label' )
 					else
-						label( object_name, method, label_text ) <<
+						label( object_name, method, label_text, class: 'label' ) <<
 						send("#{unwrapped_method_name}",*args,&block)
 					end
 				else

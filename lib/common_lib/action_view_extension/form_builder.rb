@@ -118,7 +118,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 			post_text  = options.delete(:post_text) unless options.nil?
 #	INVERTED ORDER SO NOT INCLUDED BELOW
 			s  = check_box(*args,&block) <<
-				self.label( method, label_text )
+				self.label( method, label_text, class: 'label' )
 			s << (( block_given? )? @template.capture(&block) : '')
 			s << (( post_text.blank? ) ? '' : "<span>#{post_text}</span>".html_safe )
 		end
@@ -170,7 +170,7 @@ module CommonLib::ActionViewExtension::FormBuilder
 #	when a wrapped method has a block with a wrapped method
 #	it ends up being rendered a couple times ??
 
-			s  = self.label( method, label_text ) 
+			s  = self.label( method, label_text, class: 'label'  ) 
 			s << send(unwrapped_method_name,*args,&block)
 
 #			s << (( block )? block.call : '')	
