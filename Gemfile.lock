@@ -178,6 +178,7 @@ DEPENDENCIES
   mocha
   protected_attributes
   rails
+  rails-dom-testing
   simplecov
   sqlite3
   test-unit

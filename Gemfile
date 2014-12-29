@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 group :test do
 
 	gem 'rails'
+	gem 'rails-dom-testing'
 	gem 'protected_attributes'	#	to keep rails 3 style
 
 	gem 'sqlite3'
@@ -27,7 +28,10 @@ group :test do
 	
 	gem "factory_girl_rails"
 
-	gem "mocha", :require => false
+	#	rails <= 4
+	#gem "mocha", :require => false
+	#	rails >= 5
+	gem "mocha", :require => 'mocha/setup'
 
 	gem "autotest-rails", :require => 'autotest/rails'
 
