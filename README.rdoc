@@ -98,6 +98,13 @@ Or ...
  c ; /bin/rm -rf coverage* ; bundle exec rake ; mv coverage coverage-one-run ; open coverage-one-run/index.html ; nice +20 bundle exec autotest -v  --no-full-after-failed
 
 
+
+	FIX THESE ... 
+		Unable to map class FormBuilderTest to a file
+		Unable to map class BaseTest to a file
+
+
+
 ---
 == Gemified with Jeweler
 

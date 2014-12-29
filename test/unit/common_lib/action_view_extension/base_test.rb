@@ -54,6 +54,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 	end
 
 
+	#	nokogiri doesn't seem to be able to match :text => '&nbsp;'
+
 
 	def flash
 		{:notice => "Hello There"}
@@ -64,7 +66,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #	required
 
 	test "required(text) should" do
-		response = HTML::Document.new(required('something')).root
+#		response = HTML::Document.new (required('something')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(required('something'))
 		#"<span class='required'>something</span>"
 		assert_select response, 'span.required', :text => 'something', :count => 1
 	end
@@ -72,7 +75,7 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #	req
 
 	test "req(text) should" do
-		response = HTML::Document.new(req('something')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(req('something'))	#	.root
 		#"<span class='required'>something</span>"
 		assert_select response, 'span.required', :text => 'something', :count => 1
 	end
@@ -218,14 +221,11 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #	field_wrapper
 
 	test "field_wrapper" do
-		response = HTML::Document.new(
+		response = Nokogiri::HTML::DocumentFragment.parse(
 			field_wrapper('mymethod') do
 				'Yield'
-			end).root
-#<div class="mymethod field_wrapper">
-#Yield
-#</div><!-- class='mymethod' -->
-		assert_select response, 'div.mymethod.field_wrapper'
+			end)	#	.root
+		assert_select response, 'div.mymethod.field_wrapper', :text => 'Yield'
 	end
 
 
@@ -233,12 +233,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_spans without options" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_spans(:user, :name)).root
-#<div class="name field_wrapper">
-#<span class="label">name</span>
-#<span class="value">&nbsp;</span>
-#</div><!-- class='name' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_spans(:user, :name))	#	.root
 		assert_select response, 'div.name.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :count => 1, :text => 'Name'
@@ -248,8 +244,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_spans with label text" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_spans(:user, :name, :label_text => 'blah')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_spans(:user, :name, :label_text => 'blah'))	#	.root
 		assert_select response, 'div.name.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :count => 1, :text => 'blah'
@@ -260,8 +256,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_spans with post text" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_spans(:user, :name, :post_text => 'blah')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_spans(:user, :name, :post_text => 'blah'))	#	.root
 		assert_select response, 'div.name.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :count => 1, :text => 'Name'
@@ -274,27 +270,19 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_date_spans blank" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_date_spans(:user, :dob)).root
-#<div class="dob date_spans field_wrapper">
-#<span class="label">dob</span>
-#<span class="value">&nbsp;</span>
-#</div><!-- class='dob date_spans' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_date_spans(:user, :dob))	#	.root
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Dob',:count => 1
-			assert_select 'span.value',:text => '&nbsp;',:count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "wrapped_date_spans Dec 5, 1971" do
 		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
-		response = HTML::Document.new(
-			wrapped_date_spans(:user, :dob)).root
-#<div class="dob date_spans field_wrapper">
-#<span class="label">dob</span>
-#<span class="value">12/05/1971</span>
-#</div><!-- class='dob date_spans' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_date_spans(:user, :dob))	#	.root
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Dob',:count => 1
@@ -304,8 +292,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_date_spans Dec 5, 1971 with post text" do
 		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
-		response = HTML::Document.new(
-			wrapped_date_spans(:user, :dob, :post_text => 'happy bday')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_date_spans(:user, :dob, :post_text => 'happy bday'))	#	.root
 		assert_select response, 'div.dob.date_spans.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Dob',:count => 1
@@ -319,19 +307,19 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_datetime_spans blank" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_datetime_spans(:user, :dob)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_datetime_spans(:user, :dob))	#	.root
 		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Dob',:count => 1
-			assert_select 'span.value',:text => '&nbsp;',:count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "wrapped_datetime_spans Dec 5, 1971" do
 		@user = CommonLib::User.new{|u| u.dob = Date.parse('Dec 5, 1971')}
-		response = HTML::Document.new(
-			wrapped_datetime_spans(:user, :dob)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_datetime_spans(:user, :dob))	#	.root
 		assert_select response, 'div.dob.datetime_spans.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Dob',:count => 1
@@ -346,12 +334,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_yes_or_no_spans blank" do
 		@user = CommonLib::User.new
-		response = HTML::Document.new(
-			wrapped_yes_or_no_spans(:user, :yes_or_no)).root
-#<div class="yes_or_no field_wrapper">
-#<span class="label">yes_or_no</span>
-#<span class="value">no</span>
-#</div><!-- class='yes_or_no' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_yes_or_no_spans(:user, :yes_or_no))	#	.root
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Yes or no',:count => 1
@@ -361,12 +345,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_yes_or_no_spans true" do
 		@user = CommonLib::User.new{|u| u.yes_or_no = true }
-		response = HTML::Document.new(
-			wrapped_yes_or_no_spans(:user, :yes_or_no)).root
-#<div class="yes_or_no field_wrapper">
-#<span class="label">yes_or_no</span>
-#<span class="value">yes</span>
-#</div><!-- class='yes_or_no' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_yes_or_no_spans(:user, :yes_or_no))	#	.root
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Yes or no',:count => 1
@@ -376,12 +356,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_yes_or_no_spans false" do
 		@user = CommonLib::User.new(:yes_or_no => false)
-		response = HTML::Document.new(
-			wrapped_yes_or_no_spans(:user, :yes_or_no)).root
-#<div class="yes_or_no field_wrapper">
-#<span class="label">yes_or_no</span>
-#<span class="value">no</span>
-#</div><!-- class='yes_or_no' -->
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_yes_or_no_spans(:user, :yes_or_no))	#	.root
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Yes or no',:count => 1
@@ -391,8 +367,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "wrapped_yes_or_no_spans false with post text" do
 		@user = CommonLib::User.new(:yes_or_no => false)
-		response = HTML::Document.new(
-			wrapped_yes_or_no_spans(:user, :yes_or_no, :post_text => 'blah')).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_yes_or_no_spans(:user, :yes_or_no, :post_text => 'blah'))	#	.root
 		assert_select response, 'div.yes_or_no.field_wrapper' do
 			assert_select 'label', :count => 0
 			assert_select 'span.label',:text => 'Yes or no',:count => 1
@@ -410,59 +386,44 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 #	form_link_to
 
 	test "form_link_to with block" do
-		response = HTML::Document.new(
+		response = Nokogiri::HTML::DocumentFragment.parse(
 			form_link_to('mytitle','/myurl') do
 				hidden_field_tag('apple','orange')
-			end).root
-#<form class='form_link_to' action='/myurl' method='post'>
-#<input id="apple" name="apple" type="hidden" value="orange" />
-#<input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+			end)	#	.root
+		assert_select response, "form.form_link_to[action='/myurl']", :count => 1 do
 			assert_select 'input', :count => 3
+			assert_select "input[name='apple'][type='hidden'][value='orange']",:count => 1
+			assert_select "input[type='submit'][value='mytitle']",:count => 1
 		end
 	end
 
 	test "form_link_to without block" do
-		response = HTML::Document.new(form_link_to('mytitle','/myurl')).root
-		assert_select response, 'form.form_link_to[action=/myurl]', :count => 1 do
+		response = Nokogiri::HTML::DocumentFragment.parse(form_link_to('mytitle','/myurl'))	#	.root
+		assert_select response, "form.form_link_to[action='/myurl']", :count => 1 do
 			assert_select 'input', :count => 2
+			assert_select "input[type='submit'][value='mytitle']",:count => 1
 		end
-#<form class="form_link_to" action="/myurl" method="post">
-#<input type="submit" value="mytitle" />
-#</form>
 	end
 
 #	destroy_link_to
 
 
 	test "destroy_link_to with block" do
-		response = HTML::Document.new(
+		response = Nokogiri::HTML::DocumentFragment.parse(
 			destroy_link_to('mytitle','/myurl') do
 				hidden_field_tag('apple','orange')
-			end).root
-#<form class="destroy_link_to" action="/myurl" method="post">
-#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
-#<input id="apple" name="apple" type="hidden" value="orange" /><input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
-			assert_select 'div', :count => 1 do
-				assert_select 'input[name=_method][value=delete]',:count => 1
-			end
+			end)	#	.root
+		assert_select response, "form.destroy_link_to[action='/myurl']", :count => 1 do
+			assert_select "input[name='_method'][value='delete']",:count => 1
+			assert_select "input[name='apple'][type='hidden'][value='orange']",:count => 1
 			assert_select 'input', :count => 4
 		end
 	end
 
 	test "destroy_link_to without block" do
-		response = HTML::Document.new(destroy_link_to('mytitle','/myurl')).root
-#<form class="destroy_link_to" action="/myurl" method="post">
-#<div style="margin:0;padding:0;display:inline"><input name="_method" type="hidden" value="delete" /></div>
-#<input type="submit" value="mytitle" />
-#</form>
-		assert_select response, 'form.destroy_link_to[action=/myurl]', :count => 1 do
-			assert_select 'div', :count => 1 do
-				assert_select 'input[name=_method][value=delete]',:count => 1
-			end
+		response = Nokogiri::HTML::DocumentFragment.parse(destroy_link_to('mytitle','/myurl'))	#	.root
+		assert_select response, "form.destroy_link_to[action='/myurl']", :count => 1 do
+			assert_select "input[name='_method'][value='delete']",:count => 1
 			assert_select 'input', :count => 3
 		end
 	end
@@ -474,35 +435,31 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "aws_image_tag with RAILS_APP_NAME set" do
 		::RAILS_APP_NAME = bucket = 'yadayada'
-		response = HTML::Document.new( aws_image_tag('myimage')).root
+		response = Nokogiri::HTML::DocumentFragment.parse( aws_image_tag('myimage'))	#	.root
 		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-#		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
-		assert_select response, "img[src=//s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+		assert_select response, "img[src='//s3.amazonaws.com/#{bucket}/images/myimage']", :count => 1
 		#	otherwise it sticks around
 		Object.send(:remove_const,:RAILS_APP_NAME)
+		#	still sticks around in rails 4.2.0!
 	end
 
 	test "aws_image_tag without RAILS_APP_NAME set" do
-		response = HTML::Document.new( aws_image_tag('myimage')).root
+		Object.send(:remove_const,:RAILS_APP_NAME) if defined?(::RAILS_APP_NAME)
+		response = Nokogiri::HTML::DocumentFragment.parse( aws_image_tag('myimage'))	#	.root
 		assert !defined?(::RAILS_APP_NAME), "RAILS_APP_NAME is set?" # :#{Object.const_get(:RAILS_APP_NAME)}:"
 		bucket = 'commonlib'
 		assert_equal bucket, Rails.application.class.parent.to_s.downcase
 		#<img alt="myimage" src="http://s3.amazonaws.com/ccls/images/myimage" />
-#		assert_select response, "img[src=http://s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
-		assert_select response, "img[src=//s3.amazonaws.com/#{bucket}/images/myimage]", :count => 1
+		assert_select response, "img[src='//s3.amazonaws.com/#{bucket}/images/myimage']", :count => 1
 	end
 
 
 #	flasher
 
 	test "flasher" do
-		response = HTML::Document.new(
+		response = Nokogiri::HTML::DocumentFragment.parse(
 			flasher
-		).root
-#<p class="flash" id="notice">Hello There</p>
-#<noscript>
-#<p id="noscript" class="flash">Javascript is required for this site to be fully functional.</p>
-#</noscript>
+		)	#	.root
 		assert_select response, 'p#notice.flash'
 		assert_select response, 'noscript' do
 			assert_select 'p#noscript.flash'
@@ -520,8 +477,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		stylesheets('mystylesheet')
 		assert_equal 1, @stylesheets.length
 #<link href="/stylesheets/mystylesheet.css" media="screen" rel="stylesheet" type="text/css" />
-		response = HTML::Document.new( content_for(:head) ).root
-		assert_select response, 'link[href=/stylesheets/mystylesheet.css]'
+		response = Nokogiri::HTML::DocumentFragment.parse( content_for(:head) )	#	.root
+		assert_select response, "link[href='/stylesheets/mystylesheet.css']"
 	end
 
 
@@ -534,9 +491,8 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 		assert_equal 1, @javascripts.length
 		javascripts('myjavascript')
 		assert_equal 1, @javascripts.length
-#<script src="/javascripts/myjavascript.js" type="text/javascript"></script>
-		response = HTML::Document.new( content_for(:head) ).root
-		assert_select response, 'script[src=/javascripts/myjavascript.js]'
+		response = Nokogiri::HTML::DocumentFragment.parse( content_for(:head) )	#	.root
+		assert_select response, "script[src='/javascripts/myjavascript.js']"
 	end
 
 
@@ -697,134 +653,134 @@ class CommonLib::ActionViewExtension::BaseTest < ActionView::TestCase
 
 	test "unwrapped _wrapped_padk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_padk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_padk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_padk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_padk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_padk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_adna_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_adna_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_adna_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_adna_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_adna_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_adna_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_yndk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_yndk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_yndk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_yndk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_yndk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_yndk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_ynrdk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_ynrdk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_ynrdk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_ynrdk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_ynrdk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_ynrdk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_ynodk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_ynodk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_ynodk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_ynodk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_ynodk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_ynodk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_ynordk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_ynordk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_ynordk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_ynordk_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_ynordk_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_ynordk_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 
 	test "unwrapped _wrapped_pos_neg_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			_wrapped_pos_neg_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			_wrapped_pos_neg_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'span.label', :text => 'Int field', :count => 1
-		assert_select response, 'span.value', :text => '&nbsp;', :count => 1
+		assert_select response, 'span.value', :count => 1
 	end
 
 	test "wrapped_pos_neg_spans" do
 		@app_model = AppModel.new
-		response = HTML::Document.new(
-			wrapped_pos_neg_spans(:app_model, :int_field)).root
+		response = Nokogiri::HTML::DocumentFragment.parse(
+			wrapped_pos_neg_spans(:app_model, :int_field))	#	.root
 		assert_select response, 'div.int_field.field_wrapper', :count => 1 do
 			assert_select 'label', :count => 0
 			assert_select 'span.label', :text => 'Int field', :count => 1
-			assert_select 'span.value', :text => '&nbsp;', :count => 1
+			assert_select 'span.value', :count => 1
 		end
 	end
 

@@ -8,7 +8,9 @@ CommonLib::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  #config.serve_static_assets = true
+	#	renamed in prep for rails 5
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil
@@ -38,4 +40,8 @@ CommonLib::Application.configure do
 
 	#	new for rails 4
 	config.eager_load = false
+
+
+	#	in prep for rails 5
+	config.active_support.test_order = :sorted
 end
